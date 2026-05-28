@@ -7,35 +7,33 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0;}
 body{font-family:'Segoe UI',Arial,sans-serif;background:#eef0f3;color:#333;font-size:13px;}
-
 .page-header{background:#1a1a2e;color:white;padding:12px 20px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;}
 .page-title{font-size:16px;font-weight:700;}
 .page-sub{font-size:10px;opacity:.5;margin-top:2px;}
-
 .tabs{background:#16213e;display:flex;padding:0 20px;border-bottom:2px solid #0f3460;}
 .tab{padding:10px 22px;font-size:12px;font-weight:600;color:rgba(255,255,255,.45);cursor:pointer;border-bottom:3px solid transparent;margin-bottom:-2px;transition:all .15s;letter-spacing:.3px;}
 .tab.active{color:white;border-bottom-color:#4FC3F7;}
 .tab:hover:not(.active){color:rgba(255,255,255,.75);}
-
-.stage-bar{display:flex;background:white;border-bottom:1px solid #e0e0e0;padding:0 20px;}
+.stage-bar{display:flex;background:white;border-bottom:1px solid #e0e0e0;padding:0 20px;flex-wrap:wrap;}
 .stage-count{display:flex;align-items:center;gap:8px;padding:8px 18px;border-right:1px solid #eee;cursor:pointer;transition:background .15s;}
 .stage-count:last-child{border-right:none;}
 .stage-count:hover{background:#f5f7fa;}
 .sc-dot{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
 .sc-label{font-size:9px;color:#999;text-transform:uppercase;letter-spacing:.5px;line-height:1;}
 .sc-num{font-size:16px;font-weight:800;line-height:1;}
-
 .toolbar{background:white;border-bottom:1px solid #ddd;padding:8px 16px;display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
 .btn{padding:6px 14px;border:1px solid #ccc;border-radius:4px;background:white;cursor:pointer;font-size:11px;font-family:inherit;transition:background .15s;white-space:nowrap;}
 .btn:hover{background:#f0f0f0;}
 .btn-primary{background:#0f3460;color:white;border-color:#0f3460;}
 .btn-primary:hover{background:#0a2447;}
 .btn-sm{padding:3px 10px;font-size:10px;}
-
+.view-toggle{margin-left:auto;display:flex;gap:0;border:1px solid #ccc;border-radius:4px;overflow:hidden;}
+.view-btn{padding:5px 13px;border:none;border-right:1px solid #ccc;background:white;cursor:pointer;font-size:11px;font-family:inherit;transition:all .15s;white-space:nowrap;}
+.view-btn:last-child{border-right:none;}
+.view-btn.active{background:#0f3460;color:white;}
+.view-btn:hover:not(.active){background:#f0f0f0;}
 .board-wrap{padding:16px;overflow-x:auto;}
 .board{min-width:1000px;}
-
-/* ── GRID HEADER ── */
 .grid-header{display:grid;background:#f4f5f7;border:1px solid #d0d4da;border-radius:6px 6px 0 0;border-bottom:2px solid #d0d4da;}
 .gh-cell{padding:10px 12px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#888;border-right:1px solid #dde0e5;}
 .gh-cell:last-child{border-right:none;}
@@ -44,8 +42,6 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#eef0f3;color:#333;font-
 .gh-stage:hover{filter:brightness(.95);}
 .stage-pill{font-size:9px;font-weight:700;padding:3px 8px;border-radius:10px;white-space:nowrap;}
 .stage-cnt{font-size:11px;font-weight:800;}
-
-/* ── OKR SECTION HEADER ── */
 .okr-section{border:1px solid #d0d4da;border-top:none;background:white;}
 .okr-section:last-of-type{border-radius:0 0 6px 6px;}
 .okr-header{display:flex;align-items:center;gap:10px;padding:9px 14px;background:#FFFBEA;border-bottom:1px solid #F5E9B0;cursor:default;}
@@ -60,18 +56,14 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#eef0f3;color:#333;font-
 .act-btn:hover{background:rgba(0,0,0,.07);color:#555;}
 .act-del:hover{color:#C62828;}
 .act-edit:hover{color:#0f3460;}
-
-/* ── PALANCA ROWS ── */
 .init-row{display:grid;border-bottom:1px solid #edf0f3;transition:background .1s;}
 .init-row:last-child{border-bottom:none;}
 .init-row:hover{background:#f8f9fb;}
 .init-row:hover .row-acts{opacity:1!important;}
 .sub-row{background:#fafcff;}
 .sub-row:hover{background:#f0f6ff;}
-
 .ir-okr{padding:8px 8px;border-right:1px solid #edf0f3;display:flex;align-items:flex-start;overflow:hidden;}
 .okr-tag{font-size:9px;padding:2px 7px;border-radius:10px;background:#FFF9C4;color:#795000;font-weight:700;white-space:nowrap;}
-
 .ir-name{padding:8px 10px 8px 10px;display:flex;align-items:flex-start;gap:5px;border-right:1px solid #edf0f3;min-width:0;}
 .ir-name.sub-indent{padding-left:26px;}
 .expand-btn{background:none;border:none;cursor:pointer;font-size:9px;color:#bbb;padding:2px 4px;flex-shrink:0;transition:transform .15s;line-height:1;margin-top:2px;}
@@ -79,10 +71,8 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#eef0f3;color:#333;font-
 .name-text{font-size:12px;font-weight:600;flex:1;min-width:0;line-height:1.45;word-break:break-word;}
 .sub-name-text{font-size:11px;color:#555;flex:1;min-width:0;line-height:1.45;word-break:break-word;}
 .row-acts{display:flex;gap:2px;opacity:0;transition:opacity .15s;flex-shrink:0;margin-top:1px;}
-
 .ir-resp{padding:8px 8px;border-right:1px solid #edf0f3;display:flex;align-items:flex-start;overflow:hidden;}
 .resp-txt{font-size:10px;color:#555;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-
 .ir-stage{padding:5px 5px;border-right:1px solid #edf0f3;display:flex;align-items:center;justify-content:center;}
 .ir-stage:last-child{border-right:none;}
 .sc-active{display:flex;flex-direction:column;align-items:center;gap:2px;padding:5px 7px;border-radius:5px;width:100%;cursor:pointer;transition:filter .15s;}
@@ -91,15 +81,11 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#eef0f3;color:#333;font-
 .sc-dates{font-size:8px;color:#666;text-align:center;line-height:1.35;}
 .sc-done{color:#A5D6A7;font-size:13px;text-align:center;line-height:1;}
 .sc-pending{width:7px;height:7px;border-radius:50%;background:#e8e8e8;margin:auto;}
-
 .add-palanca-wrap{padding:5px 14px;background:#FFFDF0;border-top:1px dashed #F5E9B0;}
 .add-sub-wrap{padding:5px 12px 5px 28px;border-bottom:1px solid #f0f2f5;background:#fafcff;}
 .add-sub-btn{background:none;border:1px dashed #d0d4da;border-radius:3px;padding:3px 12px;font-size:10px;color:#bbb;cursor:pointer;font-family:inherit;transition:all .15s;}
 .add-sub-btn:hover{border-color:#999;color:#666;background:#f0f2f5;}
-
 .no-items{background:white;border:1px solid #d0d4da;border-top:none;border-radius:0 0 6px 6px;padding:50px 20px;text-align:center;color:#bbb;font-size:12px;}
-
-/* ── SIDE PANEL ── */
 .sp-overlay{display:none;position:fixed;inset:0;z-index:299;background:rgba(0,0,0,.1);}
 .sp-overlay.open{display:block;}
 .side-panel{position:fixed;top:0;right:-440px;width:420px;height:100%;background:white;box-shadow:-4px 0 24px rgba(0,0,0,.14);z-index:300;transition:right .25s ease;display:flex;flex-direction:column;}
@@ -116,16 +102,15 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#eef0f3;color:#333;font-
 .sp-card-meta{font-size:10px;color:#888;display:flex;flex-wrap:wrap;gap:8px;}
 .sp-card-parent{font-size:9px;color:#bbb;margin-bottom:3px;}
 .sp-empty{text-align:center;padding:50px 20px;color:#ccc;font-size:12px;}
-
-/* ── MODAL ── */
 .modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.45);z-index:400;align-items:center;justify-content:center;}
 .modal-bg.open{display:flex;}
-.modal{background:white;border-radius:8px;padding:24px;width:500px;max-width:94vw;box-shadow:0 8px 32px rgba(0,0,0,.2);max-height:92vh;overflow-y:auto;}
+.modal{background:white;border-radius:8px;padding:24px;width:520px;max-width:95vw;box-shadow:0 8px 32px rgba(0,0,0,.2);max-height:92vh;overflow-y:auto;}
 .modal-badge{display:inline-block;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.5px;padding:2px 8px;border-radius:8px;margin-bottom:8px;}
 .badge-okr{background:#FFF9C4;color:#795000;}
 .badge-add{background:#E8F4FF;color:#0f3460;}
 .badge-edit{background:#FFF9C4;color:#795000;}
 .badge-sub{background:#F3E5F5;color:#5E35B1;}
+.badge-inc{background:#FCE4EC;color:#880E4F;}
 .modal h3{font-size:14px;color:#1a1a2e;margin-bottom:14px;}
 .field{margin-bottom:11px;}
 .field label{font-size:10px;font-weight:600;color:#555;display:block;margin-bottom:4px;}
@@ -135,19 +120,14 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#eef0f3;color:#333;font-
 .field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
 .modal-ft{margin-top:16px;display:flex;gap:8px;justify-content:flex-end;align-items:center;}
 .modal-hint{font-size:9px;color:#ccc;margin-right:auto;}
-
 .toast{position:fixed;bottom:20px;right:20px;background:#1a1a2e;color:white;padding:8px 16px;border-radius:6px;font-size:11px;box-shadow:0 4px 12px rgba(0,0,0,.25);opacity:0;transform:translateY(8px);transition:opacity .2s,transform .2s;pointer-events:none;z-index:500;}
 .toast.show{opacity:1;transform:translateY(0);}
-
-/* ── DRAG & DROP ── */
 .sc-active[draggable="true"]{cursor:grab;}
 .sc-active[draggable="true"]:active{cursor:grabbing;}
 .dragging .sc-active{opacity:.35;}
 .ir-stage.drag-over{background:#e8f0fe!important;outline:2px dashed #4A90D9;outline-offset:-3px;border-radius:5px;}
 .gh-stage.drag-over{outline:2px dashed currentColor;outline-offset:-3px;filter:brightness(.88)!important;}
 .drag-hint{font-size:9px;color:#bbb;padding:4px 16px;background:white;border-bottom:1px solid #eee;text-align:right;}
-
-/* ── DETENIDO ── */
 .gh-detenido-col{padding:6px 5px;text-align:center;cursor:pointer;border-right:1px solid #dde0e5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;transition:filter .15s;background:#FFF5F5;}
 .gh-detenido-col:last-child{border-right:none;}
 .gh-detenido-col:hover{filter:brightness(.95);}
@@ -155,17 +135,53 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#eef0f3;color:#333;font-
 .det-col-cnt{font-size:11px;font-weight:800;color:#B71C1C;}
 .ir-detenido{padding:5px 5px;border-right:1px solid #edf0f3;display:flex;align-items:center;justify-content:center;}
 .ir-detenido:last-child{border-right:none;}
-.det-dot{width:9px;height:9px;border-radius:50%;background:#EF9A9A;margin:auto;cursor:pointer;}
-.det-dot:hover{background:#B71C1C;}
 .sc-stop{display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 6px;border-radius:5px;width:100%;cursor:pointer;background:#FFEBEE;}
 .sc-stop:hover{filter:brightness(.95);}
 .sc-stop-lbl{font-size:8.5px;font-weight:700;color:#B71C1C;}
 .sc-stop-reason{font-size:8px;color:#C62828;text-align:center;line-height:1.3;font-style:italic;}
-
-/* ── STOP MODAL ── */
 .stop-modal{background:white;border-radius:8px;padding:24px;width:440px;max-width:94vw;box-shadow:0 8px 32px rgba(0,0,0,.25);}
 .stop-modal h3{font-size:14px;color:#B71C1C;margin-bottom:6px;}
 .stop-modal p{font-size:11px;color:#888;margin-bottom:14px;}
+
+/* ── INCIDENCIAS ── */
+.inc-group{border:1px solid #d0d4da;border-top:none;background:white;}
+.inc-group:last-of-type{border-radius:0 0 6px 6px;}
+.inc-group-hdr{display:flex;align-items:center;gap:10px;padding:9px 14px;cursor:pointer;border-bottom:1px solid #e0e4ea;}
+.inc-group-hdr:hover .okr-acts{opacity:1;}
+.inc-group-hdr-compras{background:#EFF8FF;}
+.inc-group-hdr-ventas{background:#FDF4FF;}
+.inc-ln-badge{font-size:9px;font-weight:800;padding:3px 9px;border-radius:10px;white-space:nowrap;flex-shrink:0;}
+.inc-ln-compras{background:#BBDEFB;color:#1565C0;}
+.inc-ln-ventas{background:#E1BEE7;color:#6A1B9A;}
+.inc-subtxt{font-size:9px;color:#aaa;line-height:1.4;margin-top:2px;}
+
+/* ── GANTT ── */
+.gantt-container{background:white;border:1px solid #d0d4da;border-radius:6px;overflow:hidden;}
+.gantt-hdr{display:flex;background:#f4f5f7;border-bottom:2px solid #d0d4da;position:sticky;top:0;z-index:10;}
+.gantt-label-col{width:300px;min-width:300px;flex-shrink:0;padding:8px 12px;font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;color:#888;border-right:1px solid #dde0e5;}
+.gantt-months{flex:1;display:flex;min-width:620px;}
+.gantt-month{flex:1;text-align:center;padding:8px 2px;font-size:9px;font-weight:700;text-transform:uppercase;color:#888;border-right:1px solid #eee;user-select:none;}
+.gantt-month:last-child{border-right:none;}
+.gantt-row{display:flex;border-bottom:1px solid #f0f2f5;min-height:34px;}
+.gantt-row:hover{background:#f8f9fb!important;}
+.gantt-rlabel{width:300px;min-width:300px;flex-shrink:0;padding:6px 10px;border-right:1px solid #eee;display:flex;align-items:center;gap:5px;overflow:hidden;cursor:pointer;}
+.gantt-rtimeline{flex:1;position:relative;min-width:620px;overflow:hidden;}
+.gantt-bar{position:absolute;height:14px;top:50%;transform:translateY(-50%);border-radius:3px;min-width:3px;cursor:default;z-index:2;}
+.gantt-today{position:absolute;top:0;bottom:0;width:2px;background:rgba(230,81,0,.45);z-index:5;pointer-events:none;}
+.gantt-mline{position:absolute;top:0;bottom:0;width:1px;background:#efefef;z-index:1;pointer-events:none;}
+.gantt-nodate{font-size:9px;color:#ccc;font-style:italic;line-height:34px;padding-left:6px;}
+/* OKR row */
+.grow-okr{background:#FFFBEA!important;}
+.grow-okr .gantt-rlabel{font-weight:700;color:#4A3000;font-size:11px;}
+/* Palanca */
+.grow-pal .gantt-rlabel{font-weight:600;color:#333;font-size:11px;padding-left:24px;}
+/* Sub */
+.grow-sub .gantt-rlabel{color:#555;font-size:10px;padding-left:44px;cursor:default;}
+/* Inc group */
+.grow-grp{background:#F8F4FF!important;}
+.grow-grp .gantt-rlabel{font-weight:700;font-size:11px;}
+/* Inc row */
+.grow-inc .gantt-rlabel{font-size:11px;font-weight:600;color:#333;}
 
 @media print{.toolbar,.side-panel,.sp-overlay,.modal-bg,.toast,.row-acts,.add-sub-btn,.expand-btn,.okr-acts,.drag-hint{display:none!important;} body{background:white;}}
 </style>
@@ -183,18 +199,20 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#eef0f3;color:#333;font-
 <div class="tabs">
   <div class="tab active" onclick="switchTab('compras')">🛒 Compras</div>
   <div class="tab" onclick="switchTab('ventas')">🚗 Ventas</div>
+  <div class="tab" onclick="switchTab('incidencias')">⚠️ Incidencias</div>
 </div>
 
 <div class="stage-bar" id="stage_bar"></div>
 
-<div class="toolbar">
-  <button class="btn btn-primary" onclick="openModalAddOkr()">+ Nuevo OKR</button>
-  <button class="btn" onclick="openModalAddPalanca(null)">+ Nueva palanca</button>
-  <button class="btn" onclick="toggleAll()">⊞ Expandir todo</button>
-  <button class="btn" onclick="window.print()">🖨 Imprimir</button>
+<div class="toolbar" id="toolbar">
+  <div id="toolbar_btns" style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;"></div>
+  <div class="view-toggle">
+    <button class="view-btn active" id="vbtn_board" onclick="setView('board')">☰ Tablero</button>
+    <button class="view-btn" id="vbtn_gantt" onclick="setView('gantt')">📊 Gantt</button>
+  </div>
 </div>
 
-<div class="drag-hint">✥ Arrastra la caja de color hacia otra columna de etapa para moverla</div>
+<div class="drag-hint" id="drag_hint">✥ Arrastra la caja de color hacia otra columna de etapa para moverla</div>
 
 <div class="board-wrap">
   <div id="board"></div>
@@ -213,7 +231,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#eef0f3;color:#333;font-
   <div class="sp-body" id="sp_body"></div>
 </div>
 
-<!-- MODAL -->
+<!-- MODAL PRINCIPAL -->
 <div class="modal-bg" id="modal_bg">
   <div class="modal">
     <div class="modal-badge badge-add" id="m_badge">+ Nuevo</div>
@@ -227,7 +245,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#eef0f3;color:#333;font-
       </div>
       <div class="field">
         <label>Nombre del OKR <span style="color:#E53935">*</span></label>
-        <input type="text" id="f_okr_name" placeholder="ej: Conversión Lead → Lead SQL / Oportunidad Compra">
+        <input type="text" id="f_okr_name" placeholder="ej: Conversión Lead → Lead SQL">
       </div>
       <div class="field-row">
         <div class="field"><label>Meta</label><input type="text" id="f_okr_meta" placeholder="ej: 3.0%"></div>
@@ -237,18 +255,11 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#eef0f3;color:#333;font-
         <label>Responsable OKR</label>
         <select id="f_okr_resp">
           <option value="">— Selecciona responsable —</option>
-          <option>Andres Korenblit</option>
-          <option>Claudia Heredia</option>
-          <option>Daniela Godoy</option>
-          <option>Diego Tomas Villegas Gutierrez</option>
-          <option>Felipe Esteban Arroyo Ceballos</option>
-          <option>Gonzalo Cortes</option>
-          <option>Ivan Balaguera</option>
-          <option>Jose Figueroa</option>
-          <option>Kelvin Noriega Algarin</option>
-          <option>Matías Felipe Romero Diez</option>
-          <option>Maryorin Vivas Macedo</option>
-          <option>Yerko Pino</option>
+          <option>Andres Korenblit</option><option>Claudia Heredia</option><option>Daniela Godoy</option>
+          <option>Diego Tomas Villegas Gutierrez</option><option>Felipe Esteban Arroyo Ceballos</option>
+          <option>Gonzalo Cortes</option><option>Ivan Balaguera</option><option>Jose Figueroa</option>
+          <option>Kelvin Noriega Algarin</option><option>Matías Felipe Romero Diez</option>
+          <option>Maryorin Vivas Macedo</option><option>Yerko Pino</option>
         </select>
       </div>
     </div>
@@ -257,9 +268,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#eef0f3;color:#333;font-
     <div id="palanca_fields">
       <div class="field" id="f_okr_sel_wrap">
         <label>OKR al que pertenece <span style="color:#E53935">*</span></label>
-        <select id="f_okr_sel">
-          <option value="">— Selecciona OKR —</option>
-        </select>
+        <select id="f_okr_sel"><option value="">— Selecciona OKR —</option></select>
       </div>
       <div class="field">
         <label>Nombre <span style="color:#E53935">*</span></label>
@@ -269,18 +278,11 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#eef0f3;color:#333;font-
         <label>Responsable <span style="color:#E53935">*</span></label>
         <select id="f_resp" onchange="onRespChange()">
           <option value="">— Selecciona responsable —</option>
-          <option>Andres Korenblit</option>
-          <option>Claudia Heredia</option>
-          <option>Daniela Godoy</option>
-          <option>Diego Tomas Villegas Gutierrez</option>
-          <option>Felipe Esteban Arroyo Ceballos</option>
-          <option>Gonzalo Cortes</option>
-          <option>Ivan Balaguera</option>
-          <option>Jose Figueroa</option>
-          <option>Kelvin Noriega Algarin</option>
-          <option>Matías Felipe Romero Diez</option>
-          <option>Maryorin Vivas Macedo</option>
-          <option>Yerko Pino</option>
+          <option>Andres Korenblit</option><option>Claudia Heredia</option><option>Daniela Godoy</option>
+          <option>Diego Tomas Villegas Gutierrez</option><option>Felipe Esteban Arroyo Ceballos</option>
+          <option>Gonzalo Cortes</option><option>Ivan Balaguera</option><option>Jose Figueroa</option>
+          <option>Kelvin Noriega Algarin</option><option>Matías Felipe Romero Diez</option>
+          <option>Maryorin Vivas Macedo</option><option>Yerko Pino</option>
           <option value="__otro__">✏ Otro...</option>
         </select>
       </div>
@@ -292,17 +294,83 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#eef0f3;color:#333;font-
         <label>Etapa actual <span style="color:#E53935">*</span></label>
         <select id="f_stage">
           <option value="">— Selecciona etapa —</option>
-          <option value="porhacer">Por hacer</option>
-          <option value="definicion">En definición</option>
-          <option value="ejecucion">En ejecución</option>
-          <option value="monitoreo">Monitoreo</option>
-          <option value="finalizado">Finalizado</option>
-          <option value="detenido">🚫 Detenido</option>
+          <option value="porhacer">Por hacer</option><option value="definicion">En definición</option>
+          <option value="ejecucion">En ejecución</option><option value="monitoreo">Monitoreo</option>
+          <option value="finalizado">Finalizado</option><option value="detenido">🚫 Detenido</option>
         </select>
       </div>
       <div class="field-row">
         <div class="field"><label>Fecha inicio</label><input type="date" id="f_start"></div>
         <div class="field"><label>Fecha fin</label><input type="date" id="f_end"></div>
+      </div>
+    </div>
+
+    <!-- Incidencia fields -->
+    <div id="incidencia_fields">
+      <div class="field-row">
+        <div class="field">
+          <label>Línea de negocio <span style="color:#E53935">*</span></label>
+          <select id="f_inc_linea">
+            <option value="">— Selecciona —</option>
+            <option value="compras">🛒 Compras</option>
+            <option value="ventas">🚗 Ventas</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Etapa <span style="color:#E53935">*</span></label>
+          <select id="f_inc_stage">
+            <option value="">— Selecciona —</option>
+            <option value="porhacer">Por hacer</option><option value="definicion">En definición</option>
+            <option value="ejecucion">En ejecución</option><option value="monitoreo">Monitoreo</option>
+            <option value="finalizado">Finalizado</option><option value="detenido">🚫 Detenido</option>
+          </select>
+        </div>
+      </div>
+      <div class="field">
+        <label>Título de la incidencia <span style="color:#E53935">*</span></label>
+        <input type="text" id="f_inc_titulo" placeholder="ej: SLA de primer contacto superado en leads de alta prioridad">
+      </div>
+      <div class="field-row">
+        <div class="field">
+          <label>Levantada por <span style="color:#E53935">*</span></label>
+          <select id="f_inc_levanta" onchange="onIncLevChange('levanta')">
+            <option value="">— Selecciona —</option>
+            <option>Andres Korenblit</option><option>Claudia Heredia</option><option>Daniela Godoy</option>
+            <option>Diego Tomas Villegas Gutierrez</option><option>Felipe Esteban Arroyo Ceballos</option>
+            <option>Gonzalo Cortes</option><option>Ivan Balaguera</option><option>Jose Figueroa</option>
+            <option>Kelvin Noriega Algarin</option><option>Matías Felipe Romero Diez</option>
+            <option>Maryorin Vivas Macedo</option><option>Yerko Pino</option>
+            <option value="__otro__">✏ Otro...</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Asignada a / Equipo <span style="color:#E53935">*</span></label>
+          <select id="f_inc_asigna" onchange="onIncLevChange('asigna')">
+            <option value="">— Selecciona —</option>
+            <option>Andres Korenblit</option><option>Claudia Heredia</option><option>Daniela Godoy</option>
+            <option>Diego Tomas Villegas Gutierrez</option><option>Felipe Esteban Arroyo Ceballos</option>
+            <option>Gonzalo Cortes</option><option>Ivan Balaguera</option><option>Jose Figueroa</option>
+            <option>Kelvin Noriega Algarin</option><option>Matías Felipe Romero Diez</option>
+            <option>Maryorin Vivas Macedo</option><option>Yerko Pino</option>
+            <option value="__otro__">✏ Otro...</option>
+          </select>
+        </div>
+      </div>
+      <div class="field" id="f_inc_levanta_otro_wrap" style="display:none">
+        <label>Nombre de quién levanta</label>
+        <input type="text" id="f_inc_levanta_otro" placeholder="Nombre completo">
+      </div>
+      <div class="field" id="f_inc_asigna_otro_wrap" style="display:none">
+        <label>Nombre asignado / equipo</label>
+        <input type="text" id="f_inc_asigna_otro" placeholder="Nombre o equipo">
+      </div>
+      <div class="field">
+        <label>Impacta en (palanca o iniciativa)</label>
+        <input type="text" id="f_inc_impacta" placeholder="ej: C1.2 – Tiempo de Primer Contacto">
+      </div>
+      <div class="field-row">
+        <div class="field"><label>Fecha inicio</label><input type="date" id="f_inc_start"></div>
+        <div class="field"><label>Fecha cierre estimado</label><input type="date" id="f_inc_end"></div>
       </div>
     </div>
 
@@ -322,7 +390,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#eef0f3;color:#333;font-
     <p>Este elemento pasará a <strong>Detenido</strong>. El motivo es obligatorio y quedará visible en la tarjeta.</p>
     <div class="field">
       <label>Motivo / observaciones <span style="color:#E53935">*</span></label>
-      <textarea id="f_stop_reason" placeholder="ej: Pendiente de aprobación presupuestaria, bloqueado por dependencia externa…" style="height:90px;resize:vertical;width:100%;border:1px solid #ddd;border-radius:4px;padding:8px;font-size:12px;font-family:inherit;outline:none;"></textarea>
+      <textarea id="f_stop_reason" placeholder="ej: Pendiente de aprobación presupuestaria…" style="height:90px;resize:vertical;width:100%;border:1px solid #ddd;border-radius:4px;padding:8px;font-size:12px;font-family:inherit;outline:none;"></textarea>
     </div>
     <div class="modal-ft">
       <button class="btn" onclick="cancelStop()">Cancelar</button>
@@ -334,272 +402,397 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#eef0f3;color:#333;font-
 <div id="toast" class="toast"></div>
 
 <script>
-const STAGES = [
-  { id:'porhacer',   label:'Por hacer',     color:'#6D4C41', bg:'#EFEBE9' },
-  { id:'definicion', label:'En definición', color:'#1565C0', bg:'#BBDEFB' },
-  { id:'ejecucion',  label:'En ejecución',  color:'#E65100', bg:'#FFE0B2' },
-  { id:'monitoreo',  label:'Monitoreo',     color:'#00695C', bg:'#B2DFDB' },
-  { id:'finalizado', label:'Finalizado',    color:'#2E7D32', bg:'#C8E6C9' },
+const STAGES=[
+  {id:'porhacer',  label:'Por hacer',    color:'#6D4C41',bg:'#EFEBE9'},
+  {id:'definicion',label:'En definición',color:'#1565C0',bg:'#BBDEFB'},
+  {id:'ejecucion', label:'En ejecución', color:'#E65100',bg:'#FFE0B2'},
+  {id:'monitoreo', label:'Monitoreo',    color:'#00695C',bg:'#B2DFDB'},
+  {id:'finalizado',label:'Finalizado',   color:'#2E7D32',bg:'#C8E6C9'},
 ];
-const STAGE_STOP = { id:'detenido', label:'Detenido', color:'#B71C1C', bg:'#FFEBEE' };
-let detenidoVisible = false;
+const STAGE_STOP={id:'detenido',label:'Detenido',color:'#B71C1C',bg:'#FFEBEE'};
+const USERS=['Andres Korenblit','Claudia Heredia','Daniela Godoy','Diego Tomas Villegas Gutierrez',
+  'Felipe Esteban Arroyo Ceballos','Gonzalo Cortes','Ivan Balaguera','Jose Figueroa',
+  'Kelvin Noriega Algarin','Matías Felipe Romero Diez','Maryorin Vivas Macedo','Yerko Pino'];
 
-const USERS = [
-  'Andres Korenblit','Claudia Heredia','Daniela Godoy','Diego Tomas Villegas Gutierrez',
-  'Felipe Esteban Arroyo Ceballos','Gonzalo Cortes','Ivan Balaguera',
-  'Jose Figueroa','Kelvin Noriega Algarin','Matías Felipe Romero Diez',
-  'Maryorin Vivas Macedo','Yerko Pino'
-];
+const MONTHS=['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'];
+const MONTH_DAYS=[31,28,31,30,31,30,31,31,30,31,30,31];
+const TOTAL_DAYS=365;
 
-const KEY = 'tablero_iniciativas_2026_v3';
+const KEY='tablero_iniciativas_2026_v4';
 
-// data[tab] = [ { id, code, name, meta, actual, responsible, expanded, palancas:[ { id, name, responsible, stage, startDate, endDate, expanded, subtasks:[] } ] } ]
-let currentTab = 'compras';
-let data = { compras:[], ventas:[] };
-let allExpanded = false;
+let currentTab='compras';
+let currentView='board';
+let detenidoVisible=false;
+let allExpanded=false;
+let ganttCollapsed={};
 
-// _mode: 'add_okr' | 'edit_okr' | 'add_palanca' | 'edit_palanca' | 'add_sub' | 'edit_sub'
-let _mode = 'add_palanca';
-let _okrId = null;   // target OKR id
-let _palId = null;   // target palanca id
-let _itemId = null;  // item being edited
+let data={compras:[],ventas:[],incidencias:[]};
+let _mode='add_palanca';
+let _okrId=null,_palId=null,_itemId=null;
 
-function uid(){ return '_'+Math.random().toString(36).slice(2,9); }
-function fmtDate(d){ if(!d) return ''; const [,m,day]=d.split('-'); return parseInt(day)+' '+['Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic'][parseInt(m)-1]; }
-function shortName(n){ if(!n) return '—'; const p=n.trim().split(' '); return p.length>=2?p[0]+' '+p[p.length-1][0]+'.':n; }
-function stageIdx(s){ return STAGES.findIndex(x=>x.id===s); }
-function escH(t){ return (t||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+// ── UTILS ──
+function uid(){return '_'+Math.random().toString(36).slice(2,9);}
+function fmtDate(d){if(!d)return'';const[,m,day]=d.split('-');return parseInt(day)+' '+MONTHS[parseInt(m)-1];}
+function shortName(n){if(!n)return'—';const p=n.trim().split(' ');return p.length>=2?p[0]+' '+p[p.length-1][0]+'.':n;}
+function stageIdx(s){return STAGES.findIndex(x=>x.id===s);}
+function escH(t){return(t||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+function getOkr(id){return data[currentTab].find(x=>x.id===id);}
+function getPalanca(oid,pid){const o=getOkr(oid);return o?o.palancas.find(p=>p.id===pid):null;}
 
-function getOkr(okrId){ return data[currentTab].find(x=>x.id===okrId); }
-function getPalanca(okrId, palId){ const o=getOkr(okrId); return o?o.palancas.find(p=>p.id===palId):null; }
-
-function countStage(stId, tab){
+function countStage(stId,tab){
+  if(tab==='incidencias') return data.incidencias.filter(i=>i.stage===stId).length;
   let n=0;
-  data[tab].forEach(okr=>{ okr.palancas.forEach(p=>{ if(p.stage===stId) n++; p.subtasks.forEach(s=>{ if(s.stage===stId) n++; }); }); });
+  (data[tab]||[]).forEach(okr=>{okr.palancas.forEach(p=>{if(p.stage===stId)n++;p.subtasks.forEach(s=>{if(s.stage===stId)n++;});});});
   return n;
 }
-function toggleDetenido(){ detenidoVisible=!detenidoVisible; renderBoard(); }
 
-/* ── RENDER BOARD ── */
+// ── GANTT HELPERS ──
+function dayOfYear(ds){
+  if(!ds)return null;
+  const[y,m,d]=ds.split('-').map(Number);
+  if(y!==2026)return null;
+  let n=0;for(let i=0;i<m-1;i++)n+=MONTH_DAYS[i];
+  return n+d;
+}
+function d2pct(ds){
+  const day=dayOfYear(ds);
+  if(day===null)return null;
+  return Math.max(0,Math.min(100,((day-1)/TOTAL_DAYS)*100));
+}
+function monthLines(){
+  let h='',cum=0;
+  for(let i=0;i<11;i++){
+    cum+=MONTH_DAYS[i];
+    const pct=(cum/TOTAL_DAYS)*100;
+    h+=`<div class="gantt-mline" style="left:${pct}%"></div>`;
+  }
+  return h;
+}
+function todayPct(){return d2pct('2026-05-27');}
+function ganttBar(sd,ed,stage){
+  const sp=d2pct(sd),ep=d2pct(ed);
+  if(sp===null&&ep===null)return`<span class="gantt-nodate">Sin fechas</span>`;
+  const st=STAGES.find(s=>s.id===stage)||STAGE_STOP;
+  const L=sp!==null?sp:(ep||0);
+  const R=ep!==null?ep:(sp||0);
+  const W=Math.max(0.5,R-L);
+  return`<div class="gantt-bar" style="left:${L}%;width:${W}%;background:${st.color};opacity:.82;" title="${sd||'?'} → ${ed||'?'} · ${st.label}"></div>`;
+}
+function ganttTimeline(sd,ed,stage){
+  return`<div class="gantt-rtimeline">${monthLines()}<div class="gantt-today" style="left:${todayPct()}%"></div>${ganttBar(sd,ed,stage)}</div>`;
+}
+
+// ── RENDER DISPATCH ──
 function renderBoard(){
-  const tab=currentTab, isC=tab==='compras';
-  const detW = detenidoVisible ? '1fr' : '38px';
-  const cols = isC ? `72px 1fr 108px repeat(5,1fr) ${detW}` : `1fr 108px repeat(5,1fr) ${detW}`;
-  const detCnt = countStage('detenido', tab);
+  if(currentView==='gantt'){renderGantt();return;}
+  if(currentTab==='incidencias'){renderIncidencias();return;}
+  renderKanban();
+}
 
+// ── RENDER KANBAN (existing logic) ──
+function renderKanban(){
+  const tab=currentTab,isC=tab==='compras';
+  const detW=detenidoVisible?'1fr':'38px';
+  const cols=isC?`72px 1fr 108px repeat(5,1fr) ${detW}`:`1fr 108px repeat(5,1fr) ${detW}`;
+  const detCnt=countStage('detenido',tab);
   let h='';
-
-  // Grid header
   h+=`<div class="grid-header" style="display:grid;grid-template-columns:${cols}">`;
-  if(isC) h+=`<div class="gh-cell">OKR</div>`;
-  h+=`<div class="gh-cell">Palanca / Iniciativa</div>`;
-  h+=`<div class="gh-cell">Responsable</div>`;
+  if(isC)h+=`<div class="gh-cell">OKR</div>`;
+  h+=`<div class="gh-cell">Palanca / Iniciativa</div><div class="gh-cell">Responsable</div>`;
   STAGES.forEach(st=>{
     const n=countStage(st.id,tab);
-    h+=`<div class="gh-stage" id="gh-${st.id}" style="background:${st.bg};color:${st.color}"
-      onclick="openPanel('${st.id}')"
-      ondragover="onDragOver(event,'${st.id}')"
-      ondragleave="onDragLeave(event)"
-      ondrop="onDrop(event,'${st.id}')">
+    h+=`<div class="gh-stage" id="gh-${st.id}" style="background:${st.bg};color:${st.color}" onclick="openPanel('${st.id}')" ondragover="onDragOver(event,'${st.id}')" ondragleave="onDragLeave(event)" ondrop="onDrop(event,'${st.id}')">
       <span class="stage-pill" style="background:${st.color};color:white">${st.label}</span>
-      <span class="stage-cnt" style="color:${st.color}">${n}</span>
-    </div>`;
+      <span class="stage-cnt" style="color:${st.color}">${n}</span></div>`;
   });
-  // Detenido column header
-  h+=`<div class="gh-detenido-col" id="gh-detenido"
-    onclick="toggleDetenido()"
-    ondragover="onDragOver(event,'detenido')"
-    ondragleave="onDragLeave(event)"
-    ondrop="onDrop(event,'detenido')"
-    title="${detenidoVisible?'Colapsar columna Detenido':'Expandir columna Detenido'}">
-    ${detenidoVisible
-      ? `<span class="stage-pill" style="background:#B71C1C;color:white">🚫 Detenido</span><span class="det-col-cnt">${detCnt}</span>`
-      : `<span class="det-col-collapsed">🚫 ${detCnt>0?detCnt:''}</span>`
-    }
-  </div>`;
-  h+=`</div>`;
-
+  h+=`<div class="gh-detenido-col" id="gh-detenido" onclick="toggleDetenido()" ondragover="onDragOver(event,'detenido')" ondragleave="onDragLeave(event)" ondrop="onDrop(event,'detenido')" title="${detenidoVisible?'Colapsar':'Expandir'} columna Detenido">
+    ${detenidoVisible?`<span class="stage-pill" style="background:#B71C1C;color:white">🚫 Detenido</span><span class="det-col-cnt">${detCnt}</span>`:`<span class="det-col-collapsed">🚫 ${detCnt>0?detCnt:''}</span>`}
+  </div></div>`;
   if(!data[tab].length){
     h+=`<div class="no-items">Sin OKRs aún.<br><br><button class="btn btn-primary btn-sm" onclick="openModalAddOkr()">+ Agregar primer OKR</button></div>`;
   } else {
-    data[tab].forEach(okr=>{ h+=renderOkrSection(okr,cols,isC); });
+    data[tab].forEach(okr=>{h+=renderOkrSection(okr,cols,isC);});
     h+=`<div style="height:0;border:1px solid #d0d4da;border-top:none;border-radius:0 0 6px 6px;"></div>`;
   }
-
   document.getElementById('board').innerHTML=h;
   renderStageBar();
 }
 
-function renderOkrSection(okr, cols, isC){
-  let h=`<div class="okr-section">`;
-
-  // OKR header bar
-  h+=`<div class="okr-header" onclick="toggleOkr('${okr.id}')" style="cursor:pointer;">
-    <button class="expand-btn ${okr.expanded!==false?'open':''}" style="color:#795000;margin-top:0;" onclick="event.stopPropagation();toggleOkr('${okr.id}')">▶</button>
-    <span class="okr-code-badge">OKR ${escH(okr.code)}</span>
-    <span class="okr-title">${escH(okr.name)}</span>
-    <span class="okr-kpis">
-      <span>Meta: <strong>${escH(okr.meta||'—')}</strong></span>
-      <span>Actual: <strong>${escH(okr.actual||'—')}</strong></span>
-    </span>
-    <span class="okr-resp">👤 ${escH(okr.responsible||'—')}</span>
-    <div class="okr-acts">
-      <button class="act-btn" onclick="openModalAddPalancaTo('${okr.id}')" title="Agregar palanca" style="color:#0f3460;font-weight:700;">+ Palanca</button>
-      <button class="act-btn act-edit" onclick="openModalEditOkr('${okr.id}')" title="Editar OKR">✏</button>
-      <button class="act-btn act-del" onclick="delOkr('${okr.id}')" title="Eliminar OKR">×</button>
-    </div>
-  </div>`;
-
-  // Palancas (solo si expandido)
-  if(okr.expanded!==false){
-    okr.palancas.forEach(p=>{ h+=renderPalancaRow(p,okr,cols,isC); });
-    h+=`<div class="add-palanca-wrap">
-      <button class="add-sub-btn" onclick="openModalAddPalancaTo('${okr.id}')">+ Agregar palanca a OKR ${escH(okr.code)}</button>
+function renderOkrSection(okr,cols,isC){
+  let h=`<div class="okr-section">
+    <div class="okr-header" onclick="toggleOkr('${okr.id}')" style="cursor:pointer;">
+      <button class="expand-btn ${okr.expanded!==false?'open':''}" style="color:#795000;margin-top:0;" onclick="event.stopPropagation();toggleOkr('${okr.id}')">▶</button>
+      <span class="okr-code-badge">OKR ${escH(okr.code)}</span>
+      <span class="okr-title">${escH(okr.name)}</span>
+      <span class="okr-kpis"><span>Meta: <strong>${escH(okr.meta||'—')}</strong></span><span>Actual: <strong>${escH(okr.actual||'—')}</strong></span></span>
+      <span class="okr-resp">👤 ${escH(okr.responsible||'—')}</span>
+      <div class="okr-acts">
+        <button class="act-btn" onclick="openModalAddPalancaTo('${okr.id}')" style="color:#0f3460;font-weight:700;">+ Palanca</button>
+        <button class="act-btn act-edit" onclick="openModalEditOkr('${okr.id}')">✏</button>
+        <button class="act-btn act-del" onclick="delOkr('${okr.id}')">×</button>
+      </div>
     </div>`;
+  if(okr.expanded!==false){
+    okr.palancas.forEach(p=>{h+=renderPalancaRow(p,okr,cols,isC);});
+    h+=`<div class="add-palanca-wrap"><button class="add-sub-btn" onclick="openModalAddPalancaTo('${okr.id}')">+ Agregar palanca a OKR ${escH(okr.code)}</button></div>`;
   }
-
-  h+=`</div>`;
-  return h;
+  h+=`</div>`;return h;
 }
 
-function renderPalancaRow(p, okr, cols, isC){
+function renderPalancaRow(p,okr,cols,isC){
   const si=stageIdx(p.stage);
-  let h=`<div class="init-block">`;
-
-  h+=`<div class="init-row" style="display:grid;grid-template-columns:${cols}">`;
-
-  if(isC) h+=`<div class="ir-okr"><span class="okr-tag" title="${escH('OKR '+okr.code+': '+okr.name)}">OKR ${escH(okr.code)}</span></div>`;
-
+  let h=`<div class="init-block"><div class="init-row" style="display:grid;grid-template-columns:${cols}">`;
+  if(isC)h+=`<div class="ir-okr"><span class="okr-tag" title="${escH('OKR '+okr.code+': '+okr.name)}">OKR ${escH(okr.code)}</span></div>`;
   h+=`<div class="ir-name">
-    <button class="expand-btn ${p.expanded?'open':''}" onclick="togglePalanca('${okr.id}','${p.id}')" title="Expandir iniciativas">▶</button>
+    <button class="expand-btn ${p.expanded?'open':''}" onclick="togglePalanca('${okr.id}','${p.id}')">▶</button>
     <span class="name-text">${escH(p.name)}</span>
     <div class="row-acts">
-      <button class="act-btn act-edit" onclick="openModalEditPalanca('${okr.id}','${p.id}')" title="Editar">✏</button>
-      <button class="act-btn act-del" onclick="delPalanca('${okr.id}','${p.id}')" title="Eliminar">×</button>
-    </div>
-  </div>`;
-
+      <button class="act-btn act-edit" onclick="openModalEditPalanca('${okr.id}','${p.id}')">✏</button>
+      <button class="act-btn act-del" onclick="delPalanca('${okr.id}','${p.id}')">×</button>
+    </div></div>`;
   h+=`<div class="ir-resp"><span class="resp-txt">${escH(shortName(p.responsible))}</span></div>`;
-
-  const isStop = p.stage==='detenido';
+  const isStop=p.stage==='detenido';
   STAGES.forEach((st,i)=>{
-    h+=`<div class="ir-stage"
-      ondragover="onStageOver(event,'${st.id}')"
-      ondragleave="onStageLeave(event)"
-      ondrop="onStageDrop(event,'${st.id}')">`;
+    h+=`<div class="ir-stage" ondragover="onStageOver(event,'${st.id}')" ondragleave="onStageLeave(event)" ondrop="onStageDrop(event,'${st.id}')">`;
     if(p.stage===st.id){
-      h+=`<div class="sc-active" style="background:${st.bg}"
-        draggable="true"
-        ondragstart="onDragStart(event,'${p.id}','palanca','${okr.id}')"
-        ondragend="onDragEnd(event)"
-        onclick="openModalEditPalanca('${okr.id}','${p.id}')">
+      h+=`<div class="sc-active" style="background:${st.bg}" draggable="true" ondragstart="onDragStart(event,'${p.id}','palanca','${okr.id}')" ondragend="onDragEnd(event)" onclick="openModalEditPalanca('${okr.id}','${p.id}')">
         <span class="sc-active-lbl" style="color:${st.color}">${st.label}</span>
-        <span class="sc-dates">${fmtDate(p.startDate)}${p.endDate?' – '+fmtDate(p.endDate):''}</span>
-      </div>`;
-    } else if(!isStop && si>i){
-      h+=`<span class="sc-done">✓</span>`;
-    } else {
-      h+=`<span class="sc-pending"></span>`;
-    }
+        <span class="sc-dates">${fmtDate(p.startDate)}${p.endDate?' – '+fmtDate(p.endDate):''}</span></div>`;
+    } else if(!isStop&&si>i){h+=`<span class="sc-done">✓</span>`;}
+    else{h+=`<span class="sc-pending"></span>`;}
     h+=`</div>`;
   });
-  // Celda Detenido
-  h+=`<div class="ir-detenido"
-    ondragover="onStageOver(event,'detenido')"
-    ondragleave="onStageLeave(event)"
-    ondrop="onStageDrop(event,'detenido')">`;
+  h+=`<div class="ir-detenido" ondragover="onStageOver(event,'detenido')" ondragleave="onStageLeave(event)" ondrop="onStageDrop(event,'detenido')">`;
   if(isStop){
-    h+=`<div class="sc-stop" draggable="true"
-      ondragstart="onDragStart(event,'${p.id}','palanca','${okr.id}')"
-      ondragend="onDragEnd(event)"
-      onclick="openModalEditPalanca('${okr.id}','${p.id}')">
+    h+=`<div class="sc-stop" draggable="true" ondragstart="onDragStart(event,'${p.id}','palanca','${okr.id}')" ondragend="onDragEnd(event)" onclick="openModalEditPalanca('${okr.id}','${p.id}')">
       <span class="sc-stop-lbl">🚫 Detenido</span>
-      ${detenidoVisible&&p.stopReason?`<span class="sc-stop-reason">${escH(p.stopReason)}</span>`:''}
-    </div>`;
-  } else if(detenidoVisible){
-    h+=`<span class="sc-pending"></span>`;
-  }
-  h+=`</div>`;
-
-  h+=`</div>`; // init-row
-
+      ${detenidoVisible&&p.stopReason?`<span class="sc-stop-reason">${escH(p.stopReason)}</span>`:''}</div>`;
+  } else if(detenidoVisible){h+=`<span class="sc-pending"></span>`;}
+  h+=`</div></div>`;
   if(p.expanded){
-    p.subtasks.forEach(sub=>{ h+=renderSubRow(sub,okr.id,p.id,cols,isC); });
-    h+=`<div class="add-sub-wrap">
-      <button class="add-sub-btn" onclick="openModalAddSub('${okr.id}','${p.id}')">+ Agregar iniciativa</button>
-    </div>`;
+    p.subtasks.forEach(sub=>{h+=renderSubRow(sub,okr.id,p.id,cols,isC);});
+    h+=`<div class="add-sub-wrap"><button class="add-sub-btn" onclick="openModalAddSub('${okr.id}','${p.id}')">+ Agregar iniciativa</button></div>`;
   }
-
-  h+=`</div>`; // init-block
-  return h;
+  h+=`</div>`;return h;
 }
 
-function renderSubRow(sub, okrId, palId, cols, isC){
+function renderSubRow(sub,okrId,palId,cols,isC){
   const si=stageIdx(sub.stage);
   let h=`<div class="init-row sub-row" style="display:grid;grid-template-columns:${cols}">`;
-
-  if(isC) h+=`<div class="ir-okr"></div>`;
-
+  if(isC)h+=`<div class="ir-okr"></div>`;
   h+=`<div class="ir-name sub-indent">
     <span style="color:#ccc;font-size:10px;flex-shrink:0;margin-top:2px;">↳</span>
     <span class="sub-name-text">${escH(sub.name)}</span>
     <div class="row-acts">
-      <button class="act-btn act-edit" onclick="openModalEditSub('${okrId}','${palId}','${sub.id}')" title="Editar">✏</button>
-      <button class="act-btn act-del" onclick="delSub('${okrId}','${palId}','${sub.id}')" title="Eliminar">×</button>
-    </div>
-  </div>`;
-
+      <button class="act-btn act-edit" onclick="openModalEditSub('${okrId}','${palId}','${sub.id}')">✏</button>
+      <button class="act-btn act-del" onclick="delSub('${okrId}','${palId}','${sub.id}')">×</button>
+    </div></div>`;
   h+=`<div class="ir-resp"><span class="resp-txt" style="font-size:9px">${escH(shortName(sub.responsible))}</span></div>`;
-
-  const isStopSub = sub.stage==='detenido';
+  const isStopSub=sub.stage==='detenido';
   STAGES.forEach((st,i)=>{
-    h+=`<div class="ir-stage"
-      ondragover="onStageOver(event,'${st.id}')"
-      ondragleave="onStageLeave(event)"
-      ondrop="onStageDrop(event,'${st.id}')">`;
+    h+=`<div class="ir-stage" ondragover="onStageOver(event,'${st.id}')" ondragleave="onStageLeave(event)" ondrop="onStageDrop(event,'${st.id}')">`;
     if(sub.stage===st.id){
-      h+=`<div class="sc-active" style="background:${st.bg};padding:4px 6px;"
-        draggable="true"
-        ondragstart="onDragStart(event,'${sub.id}','sub','${okrId}|${palId}')"
-        ondragend="onDragEnd(event)"
-        onclick="openModalEditSub('${okrId}','${palId}','${sub.id}')">
+      h+=`<div class="sc-active" style="background:${st.bg};padding:4px 6px;" draggable="true" ondragstart="onDragStart(event,'${sub.id}','sub','${okrId}|${palId}')" ondragend="onDragEnd(event)" onclick="openModalEditSub('${okrId}','${palId}','${sub.id}')">
         <span class="sc-active-lbl" style="color:${st.color};font-size:8px">${st.label}</span>
-        <span class="sc-dates">${fmtDate(sub.startDate)}${sub.endDate?' – '+fmtDate(sub.endDate):''}</span>
-      </div>`;
-    } else if(!isStopSub && si>i){
-      h+=`<span class="sc-done" style="font-size:11px">✓</span>`;
-    } else {
-      h+=`<span class="sc-pending"></span>`;
-    }
+        <span class="sc-dates">${fmtDate(sub.startDate)}${sub.endDate?' – '+fmtDate(sub.endDate):''}</span></div>`;
+    } else if(!isStopSub&&si>i){h+=`<span class="sc-done" style="font-size:11px">✓</span>`;}
+    else{h+=`<span class="sc-pending"></span>`;}
     h+=`</div>`;
   });
-  // Celda Detenido sub
-  h+=`<div class="ir-detenido"
-    ondragover="onStageOver(event,'detenido')"
-    ondragleave="onStageLeave(event)"
-    ondrop="onStageDrop(event,'detenido')">`;
+  h+=`<div class="ir-detenido" ondragover="onStageOver(event,'detenido')" ondragleave="onStageLeave(event)" ondrop="onStageDrop(event,'detenido')">`;
   if(isStopSub){
-    h+=`<div class="sc-stop" style="padding:3px 5px;" draggable="true"
-      ondragstart="onDragStart(event,'${sub.id}','sub','${okrId}|${palId}')"
-      ondragend="onDragEnd(event)"
-      onclick="openModalEditSub('${okrId}','${palId}','${sub.id}')">
+    h+=`<div class="sc-stop" style="padding:3px 5px;" draggable="true" ondragstart="onDragStart(event,'${sub.id}','sub','${okrId}|${palId}')" ondragend="onDragEnd(event)" onclick="openModalEditSub('${okrId}','${palId}','${sub.id}')">
       <span class="sc-stop-lbl" style="font-size:8px">🚫</span>
-      ${detenidoVisible&&sub.stopReason?`<span class="sc-stop-reason" style="font-size:7.5px">${escH(sub.stopReason)}</span>`:''}
-    </div>`;
-  } else if(detenidoVisible){
-    h+=`<span class="sc-pending"></span>`;
-  }
-  h+=`</div>`;
-
-  h+=`</div>`;
-  return h;
+      ${detenidoVisible&&sub.stopReason?`<span class="sc-stop-reason" style="font-size:7.5px">${escH(sub.stopReason)}</span>`:''}</div>`;
+  } else if(detenidoVisible){h+=`<span class="sc-pending"></span>`;}
+  h+=`</div></div>`;return h;
 }
 
+// ── RENDER INCIDENCIAS ──
+function renderIncidencias(){
+  const detW=detenidoVisible?'1fr':'38px';
+  const cols=`1fr 80px 95px 1fr repeat(5,1fr) ${detW}`;
+  const detCnt=countStage('detenido','incidencias');
+  let h='';
+  h+=`<div class="grid-header" style="display:grid;grid-template-columns:${cols}">`;
+  h+=`<div class="gh-cell">Incidencia · Levantada por</div>`;
+  h+=`<div class="gh-cell">Línea</div>`;
+  h+=`<div class="gh-cell">Asignada a</div>`;
+  h+=`<div class="gh-cell">Impacta en</div>`;
+  STAGES.forEach(st=>{
+    const n=countStage(st.id,'incidencias');
+    h+=`<div class="gh-stage" id="gh-inc-${st.id}" style="background:${st.bg};color:${st.color}" onclick="openIncPanel('${st.id}')">
+      <span class="stage-pill" style="background:${st.color};color:white">${st.label}</span>
+      <span class="stage-cnt" style="color:${st.color}">${n}</span></div>`;
+  });
+  h+=`<div class="gh-detenido-col" onclick="toggleDetenido()" title="${detenidoVisible?'Colapsar':'Expandir'} Detenido">
+    ${detenidoVisible?`<span class="stage-pill" style="background:#B71C1C;color:white">🚫 Detenido</span><span class="det-col-cnt">${detCnt}</span>`:`<span class="det-col-collapsed">🚫 ${detCnt>0?detCnt:''}</span>`}
+  </div></div>`;
+
+  if(!data.incidencias.length){
+    h+=`<div class="no-items">Sin incidencias registradas.<br><br><button class="btn btn-primary btn-sm" onclick="openModalAddIncidencia()">+ Registrar primera incidencia</button></div>`;
+  } else {
+    // Agrupar por línea de negocio
+    ['compras','ventas'].forEach(ln=>{
+      const items=data.incidencias.filter(i=>i.lineaNegocio===ln);
+      if(!items.length)return;
+      const lnLabel=ln==='compras'?'🛒 Compras':'🚗 Ventas';
+      const isCollapsed=ganttCollapsed['inc_grp_'+ln]===true;
+      h+=`<div class="inc-group">
+        <div class="inc-group-hdr inc-group-hdr-${ln}" onclick="toggleIncGrp('${ln}')">
+          <button class="expand-btn ${!isCollapsed?'open':''}" style="color:${ln==='compras'?'#1565C0':'#6A1B9A'}">▶</button>
+          <span class="inc-ln-badge inc-ln-${ln}">${lnLabel}</span>
+          <span style="font-size:11px;font-weight:600;color:${ln==='compras'?'#1565C0':'#6A1B9A'};flex:1;">${items.length} incidencia${items.length!==1?'s':''}</span>
+          <div class="okr-acts">
+            <button class="act-btn" onclick="event.stopPropagation();openModalAddIncidencia('${ln}')" style="color:#0f3460;font-weight:700;">+ Incidencia</button>
+          </div>
+        </div>`;
+      if(!isCollapsed){
+        items.forEach(inc=>{h+=renderIncRow(inc,cols);});
+        h+=`<div class="add-palanca-wrap"><button class="add-sub-btn" onclick="openModalAddIncidencia('${ln}')">+ Agregar incidencia ${lnLabel}</button></div>`;
+      }
+      h+=`</div>`;
+    });
+    h+=`<div style="height:0;border:1px solid #d0d4da;border-top:none;border-radius:0 0 6px 6px;"></div>`;
+  }
+  document.getElementById('board').innerHTML=h;
+  renderStageBar();
+}
+
+function renderIncRow(inc,cols){
+  const si=stageIdx(inc.stage);
+  const isStop=inc.stage==='detenido';
+  let h=`<div class="init-row" style="display:grid;grid-template-columns:${cols}">`;
+  h+=`<div class="ir-name">
+    <span class="name-text">${escH(inc.titulo)}<br><span class="inc-subtxt">👤 ${escH(shortName(inc.levantadaPor))}</span></span>
+    <div class="row-acts">
+      <button class="act-btn act-edit" onclick="openModalEditIncidencia('${inc.id}')">✏</button>
+      <button class="act-btn act-del" onclick="delIncidencia('${inc.id}')">×</button>
+    </div></div>`;
+  const lnBg=inc.lineaNegocio==='compras'?'#BBDEFB':'#E1BEE7';
+  const lnColor=inc.lineaNegocio==='compras'?'#1565C0':'#6A1B9A';
+  const lnTxt=inc.lineaNegocio==='compras'?'Compras':'Ventas';
+  h+=`<div class="ir-resp"><span class="inc-ln-badge" style="background:${lnBg};color:${lnColor};font-size:8px;">${lnTxt}</span></div>`;
+  h+=`<div class="ir-resp"><span class="resp-txt">${escH(shortName(inc.asignadoA))}</span></div>`;
+  h+=`<div class="ir-resp" style="overflow:hidden;"><span class="resp-txt" style="font-size:9px;font-style:italic;white-space:normal;line-height:1.3;">${escH(inc.impactaEn||'—')}</span></div>`;
+  STAGES.forEach((st,i)=>{
+    h+=`<div class="ir-stage">`;
+    if(inc.stage===st.id){
+      h+=`<div class="sc-active" style="background:${st.bg};cursor:pointer;" onclick="openModalEditIncidencia('${inc.id}')">
+        <span class="sc-active-lbl" style="color:${st.color}">${st.label}</span>
+        <span class="sc-dates">${fmtDate(inc.startDate)}${inc.endDate?' – '+fmtDate(inc.endDate):''}</span></div>`;
+    } else if(!isStop&&si>i){h+=`<span class="sc-done">✓</span>`;}
+    else{h+=`<span class="sc-pending"></span>`;}
+    h+=`</div>`;
+  });
+  h+=`<div class="ir-detenido">`;
+  if(isStop){
+    h+=`<div class="sc-stop" style="cursor:pointer;" onclick="openModalEditIncidencia('${inc.id}')">
+      <span class="sc-stop-lbl">🚫 Detenido</span>
+      ${detenidoVisible&&inc.stopReason?`<span class="sc-stop-reason">${escH(inc.stopReason)}</span>`:''}</div>`;
+  } else if(detenidoVisible){h+=`<span class="sc-pending"></span>`;}
+  h+=`</div></div>`;return h;
+}
+
+// ── RENDER GANTT ──
+function renderGantt(){
+  const tab=currentTab;
+  const isInc=tab==='incidencias';
+  let h=`<div class="gantt-container">`;
+  h+=`<div class="gantt-hdr">
+    <div class="gantt-label-col">${isInc?'Incidencia':'OKR / Palanca / Iniciativa'}</div>
+    <div class="gantt-months">${MONTHS.map(m=>`<div class="gantt-month">${m}</div>`).join('')}</div>
+  </div>`;
+
+  if(isInc){
+    const incs=data.incidencias;
+    if(!incs.length){
+      h+=`<div style="padding:50px;text-align:center;color:#ccc;font-size:12px;">Sin incidencias registradas.</div>`;
+    } else {
+      ['compras','ventas'].forEach(ln=>{
+        const items=incs.filter(i=>i.lineaNegocio===ln);
+        if(!items.length)return;
+        const lnLabel=ln==='compras'?'🛒 Compras':'🚗 Ventas';
+        const lnColor=ln==='compras'?'#1565C0':'#6A1B9A';
+        const lnBg=ln==='compras'?'#EFF8FF':'#FDF4FF';
+        const isCollapsed=ganttCollapsed['gantt_inc_'+ln]===true;
+        h+=`<div class="gantt-row grow-grp" style="background:${lnBg}!important;" onclick="toggleGanttGrp('gantt_inc_${ln}')">
+          <div class="gantt-rlabel" style="color:${lnColor};font-weight:700;">
+            <button class="expand-btn ${!isCollapsed?'open':''}" style="color:${lnColor}">▶</button>
+            ${lnLabel}
+          </div>
+          <div class="gantt-rtimeline">${monthLines()}<div class="gantt-today" style="left:${todayPct()}%"></div></div>
+        </div>`;
+        if(!isCollapsed){
+          items.forEach(inc=>{
+            h+=`<div class="gantt-row grow-inc">
+              <div class="gantt-rlabel" style="cursor:default;">
+                <span style="font-size:11px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escH(inc.titulo)}</span>
+              </div>
+              ${ganttTimeline(inc.startDate,inc.endDate,inc.stage)}
+            </div>`;
+          });
+        }
+      });
+    }
+  } else {
+    const okrs=data[tab]||[];
+    if(!okrs.length){
+      h+=`<div style="padding:50px;text-align:center;color:#ccc;font-size:12px;">Sin OKRs aún.</div>`;
+    } else {
+      okrs.forEach(okr=>{
+        const okrKey='gantt_okr_'+okr.id;
+        const isOkrCollapsed=ganttCollapsed[okrKey]===true;
+        h+=`<div class="gantt-row grow-okr" onclick="toggleGanttGrp('${okrKey}')">
+          <div class="gantt-rlabel">
+            <button class="expand-btn ${!isOkrCollapsed?'open':''}" style="color:#795000;flex-shrink:0;">▶</button>
+            <span class="okr-code-badge" style="font-size:8px;flex-shrink:0;">OKR ${escH(okr.code)}</span>
+            <span style="font-size:10px;font-weight:700;color:#4A3000;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;">${escH(okr.name)}</span>
+          </div>
+          <div class="gantt-rtimeline">${monthLines()}<div class="gantt-today" style="left:${todayPct()}%"></div></div>
+        </div>`;
+        if(!isOkrCollapsed){
+          okr.palancas.forEach(p=>{
+            const palKey='gantt_pal_'+p.id;
+            const isPalCollapsed=ganttCollapsed[palKey]===true;
+            h+=`<div class="gantt-row grow-pal" onclick="toggleGanttGrp('${palKey}')">
+              <div class="gantt-rlabel">
+                <button class="expand-btn ${!isPalCollapsed&&p.subtasks.length?'open':''}" style="color:#aaa;flex-shrink:0;visibility:${p.subtasks.length?'visible':'hidden'}">▶</button>
+                <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escH(p.name)}</span>
+              </div>
+              ${ganttTimeline(p.startDate,p.endDate,p.stage)}
+            </div>`;
+            if(!isPalCollapsed){
+              p.subtasks.forEach(sub=>{
+                h+=`<div class="gantt-row grow-sub">
+                  <div class="gantt-rlabel" style="cursor:default;">
+                    <span style="color:#ccc;font-size:10px;flex-shrink:0;">↳</span>
+                    <span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escH(sub.name)}</span>
+                  </div>
+                  ${ganttTimeline(sub.startDate,sub.endDate,sub.stage)}
+                </div>`;
+              });
+            }
+          });
+        }
+      });
+    }
+  }
+  h+=`</div>`;
+  document.getElementById('board').innerHTML=h;
+  renderStageBar();
+}
+
+function toggleGanttGrp(key){ganttCollapsed[key]=!ganttCollapsed[key];renderGantt();}
+function toggleIncGrp(ln){ganttCollapsed['inc_grp_'+ln]=!ganttCollapsed['inc_grp_'+ln];renderIncidencias();}
+
+// ── STAGE BAR ──
 function renderStageBar(){
+  const tab=currentTab;
   let h='';
   STAGES.forEach(st=>{
-    const n=countStage(st.id,currentTab);
-    h+=`<div class="stage-count" onclick="openPanel('${st.id}')">
+    const n=countStage(st.id,tab);
+    h+=`<div class="stage-count" onclick="${tab==='incidencias'?`openIncPanel('${st.id}')`:`openPanel('${st.id}')`}">
       <div class="sc-dot" style="background:${st.color}"></div>
       <div><div class="sc-num" style="color:${st.color}">${n}</div><div class="sc-label">${st.label}</div></div>
     </div>`;
@@ -607,116 +800,161 @@ function renderStageBar(){
   document.getElementById('stage_bar').innerHTML=h;
 }
 
-/* ── TOGGLE ── */
-function switchTab(tab){
-  currentTab=tab;
-  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',(i===0&&tab==='compras')||(i===1&&tab==='ventas')));
-  renderBoard();
+// ── TOOLBAR ──
+function renderToolbar(){
+  const isInc=currentTab==='incidencias';
+  let h='';
+  if(isInc){
+    h=`<button class="btn btn-primary" onclick="openModalAddIncidencia('')">+ Nueva incidencia</button>
+       <button class="btn" onclick="window.print()">🖨 Imprimir</button>`;
+  } else {
+    h=`<button class="btn btn-primary" onclick="openModalAddOkr()">+ Nuevo OKR</button>
+       <button class="btn" onclick="openModalAddPalanca(null)">+ Nueva palanca</button>
+       <button class="btn" onclick="toggleAll()">⊞ Expandir todo</button>
+       <button class="btn" onclick="window.print()">🖨 Imprimir</button>`;
+  }
+  document.getElementById('toolbar_btns').innerHTML=h;
 }
-function toggleOkr(okrId){
-  const okr=getOkr(okrId);
-  if(okr) okr.expanded = okr.expanded===false ? true : false;
-  saveState(); renderBoard();
-}
-function togglePalanca(okrId,palId){
-  const p=getPalanca(okrId,palId);
-  if(p) p.expanded=!p.expanded;
-  renderBoard();
-}
-function toggleAll(){
-  allExpanded=!allExpanded;
-  data[currentTab].forEach(okr=>{ okr.palancas.forEach(p=>{ p.expanded=allExpanded; }); });
+
+// ── VIEW TOGGLE ──
+function setView(view){
+  currentView=view;
+  document.getElementById('vbtn_board').classList.toggle('active',view==='board');
+  document.getElementById('vbtn_gantt').classList.toggle('active',view==='gantt');
+  document.getElementById('drag_hint').style.display=(view==='board'&&currentTab!=='incidencias')?'':'none';
   renderBoard();
 }
 
-/* ── SIDE PANEL ── */
+// ── SWITCH TAB ──
+function switchTab(tab){
+  currentTab=tab;
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',
+    (i===0&&tab==='compras')||(i===1&&tab==='ventas')||(i===2&&tab==='incidencias')));
+  document.getElementById('drag_hint').style.display=(currentView==='board'&&tab!=='incidencias')?'':'none';
+  renderToolbar();
+  renderBoard();
+}
+
+// ── TOGGLE ──
+function toggleOkr(okrId){const okr=getOkr(okrId);if(okr)okr.expanded=okr.expanded===false;saveState();renderBoard();}
+function togglePalanca(okrId,palId){const p=getPalanca(okrId,palId);if(p)p.expanded=!p.expanded;renderBoard();}
+function toggleAll(){allExpanded=!allExpanded;data[currentTab].forEach(okr=>{okr.palancas.forEach(p=>{p.expanded=allExpanded;});});renderBoard();}
+function toggleDetenido(){detenidoVisible=!detenidoVisible;renderBoard();}
+
+// ── SIDE PANEL ──
 function openPanel(stageId){
   const st=STAGES.find(s=>s.id===stageId);
   const items=[];
   data[currentTab].forEach(okr=>{
     okr.palancas.forEach(p=>{
-      if(p.stage===stageId) items.push({name:p.name,responsible:p.responsible,startDate:p.startDate,endDate:p.endDate,_type:'palanca',_parent:`OKR ${okr.code}: ${okr.name}`});
-      p.subtasks.forEach(sub=>{
-        if(sub.stage===stageId) items.push({...sub,_type:'sub',_parent:`${p.name}`});
-      });
+      if(p.stage===stageId)items.push({name:p.name,responsible:p.responsible,startDate:p.startDate,endDate:p.endDate,_type:'palanca',_parent:`OKR ${okr.code}: ${okr.name}`});
+      p.subtasks.forEach(sub=>{if(sub.stage===stageId)items.push({...sub,_type:'sub',_parent:`${p.name}`});});
     });
   });
-
   document.getElementById('sp_title').innerHTML=`<span style="color:${st.color}">● ${st.label}</span>`;
   document.getElementById('sp_count').textContent=`${items.length} elemento${items.length!==1?'s':''} en esta etapa`;
-
   let bh='';
-  if(!items.length){ bh='<div class="sp-empty">Sin elementos en esta etapa.</div>'; }
-  else {
-    items.forEach(it=>{
-      bh+=`<div class="sp-card" style="border-left:3px solid ${st.color}">
-        <div class="sp-card-parent">${it._type==='sub'?'↳ Iniciativa de: ':'📌 Palanca de: '}${escH(it._parent)}</div>
-        <div class="sp-card-name">${escH(it.name)}</div>
-        <div class="sp-card-meta">
-          ${it.responsible?`<span>👤 ${escH(it.responsible)}</span>`:''}
-          ${it.startDate||it.endDate?`<span>📅 ${fmtDate(it.startDate)}${it.endDate?' – '+fmtDate(it.endDate):''}</span>`:''}
-        </div>
-      </div>`;
-    });
-  }
+  if(!items.length){bh='<div class="sp-empty">Sin elementos en esta etapa.</div>';}
+  else{items.forEach(it=>{bh+=`<div class="sp-card" style="border-left:3px solid ${st.color}">
+    <div class="sp-card-parent">${it._type==='sub'?'↳ Iniciativa de: ':'📌 Palanca de: '}${escH(it._parent)}</div>
+    <div class="sp-card-name">${escH(it.name)}</div>
+    <div class="sp-card-meta">${it.responsible?`<span>👤 ${escH(it.responsible)}</span>`:''}${it.startDate||it.endDate?`<span>📅 ${fmtDate(it.startDate)}${it.endDate?' – '+fmtDate(it.endDate):''}</span>`:''}</div>
+  </div>`;}); }
   document.getElementById('sp_body').innerHTML=bh;
   document.getElementById('side_panel').classList.add('open');
   document.getElementById('sp_overlay').classList.add('open');
 }
-function closePanel(){
-  document.getElementById('side_panel').classList.remove('open');
-  document.getElementById('sp_overlay').classList.remove('open');
-}
 
-/* ── MODAL HELPERS ── */
-function _showFields(type){ // 'okr' | 'palanca'
-  document.getElementById('okr_fields').style.display   = type==='okr'     ? '' : 'none';
-  document.getElementById('palanca_fields').style.display = type==='palanca' ? '' : 'none';
+function openIncPanel(stageId){
+  const st=STAGES.find(s=>s.id===stageId);
+  const items=data.incidencias.filter(i=>i.stage===stageId);
+  document.getElementById('sp_title').innerHTML=`<span style="color:${st.color}">● ${st.label}</span>`;
+  document.getElementById('sp_count').textContent=`${items.length} incidencia${items.length!==1?'s':''} en esta etapa`;
+  let bh='';
+  if(!items.length){bh='<div class="sp-empty">Sin incidencias en esta etapa.</div>';}
+  else{items.forEach(it=>{
+    const lnColor=it.lineaNegocio==='compras'?'#1565C0':'#6A1B9A';
+    bh+=`<div class="sp-card" style="border-left:3px solid ${st.color}">
+      <div class="sp-card-parent" style="color:${lnColor}">⚠️ ${it.lineaNegocio==='compras'?'Compras':'Ventas'}</div>
+      <div class="sp-card-name">${escH(it.titulo)}</div>
+      <div class="sp-card-meta">
+        <span>👤 Levantó: ${escH(it.levantadaPor)}</span>
+        <span>→ Asignada: ${escH(it.asignadoA)}</span>
+        ${it.impactaEn?`<span>🎯 ${escH(it.impactaEn)}</span>`:''}
+        ${it.startDate||it.endDate?`<span>📅 ${fmtDate(it.startDate)}${it.endDate?' – '+fmtDate(it.endDate):''}</span>`:''}
+      </div>
+    </div>`;
+  });}
+  document.getElementById('sp_body').innerHTML=bh;
+  document.getElementById('side_panel').classList.add('open');
+  document.getElementById('sp_overlay').classList.add('open');
+}
+function closePanel(){document.getElementById('side_panel').classList.remove('open');document.getElementById('sp_overlay').classList.remove('open');}
+
+// ── MODAL HELPERS ──
+function _showFields(type){
+  document.getElementById('okr_fields').style.display=type==='okr'?'':'none';
+  document.getElementById('palanca_fields').style.display=type==='palanca'?'':'none';
+  document.getElementById('incidencia_fields').style.display=type==='incidencia'?'':'none';
 }
 function _resetFields(){
   ['f_okr_code','f_okr_name','f_okr_meta','f_okr_actual','f_okr_resp',
-   'f_name','f_resp_otro','f_start','f_end'].forEach(id=>{ const el=document.getElementById(id); if(el) el.value=''; });
-  document.getElementById('f_resp').value='';
-  document.getElementById('f_stage').value='';
+   'f_name','f_resp_otro','f_start','f_end',
+   'f_inc_titulo','f_inc_levanta_otro','f_inc_asigna_otro','f_inc_impacta','f_inc_start','f_inc_end']
+  .forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
+  ['f_resp','f_stage','f_inc_linea','f_inc_stage','f_inc_levanta','f_inc_asigna']
+  .forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
   document.getElementById('f_resp_otro_wrap').style.display='none';
+  document.getElementById('f_inc_levanta_otro_wrap').style.display='none';
+  document.getElementById('f_inc_asigna_otro_wrap').style.display='none';
 }
 function _fillOkrSelect(){
   const sel=document.getElementById('f_okr_sel');
   sel.innerHTML='<option value="">— Selecciona OKR —</option>';
-  data[currentTab].forEach(okr=>{
-    const opt=document.createElement('option');
-    opt.value=okr.id; opt.textContent=`OKR ${okr.code}: ${okr.name}`;
-    sel.appendChild(opt);
-  });
+  data[currentTab].forEach(okr=>{const opt=document.createElement('option');opt.value=okr.id;opt.textContent=`OKR ${okr.code}: ${okr.name}`;sel.appendChild(opt);});
 }
 function onRespChange(){
   const v=document.getElementById('f_resp').value;
   document.getElementById('f_resp_otro_wrap').style.display=v==='__otro__'?'':'none';
-  if(v==='__otro__') setTimeout(()=>document.getElementById('f_resp_otro').focus(),50);
+  if(v==='__otro__')setTimeout(()=>document.getElementById('f_resp_otro').focus(),50);
 }
 function _getResp(){
   const v=document.getElementById('f_resp').value;
-  if(!v) return null;
-  if(v==='__otro__') return document.getElementById('f_resp_otro').value.trim()||null;
+  if(!v)return null;
+  if(v==='__otro__')return document.getElementById('f_resp_otro').value.trim()||null;
+  return v;
+}
+function onIncLevChange(which){
+  const id='f_inc_'+which;
+  const wrapId='f_inc_'+which+'_otro_wrap';
+  const otherId='f_inc_'+which+'_otro';
+  const v=document.getElementById(id).value;
+  document.getElementById(wrapId).style.display=v==='__otro__'?'':'none';
+  if(v==='__otro__')setTimeout(()=>document.getElementById(otherId).focus(),50);
+}
+function _getIncVal(which){
+  const v=document.getElementById('f_inc_'+which).value;
+  if(!v)return null;
+  if(v==='__otro__')return document.getElementById('f_inc_'+which+'_otro').value.trim()||null;
   return v;
 }
 
-/* ── OPEN MODALS ── */
+// ── OPEN MODALS ──
 function openModalAddOkr(){
-  _mode='add_okr'; _okrId=null; _palId=null; _itemId=null;
-  _resetFields(); _showFields('okr');
+  _mode='add_okr';_okrId=null;_palId=null;_itemId=null;
+  _resetFields();_showFields('okr');
   document.getElementById('m_badge').className='modal-badge badge-okr';
-  document.getElementById('f_okr_resp').value='Maryorin Vivas Macedo';
   document.getElementById('m_badge').textContent='⭐ Nuevo OKR';
   document.getElementById('m_title').textContent='Nuevo OKR';
   document.getElementById('m_save').textContent='Crear OKR ✓';
+  document.getElementById('f_okr_resp').value='Maryorin Vivas Macedo';
   document.getElementById('modal_bg').classList.add('open');
   document.getElementById('f_okr_code').focus();
 }
 function openModalEditOkr(okrId){
-  const okr=getOkr(okrId); if(!okr) return;
-  _mode='edit_okr'; _okrId=okrId;
-  _resetFields(); _showFields('okr');
+  const okr=getOkr(okrId);if(!okr)return;
+  _mode='edit_okr';_okrId=okrId;
+  _resetFields();_showFields('okr');
   document.getElementById('m_badge').className='modal-badge badge-edit';
   document.getElementById('m_badge').textContent='✏ Editando OKR';
   document.getElementById('m_title').textContent=`Editar OKR ${okr.code}`;
@@ -728,11 +966,11 @@ function openModalEditOkr(okrId){
   document.getElementById('f_okr_resp').value=okr.responsible||'Maryorin Vivas Macedo';
   document.getElementById('modal_bg').classList.add('open');
 }
-function openModalAddPalanca(okrId){ // null = user picks OKR
-  _mode='add_palanca'; _okrId=okrId; _palId=null; _itemId=null;
-  _resetFields(); _showFields('palanca'); _fillOkrSelect();
+function openModalAddPalanca(okrId){
+  _mode='add_palanca';_okrId=okrId;_palId=null;_itemId=null;
+  _resetFields();_showFields('palanca');_fillOkrSelect();
   document.getElementById('f_okr_sel_wrap').style.display='';
-  if(okrId) document.getElementById('f_okr_sel').value=okrId;
+  if(okrId)document.getElementById('f_okr_sel').value=okrId;
   document.getElementById('m_badge').className='modal-badge badge-add';
   document.getElementById('m_badge').textContent='+ Nueva palanca';
   document.getElementById('m_title').textContent='Nueva palanca';
@@ -740,11 +978,11 @@ function openModalAddPalanca(okrId){ // null = user picks OKR
   document.getElementById('modal_bg').classList.add('open');
   document.getElementById('f_name').focus();
 }
-function openModalAddPalancaTo(okrId){ openModalAddPalanca(okrId); }
+function openModalAddPalancaTo(okrId){openModalAddPalanca(okrId);}
 function openModalEditPalanca(okrId,palId){
-  const p=getPalanca(okrId,palId); if(!p) return;
-  _mode='edit_palanca'; _okrId=okrId; _palId=palId;
-  _resetFields(); _showFields('palanca');
+  const p=getPalanca(okrId,palId);if(!p)return;
+  _mode='edit_palanca';_okrId=okrId;_palId=palId;
+  _resetFields();_showFields('palanca');
   document.getElementById('f_okr_sel_wrap').style.display='none';
   document.getElementById('m_badge').className='modal-badge badge-edit';
   document.getElementById('m_badge').textContent='✏ Editando palanca';
@@ -752,16 +990,16 @@ function openModalEditPalanca(okrId,palId){
   document.getElementById('m_save').textContent='Guardar ✓';
   document.getElementById('f_name').value=p.name||'';
   const sel=document.getElementById('f_resp');
-  if(USERS.includes(p.responsible)){ sel.value=p.responsible; }
-  else if(p.responsible){ sel.value='__otro__'; document.getElementById('f_resp_otro').value=p.responsible; document.getElementById('f_resp_otro_wrap').style.display=''; }
+  if(USERS.includes(p.responsible)){sel.value=p.responsible;}
+  else if(p.responsible){sel.value='__otro__';document.getElementById('f_resp_otro').value=p.responsible;document.getElementById('f_resp_otro_wrap').style.display='';}
   document.getElementById('f_stage').value=p.stage||'';
   document.getElementById('f_start').value=p.startDate||'';
   document.getElementById('f_end').value=p.endDate||'';
   document.getElementById('modal_bg').classList.add('open');
 }
 function openModalAddSub(okrId,palId){
-  _mode='add_sub'; _okrId=okrId; _palId=palId; _itemId=null;
-  _resetFields(); _showFields('palanca');
+  _mode='add_sub';_okrId=okrId;_palId=palId;_itemId=null;
+  _resetFields();_showFields('palanca');
   document.getElementById('f_okr_sel_wrap').style.display='none';
   const p=getPalanca(okrId,palId);
   document.getElementById('m_badge').className='modal-badge badge-sub';
@@ -772,10 +1010,10 @@ function openModalAddSub(okrId,palId){
   document.getElementById('f_name').focus();
 }
 function openModalEditSub(okrId,palId,subId){
-  const p=getPalanca(okrId,palId); if(!p) return;
-  const sub=p.subtasks.find(s=>s.id===subId); if(!sub) return;
-  _mode='edit_sub'; _okrId=okrId; _palId=palId; _itemId=subId;
-  _resetFields(); _showFields('palanca');
+  const p=getPalanca(okrId,palId);if(!p)return;
+  const sub=p.subtasks.find(s=>s.id===subId);if(!sub)return;
+  _mode='edit_sub';_okrId=okrId;_palId=palId;_itemId=subId;
+  _resetFields();_showFields('palanca');
   document.getElementById('f_okr_sel_wrap').style.display='none';
   document.getElementById('m_badge').className='modal-badge badge-sub';
   document.getElementById('m_badge').textContent='✏ Editando iniciativa';
@@ -783,33 +1021,90 @@ function openModalEditSub(okrId,palId,subId){
   document.getElementById('m_save').textContent='Guardar ✓';
   document.getElementById('f_name').value=sub.name||'';
   const sel=document.getElementById('f_resp');
-  if(USERS.includes(sub.responsible)){ sel.value=sub.responsible; }
-  else if(sub.responsible){ sel.value='__otro__'; document.getElementById('f_resp_otro').value=sub.responsible; document.getElementById('f_resp_otro_wrap').style.display=''; }
+  if(USERS.includes(sub.responsible)){sel.value=sub.responsible;}
+  else if(sub.responsible){sel.value='__otro__';document.getElementById('f_resp_otro').value=sub.responsible;document.getElementById('f_resp_otro_wrap').style.display='';}
   document.getElementById('f_stage').value=sub.stage||'';
   document.getElementById('f_start').value=sub.startDate||'';
   document.getElementById('f_end').value=sub.endDate||'';
   document.getElementById('modal_bg').classList.add('open');
 }
-function closeModal(){ document.getElementById('modal_bg').classList.remove('open'); }
 
-/* ── SAVE ── */
+// ── INCIDENCIAS MODAL ──
+function openModalAddIncidencia(preLinea){
+  _mode='add_inc';_itemId=null;
+  _resetFields();_showFields('incidencia');
+  if(preLinea)document.getElementById('f_inc_linea').value=preLinea;
+  document.getElementById('m_badge').className='modal-badge badge-inc';
+  document.getElementById('m_badge').textContent='⚠️ Nueva incidencia';
+  document.getElementById('m_title').textContent='Registrar incidencia';
+  document.getElementById('m_save').textContent='Registrar ✓';
+  document.getElementById('modal_bg').classList.add('open');
+  document.getElementById('f_inc_titulo').focus();
+}
+function openModalEditIncidencia(incId){
+  const inc=data.incidencias.find(i=>i.id===incId);if(!inc)return;
+  _mode='edit_inc';_itemId=incId;
+  _resetFields();_showFields('incidencia');
+  document.getElementById('m_badge').className='modal-badge badge-inc';
+  document.getElementById('m_badge').textContent='✏ Editando incidencia';
+  document.getElementById('m_title').textContent='Editar incidencia';
+  document.getElementById('m_save').textContent='Guardar ✓';
+  document.getElementById('f_inc_linea').value=inc.lineaNegocio||'';
+  document.getElementById('f_inc_stage').value=inc.stage||'';
+  document.getElementById('f_inc_titulo').value=inc.titulo||'';
+  document.getElementById('f_inc_impacta').value=inc.impactaEn||'';
+  document.getElementById('f_inc_start').value=inc.startDate||'';
+  document.getElementById('f_inc_end').value=inc.endDate||'';
+  const sL=document.getElementById('f_inc_levanta');
+  if(USERS.includes(inc.levantadaPor)){sL.value=inc.levantadaPor;}
+  else if(inc.levantadaPor){sL.value='__otro__';document.getElementById('f_inc_levanta_otro').value=inc.levantadaPor;document.getElementById('f_inc_levanta_otro_wrap').style.display='';}
+  const sA=document.getElementById('f_inc_asigna');
+  if(USERS.includes(inc.asignadoA)){sA.value=inc.asignadoA;}
+  else if(inc.asignadoA){sA.value='__otro__';document.getElementById('f_inc_asigna_otro').value=inc.asignadoA;document.getElementById('f_inc_asigna_otro_wrap').style.display='';}
+  document.getElementById('modal_bg').classList.add('open');
+}
+function closeModal(){document.getElementById('modal_bg').classList.remove('open');}
+
+// ── SAVE ──
 function saveItem(){
   const tab=currentTab;
-
   if(_mode==='add_okr'||_mode==='edit_okr'){
     const code=document.getElementById('f_okr_code').value.trim();
     const name=document.getElementById('f_okr_name').value.trim();
     const meta=document.getElementById('f_okr_meta').value.trim();
     const actual=document.getElementById('f_okr_actual').value.trim();
     const responsible=document.getElementById('f_okr_resp').value.trim();
-    if(!code||!name){ showToast('⚠ Completa código y nombre del OKR'); return; }
-    if(_mode==='add_okr'){
-      data[tab].push({id:uid(),code,name,meta,actual,responsible,expanded:true,palancas:[]});
-      showToast('OKR creado ✓');
+    if(!code||!name){showToast('⚠ Completa código y nombre del OKR');return;}
+    if(_mode==='add_okr'){data[tab].push({id:uid(),code,name,meta,actual,responsible,expanded:true,palancas:[]});showToast('OKR creado ✓');}
+    else{const okr=getOkr(_okrId);if(okr)Object.assign(okr,{code,name,meta,actual,responsible});showToast('OKR actualizado ✓');}
+  } else if(_mode==='add_inc'||_mode==='edit_inc'){
+    const linea=document.getElementById('f_inc_linea').value;
+    const stage=document.getElementById('f_inc_stage').value;
+    const titulo=document.getElementById('f_inc_titulo').value.trim();
+    const levantadaPor=_getIncVal('levanta');
+    const asignadoA=_getIncVal('asigna');
+    const impactaEn=document.getElementById('f_inc_impacta').value.trim();
+    const startDate=document.getElementById('f_inc_start').value;
+    const endDate=document.getElementById('f_inc_end').value;
+    if(!linea||!stage||!titulo||!levantadaPor||!asignadoA){showToast('⚠ Completa línea, título, etapa, levantada por y asignada a');return;}
+    if(stage==='detenido'){
+      const existing=_mode==='edit_inc'?(data.incidencias.find(i=>i.id===_itemId)||{}).stopReason:null;
+      if(!existing){
+        _pendingStop={type:'incidencia',id:_itemId,_modalSave:{linea,stage,titulo,levantadaPor,asignadoA,impactaEn,startDate,endDate}};
+        document.getElementById('f_stop_reason').value='';
+        closeModal();
+        document.getElementById('stop_modal_bg').classList.add('open');
+        setTimeout(()=>document.getElementById('f_stop_reason').focus(),80);
+        return;
+      }
+    }
+    if(_mode==='add_inc'){
+      data.incidencias.push({id:uid(),lineaNegocio:linea,stage,titulo,levantadaPor,asignadoA,impactaEn,startDate,endDate,stopReason:''});
+      showToast('Incidencia registrada ✓');
     } else {
-      const okr=getOkr(_okrId);
-      if(okr) Object.assign(okr,{code,name,meta,actual,responsible});
-      showToast('OKR actualizado ✓');
+      const inc=data.incidencias.find(i=>i.id===_itemId);
+      if(inc)Object.assign(inc,{lineaNegocio:linea,stage,titulo,levantadaPor,asignadoA,impactaEn,startDate,endDate});
+      showToast('Incidencia actualizada ✓');
     }
   } else {
     const name=document.getElementById('f_name').value.trim();
@@ -817,16 +1112,13 @@ function saveItem(){
     const stage=document.getElementById('f_stage').value;
     const startDate=document.getElementById('f_start').value;
     const endDate=document.getElementById('f_end').value;
-    if(!name||!resp||!stage){ showToast('⚠ Completa nombre, responsable y etapa'); return; }
-
-    // Si la etapa elegida es 'detenido' y no hay motivo ya dado, abrir modal de motivo
+    if(!name||!resp||!stage){showToast('⚠ Completa nombre, responsable y etapa');return;}
     if(stage==='detenido'){
-      const existing = _mode==='edit_palanca' ? (getPalanca(_okrId,_palId)||{}).stopReason
-                      : _mode==='edit_sub'    ? ((getPalanca(_okrId,_palId)||{subtasks:[]}).subtasks.find(s=>s.id===_itemId)||{}).stopReason
-                      : null;
+      const existing=_mode==='edit_palanca'?(getPalanca(_okrId,_palId)||{}).stopReason
+                    :_mode==='edit_sub'?((getPalanca(_okrId,_palId)||{subtasks:[]}).subtasks.find(s=>s.id===_itemId)||{}).stopReason
+                    :null;
       if(!existing){
-        // Guardar estado temporal y abrir modal motivo
-        _pendingStop={type: (_mode.includes('sub')?'sub':'palanca'), id:(_mode==='add_palanca'?null:(_mode==='edit_palanca'?_palId:_itemId)), parentStr: _okrId+(_palId?'|'+_palId:''), _modalSave:{name,resp,stage,startDate,endDate}};
+        _pendingStop={type:(_mode.includes('sub')?'sub':'palanca'),id:(_mode==='add_palanca'?null:(_mode==='edit_palanca'?_palId:_itemId)),parentStr:_okrId+(_palId?'|'+_palId:''),_modalSave:{name,resp,stage,startDate,endDate}};
         document.getElementById('f_stop_reason').value='';
         closeModal();
         document.getElementById('stop_modal_bg').classList.add('open');
@@ -836,255 +1128,208 @@ function saveItem(){
     }
     if(_mode==='add_palanca'){
       const okrId=_okrId||document.getElementById('f_okr_sel').value;
-      const okr=getOkr(okrId); if(!okr){ showToast('⚠ Selecciona un OKR'); return; }
+      const okr=getOkr(okrId);if(!okr){showToast('⚠ Selecciona un OKR');return;}
       okr.palancas.push({id:uid(),name,responsible:resp,stage,startDate,endDate,expanded:false,subtasks:[]});
       showToast('Palanca agregada ✓');
     } else if(_mode==='edit_palanca'){
       const p=getPalanca(_okrId,_palId);
-      if(p) Object.assign(p,{name,responsible:resp,stage,startDate,endDate});
+      if(p)Object.assign(p,{name,responsible:resp,stage,startDate,endDate});
       showToast('Palanca actualizada ✓');
     } else if(_mode==='add_sub'){
       const p=getPalanca(_okrId,_palId);
-      if(p){ p.subtasks.push({id:uid(),name,responsible:resp,stage,startDate,endDate}); p.expanded=true; }
+      if(p){p.subtasks.push({id:uid(),name,responsible:resp,stage,startDate,endDate});p.expanded=true;}
       showToast('Iniciativa agregada ✓');
     } else if(_mode==='edit_sub'){
       const p=getPalanca(_okrId,_palId);
-      if(p){ const s=p.subtasks.find(x=>x.id===_itemId); if(s) Object.assign(s,{name,responsible:resp,stage,startDate,endDate}); }
+      if(p){const s=p.subtasks.find(x=>x.id===_itemId);if(s)Object.assign(s,{name,responsible:resp,stage,startDate,endDate});}
       showToast('Iniciativa actualizada ✓');
     }
   }
-
-  saveState(); closeModal(); renderBoard();
+  saveState();closeModal();renderBoard();
 }
 
-/* ── DELETE ── */
+// ── DELETE ──
 function delOkr(okrId){
   const okr=getOkr(okrId);
-  if(!confirm(`¿Eliminar OKR "${okr?okr.code:''}" y todas sus palancas?`)) return;
+  if(!confirm(`¿Eliminar OKR "${okr?okr.code:''}" y todas sus palancas?`))return;
   data[currentTab]=data[currentTab].filter(x=>x.id!==okrId);
-  saveState(); renderBoard(); showToast('OKR eliminado ✓');
+  saveState();renderBoard();showToast('OKR eliminado ✓');
 }
 function delPalanca(okrId,palId){
-  const okr=getOkr(okrId); if(!okr) return;
-  if(!confirm('¿Eliminar esta palanca y sus iniciativas?')) return;
+  const okr=getOkr(okrId);if(!okr)return;
+  if(!confirm('¿Eliminar esta palanca y sus iniciativas?'))return;
   okr.palancas=okr.palancas.filter(p=>p.id!==palId);
-  saveState(); renderBoard(); showToast('Palanca eliminada ✓');
+  saveState();renderBoard();showToast('Palanca eliminada ✓');
 }
 function delSub(okrId,palId,subId){
-  const p=getPalanca(okrId,palId); if(!p) return;
+  const p=getPalanca(okrId,palId);if(!p)return;
   p.subtasks=p.subtasks.filter(s=>s.id!==subId);
-  saveState(); renderBoard(); showToast('Iniciativa eliminada ✓');
+  saveState();renderBoard();showToast('Iniciativa eliminada ✓');
+}
+function delIncidencia(incId){
+  if(!confirm('¿Eliminar esta incidencia?'))return;
+  data.incidencias=data.incidencias.filter(i=>i.id!==incId);
+  saveState();renderBoard();showToast('Incidencia eliminada ✓');
 }
 
-/* ── MODAL DETENIDO ── */
+// ── STOP MODAL ──
 let _pendingStop=null;
 function _interceptStop(stageId){
-  // Si el destino es 'detenido', pedir motivo antes de confirmar
-  if(stageId==='detenido'){
-    _pendingStop={..._dragData, stageId};
-    document.getElementById('f_stop_reason').value='';
-    document.getElementById('stop_modal_bg').classList.add('open');
-    setTimeout(()=>document.getElementById('f_stop_reason').focus(),80);
-    return true;
-  }
+  if(stageId==='detenido'){_pendingStop={..._dragData,stageId};document.getElementById('f_stop_reason').value='';document.getElementById('stop_modal_bg').classList.add('open');setTimeout(()=>document.getElementById('f_stop_reason').focus(),80);return true;}
   return false;
 }
-function cancelStop(){
-  _pendingStop=null;
-  document.getElementById('stop_modal_bg').classList.remove('open');
-}
+function cancelStop(){_pendingStop=null;document.getElementById('stop_modal_bg').classList.remove('open');}
 function confirmStop(){
   const reason=document.getElementById('f_stop_reason').value.trim();
-  if(!reason){ document.getElementById('f_stop_reason').style.borderColor='#E53935'; showToast('⚠ El motivo es obligatorio'); return; }
+  if(!reason){document.getElementById('f_stop_reason').style.borderColor='#E53935';showToast('⚠ El motivo es obligatorio');return;}
   document.getElementById('f_stop_reason').style.borderColor='';
   document.getElementById('stop_modal_bg').classList.remove('open');
-  if(!_pendingStop) return;
-  const tab=currentTab;
-
+  if(!_pendingStop)return;
   if(_pendingStop._modalSave){
-    // Flujo desde modal de edición
     const ms=_pendingStop._modalSave;
-    const [okrId,palId]=(_pendingStop.parentStr||'').split('|');
-    if(_pendingStop.type==='palanca'&&palId){
-      const p=getPalanca(okrId,palId);
-      if(p) Object.assign(p,{name:ms.name,responsible:ms.resp,stage:'detenido',startDate:ms.startDate,endDate:ms.endDate,stopReason:reason});
-    } else if(_pendingStop.type==='sub'&&palId&&_pendingStop.id){
-      const p=getPalanca(okrId,palId);
-      if(p){ const s=p.subtasks.find(x=>x.id===_pendingStop.id); if(s) Object.assign(s,{name:ms.name,responsible:ms.resp,stage:'detenido',startDate:ms.startDate,endDate:ms.endDate,stopReason:reason}); }
+    if(_pendingStop.type==='incidencia'){
+      if(_pendingStop.id){
+        const inc=data.incidencias.find(i=>i.id===_pendingStop.id);
+        if(inc)Object.assign(inc,{lineaNegocio:ms.linea,stage:'detenido',titulo:ms.titulo,levantadaPor:ms.levantadaPor,asignadoA:ms.asignadoA,impactaEn:ms.impactaEn,startDate:ms.startDate,endDate:ms.endDate,stopReason:reason});
+      } else {
+        data.incidencias.push({id:uid(),lineaNegocio:ms.linea,stage:'detenido',titulo:ms.titulo,levantadaPor:ms.levantadaPor,asignadoA:ms.asignadoA,impactaEn:ms.impactaEn,startDate:ms.startDate,endDate:ms.endDate,stopReason:reason});
+      }
+    } else {
+      const[okrId,palId]=(_pendingStop.parentStr||'').split('|');
+      if(_pendingStop.type==='palanca'&&palId){const p=getPalanca(okrId,palId);if(p)Object.assign(p,{name:ms.name,responsible:ms.resp,stage:'detenido',startDate:ms.startDate,endDate:ms.endDate,stopReason:reason});}
+      else if(_pendingStop.type==='sub'&&palId&&_pendingStop.id){const p=getPalanca(okrId,palId);if(p){const s=p.subtasks.find(x=>x.id===_pendingStop.id);if(s)Object.assign(s,{name:ms.name,responsible:ms.resp,stage:'detenido',startDate:ms.startDate,endDate:ms.endDate,stopReason:reason});}}
     }
   } else {
-    // Flujo desde drag & drop
-    if(_pendingStop.type==='palanca'){
-      const okr=getOkr(_pendingStop.parentStr);
-      if(okr){ const p=okr.palancas.find(x=>x.id===_pendingStop.id); if(p){ p.stage='detenido'; p.stopReason=reason; } }
-    } else if(_pendingStop.type==='sub'){
-      const [okrId,palId]=_pendingStop.parentStr.split('|');
-      const p=getPalanca(okrId,palId);
-      if(p){ const s=p.subtasks.find(x=>x.id===_pendingStop.id); if(s){ s.stage='detenido'; s.stopReason=reason; } }
-    }
+    if(_pendingStop.type==='palanca'){const okr=getOkr(_pendingStop.parentStr);if(okr){const p=okr.palancas.find(x=>x.id===_pendingStop.id);if(p){p.stage='detenido';p.stopReason=reason;}}}
+    else if(_pendingStop.type==='sub'){const[okrId,palId]=_pendingStop.parentStr.split('|');const p=getPalanca(okrId,palId);if(p){const s=p.subtasks.find(x=>x.id===_pendingStop.id);if(s){s.stage='detenido';s.stopReason=reason;}}}
   }
-  detenidoVisible=true;
-  _pendingStop=null;
-  showToast('Movido a Detenido ✓');
-  saveState(); renderBoard();
+  detenidoVisible=true;_pendingStop=null;showToast('Movido a Detenido ✓');saveState();renderBoard();
 }
 
-/* ── DRAG & DROP ── */
+// ── DRAG & DROP ──
 let _dragData=null;
-function onDragStart(e,id,type,parentStr){
-  _dragData={id,type,parentStr};
-  e.dataTransfer.effectAllowed='move';
-  e.dataTransfer.setData('text/plain',id);
-  e.stopPropagation();
-  setTimeout(()=>{ const r=e.target.closest('.init-row'); if(r) r.classList.add('dragging'); },0);
-}
-function onDragEnd(e){
-  document.querySelectorAll('.dragging').forEach(r=>r.classList.remove('dragging'));
-  document.querySelectorAll('.drag-over').forEach(el=>el.classList.remove('drag-over'));
-  _dragData=null;
-}
+function onDragStart(e,id,type,parentStr){_dragData={id,type,parentStr};e.dataTransfer.effectAllowed='move';e.dataTransfer.setData('text/plain',id);e.stopPropagation();setTimeout(()=>{const r=e.target.closest('.init-row');if(r)r.classList.add('dragging');},0);}
+function onDragEnd(e){document.querySelectorAll('.dragging').forEach(r=>r.classList.remove('dragging'));document.querySelectorAll('.drag-over').forEach(el=>el.classList.remove('drag-over'));_dragData=null;}
 function _applyStageChange(stageId){
-  if(!_dragData) return;
-  if(_interceptStop(stageId)) return; // modal de motivo
+  if(!_dragData)return;
+  if(_interceptStop(stageId))return;
   const st=STAGES.find(s=>s.id===stageId)||STAGE_STOP;
-  const tab=currentTab;
-  if(_dragData.type==='palanca'){
-    const okr=getOkr(_dragData.parentStr);
-    if(okr){ const p=okr.palancas.find(x=>x.id===_dragData.id); if(p&&p.stage!==stageId){ p.stage=stageId; showToast(`Movido a ${st.label} ✓`); saveState(); renderBoard(); } }
-  } else if(_dragData.type==='sub'){
-    const [okrId,palId]=_dragData.parentStr.split('|');
-    const p=getPalanca(okrId,palId);
-    if(p){ const s=p.subtasks.find(x=>x.id===_dragData.id); if(s&&s.stage!==stageId){ s.stage=stageId; showToast(`Movido a ${st.label} ✓`); saveState(); renderBoard(); } }
-  }
+  if(_dragData.type==='palanca'){const okr=getOkr(_dragData.parentStr);if(okr){const p=okr.palancas.find(x=>x.id===_dragData.id);if(p&&p.stage!==stageId){p.stage=stageId;showToast(`Movido a ${st.label} ✓`);saveState();renderBoard();}}}
+  else if(_dragData.type==='sub'){const[okrId,palId]=_dragData.parentStr.split('|');const p=getPalanca(okrId,palId);if(p){const s=p.subtasks.find(x=>x.id===_dragData.id);if(s&&s.stage!==stageId){s.stage=stageId;showToast(`Movido a ${st.label} ✓`);saveState();renderBoard();}}}
 }
-function onDragOver(e,stageId){ e.preventDefault(); e.dataTransfer.dropEffect='move'; document.querySelectorAll('.gh-stage').forEach(el=>el.classList.remove('drag-over')); const el=document.getElementById('gh-'+stageId); if(el) el.classList.add('drag-over'); }
-function onDragLeave(e){ e.currentTarget.classList.remove('drag-over'); }
-function onDrop(e,stageId){ e.preventDefault(); document.querySelectorAll('.drag-over').forEach(el=>el.classList.remove('drag-over')); _applyStageChange(stageId); }
-function onStageOver(e,stageId){ e.preventDefault(); e.stopPropagation(); e.dataTransfer.dropEffect='move'; document.querySelectorAll('.ir-stage.drag-over').forEach(el=>el.classList.remove('drag-over')); e.currentTarget.classList.add('drag-over'); }
-function onStageLeave(e){ e.currentTarget.classList.remove('drag-over'); }
-function onStageDrop(e,stageId){ e.preventDefault(); e.stopPropagation(); document.querySelectorAll('.drag-over').forEach(el=>el.classList.remove('drag-over')); _applyStageChange(stageId); }
+function onDragOver(e,stageId){e.preventDefault();e.dataTransfer.dropEffect='move';document.querySelectorAll('.gh-stage').forEach(el=>el.classList.remove('drag-over'));const el=document.getElementById('gh-'+stageId);if(el)el.classList.add('drag-over');}
+function onDragLeave(e){e.currentTarget.classList.remove('drag-over');}
+function onDrop(e,stageId){e.preventDefault();document.querySelectorAll('.drag-over').forEach(el=>el.classList.remove('drag-over'));_applyStageChange(stageId);}
+function onStageOver(e,stageId){e.preventDefault();e.stopPropagation();e.dataTransfer.dropEffect='move';document.querySelectorAll('.ir-stage.drag-over').forEach(el=>el.classList.remove('drag-over'));e.currentTarget.classList.add('drag-over');}
+function onStageLeave(e){e.currentTarget.classList.remove('drag-over');}
+function onStageDrop(e,stageId){e.preventDefault();e.stopPropagation();document.querySelectorAll('.drag-over').forEach(el=>el.classList.remove('drag-over'));_applyStageChange(stageId);}
 
-/* ── PERSISTENCE ── */
-function saveState(){ try{ localStorage.setItem(KEY,JSON.stringify(data)); }catch(e){} }
-function loadState(){ const r=localStorage.getItem(KEY); if(!r) return false; try{ data=JSON.parse(r); return true; }catch(e){ localStorage.removeItem(KEY); return false; } }
-function resetData(){
-  if(!confirm('¿Restablecer todos los datos al estado inicial?')) return;
-  localStorage.removeItem(KEY);
-  data={compras:JSON.parse(JSON.stringify(SAMPLE_COMPRAS)),ventas:JSON.parse(JSON.stringify(SAMPLE_VENTAS))};
-  renderBoard(); showToast('Restablecido ✓');
-}
+// ── PERSISTENCE ──
+function saveState(){try{localStorage.setItem(KEY,JSON.stringify(data));}catch(e){}}
+function loadState(){const r=localStorage.getItem(KEY);if(!r)return false;try{data=JSON.parse(r);return true;}catch(e){localStorage.removeItem(KEY);return false;}}
 
-/* ── TOAST ── */
+// ── TOAST ──
 let _tT=null;
-function showToast(msg){ const t=document.getElementById('toast'); t.textContent=msg; t.classList.add('show'); clearTimeout(_tT); _tT=setTimeout(()=>t.classList.remove('show'),2300); }
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(_tT);_tT=setTimeout(()=>t.classList.remove('show'),2300);}
 
-/* ── KEYBOARD ── */
-document.getElementById('modal_bg').addEventListener('click',e=>{ if(e.target===e.currentTarget) closeModal(); });
-document.getElementById('stop_modal_bg').addEventListener('click',e=>{ if(e.target===e.currentTarget) cancelStop(); });
-document.addEventListener('keydown',e=>{ if(e.key==='Escape'){ closeModal(); closePanel(); cancelStop(); } if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)) saveItem(); });
+// ── KEYBOARD ──
+document.getElementById('modal_bg').addEventListener('click',e=>{if(e.target===e.currentTarget)closeModal();});
+document.getElementById('stop_modal_bg').addEventListener('click',e=>{if(e.target===e.currentTarget)cancelStop();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeModal();closePanel();cancelStop();}if(e.key==='Enter'&&(e.ctrlKey||e.metaKey))saveItem();});
 
-/* ── SAMPLE DATA ── */
-const SAMPLE_COMPRAS = [
-  {
-    id:'okr_c1', code:'C1', expanded:true,
-    name:'Conversión Lead → Lead SQL / Oportunidad Compra',
-    meta:'3.0%', actual:'1.5%', responsible:'Maryorin Vivas Macedo',
-    palancas:[
-      { id:'c1p1', name:'Palanca C1.1 – Contactabilidad Global de Leads de Compra', responsible:'Jose Figueroa', stage:'ejecucion', startDate:'2026-01-15', endDate:'2026-06-30', expanded:false, subtasks:[
-        { id:'c1p1s1', name:'Cadencias de contacto automáticas multicanal (email, WhatsApp, SMS)',        responsible:'', stage:'porhacer',   startDate:'2026-05-25', endDate:'2026-06-05' },
-        { id:'c1p1s2', name:'OTP al inicio del flujo de compra para validar solo números reales',         responsible:'', stage:'finalizado', startDate:'2026-03-23', endDate:'2026-05-08' },
-        { id:'c1p1s3', name:'Primer contacto automático desde Llaima en Compra (iniciativa con Paula)',   responsible:'', stage:'porhacer',   startDate:'2026-05-25', endDate:'2026-06-12' },
-      ]},
-      { id:'c1p2', name:'Palanca C1.2 – Tiempo Promedio de Primer Contacto (Leads Compra)', responsible:'Jose Figueroa', stage:'monitoreo', startDate:'2026-01-15', endDate:'2026-06-30', expanded:false, subtasks:[
-        { id:'c1p2s1', name:'Reasignación Express: reasignación automática de leads sin contacto al superar SLA', responsible:'', stage:'porhacer',  startDate:'2026-05-25', endDate:'2026-06-12' },
-        { id:'c1p2s2', name:'Monitoreo de colas y priorización de leads categoría Muy Alta y Alta',               responsible:'', stage:'ejecucion', startDate:'2026-05-11', endDate:'2026-05-29' },
-      ]},
-      { id:'c1p3', name:'Palanca C1.3 – Bajar duplicados (Regla de validación para descartar automáticamente estos leads)', responsible:'', stage:'definicion', startDate:'2026-03-01', endDate:'', expanded:false, subtasks:[] },
-      { id:'c1p4', name:'Palanca C1.4 – Detectar clientes falsos (nombre, cantidad de leads vs patentes)', responsible:'', stage:'porhacer', startDate:'', endDate:'', expanded:false, subtasks:[] },
-      { id:'c1p5', name:'Palanca C1.5 – Optimización de la lista negra', responsible:'', stage:'porhacer', startDate:'', endDate:'', expanded:false, subtasks:[] },
-      { id:'c1p6', name:'Palanca C1.6 – Comunicación del proceso de tasación comercial desde Llaima (Material para Compras y Ventas)', responsible:'Jose Figueroa', stage:'definicion', startDate:'2026-04-01', endDate:'', expanded:false, subtasks:[] },
-    ]
-  },
-  {
-    id:'okr_c2', code:'C2', expanded:true,
-    name:'Conversión Lead → Cita de Inspección Completada',
-    meta:'40%', actual:'32%', responsible:'Maryorin Vivas Macedo',
-    palancas:[
-      { id:'c2p1', name:'Palanca C2.1 – Validación y Seguimiento de Citas de Inspección desde el Lead (completada)', responsible:'Jose Figueroa', stage:'monitoreo', startDate:'2026-01-01', endDate:'2026-06-30', expanded:false, subtasks:[
-        { id:'c2p1s1', name:'Monitoreo de citas agendadas y atención de leads',                                                    responsible:'', stage:'ejecucion', startDate:'2026-05-18', endDate:'2026-05-29' },
-        { id:'c2p1s2', name:'Lead Scoring Predictivo: análisis del tipo de cliente y auto con mayor conversión en compra',         responsible:'', stage:'porhacer',  startDate:'2026-05-25', endDate:'2026-06-05' },
-        { id:'c2p1s3', name:'Flujo automatizado de confirmación + recordatorio cita inspección (WhatsApp + email)',                responsible:'', stage:'porhacer',  startDate:'2026-05-25', endDate:'2026-06-19' },
-        { id:'c2p1s4', name:'Panel de citas de inspección del día por jefe de sucursal (visibilidad tiempo real)',                 responsible:'', stage:'porhacer',  startDate:'2026-06-01', endDate:'2026-07-03' },
-      ]},
-      { id:'c2p2', name:'Palanca C2.2 – Capacitación y Auditoría de Protocolos en Llamadas de Inspección', responsible:'Jose Figueroa', stage:'porhacer', startDate:'', endDate:'', expanded:false, subtasks:[
-        { id:'c2p2s1', name:'Capacitación y auditoría de protocolos en llamadas de inspección basada en éxito',             responsible:'', stage:'porhacer', startDate:'2026-05-25', endDate:'2026-06-05' },
-        { id:'c2p2s2', name:'Análisis de llamadas con IA para detectar factores de éxito en conversión de inspección',      responsible:'', stage:'porhacer', startDate:'2026-05-25', endDate:'2026-06-19' },
-        { id:'c2p2s3', name:'Dashboard de rendimiento individual por asesor en llamadas de compra (inspección)',             responsible:'', stage:'porhacer', startDate:'2026-06-08', endDate:'2026-06-26' },
-      ]},
-    ]
-  },
+// ── SAMPLE DATA ──
+const SAMPLE_COMPRAS=[
+  {id:'okr_c1',code:'C1',expanded:true,name:'Conversión Lead → Lead SQL / Oportunidad Compra',meta:'3.0%',actual:'1.5%',responsible:'Maryorin Vivas Macedo',palancas:[
+    {id:'c1p1',name:'Palanca C1.1 – Contactabilidad Global de Leads de Compra',responsible:'Jose Figueroa',stage:'ejecucion',startDate:'2026-01-15',endDate:'2026-06-30',expanded:false,subtasks:[
+      {id:'c1p1s1',name:'Cadencias de contacto automáticas multicanal (email, WhatsApp, SMS)',responsible:'',stage:'porhacer',startDate:'2026-05-25',endDate:'2026-06-05'},
+      {id:'c1p1s2',name:'OTP al inicio del flujo de compra para validar solo números reales',responsible:'',stage:'finalizado',startDate:'2026-03-23',endDate:'2026-05-08'},
+      {id:'c1p1s3',name:'Primer contacto automático desde Llaima en Compra (iniciativa con Paula)',responsible:'',stage:'porhacer',startDate:'2026-05-25',endDate:'2026-06-12'},
+    ]},
+    {id:'c1p2',name:'Palanca C1.2 – Tiempo Promedio de Primer Contacto (Leads Compra)',responsible:'Jose Figueroa',stage:'monitoreo',startDate:'2026-01-15',endDate:'2026-06-30',expanded:false,subtasks:[
+      {id:'c1p2s1',name:'Reasignación Express: reasignación automática de leads sin contacto al superar SLA',responsible:'',stage:'porhacer',startDate:'2026-05-25',endDate:'2026-06-12'},
+      {id:'c1p2s2',name:'Monitoreo de colas y priorización de leads categoría Muy Alta y Alta',responsible:'',stage:'ejecucion',startDate:'2026-05-11',endDate:'2026-05-29'},
+    ]},
+    {id:'c1p3',name:'Palanca C1.3 – Bajar duplicados (Regla de validación para descartar automáticamente estos leads)',responsible:'',stage:'definicion',startDate:'2026-03-01',endDate:'',expanded:false,subtasks:[]},
+    {id:'c1p4',name:'Palanca C1.4 – Detectar clientes falsos (nombre, cantidad de leads vs patentes)',responsible:'',stage:'porhacer',startDate:'',endDate:'',expanded:false,subtasks:[]},
+    {id:'c1p5',name:'Palanca C1.5 – Optimización de la lista negra',responsible:'',stage:'porhacer',startDate:'',endDate:'',expanded:false,subtasks:[]},
+    {id:'c1p6',name:'Palanca C1.6 – Comunicación del proceso de tasación comercial desde Llaima',responsible:'Jose Figueroa',stage:'definicion',startDate:'2026-04-01',endDate:'',expanded:false,subtasks:[]},
+  ]},
+  {id:'okr_c2',code:'C2',expanded:true,name:'Conversión Lead → Cita de Inspección Completada',meta:'40%',actual:'32%',responsible:'Maryorin Vivas Macedo',palancas:[
+    {id:'c2p1',name:'Palanca C2.1 – Validación y Seguimiento de Citas de Inspección desde el Lead',responsible:'Jose Figueroa',stage:'monitoreo',startDate:'2026-01-01',endDate:'2026-06-30',expanded:false,subtasks:[
+      {id:'c2p1s1',name:'Monitoreo de citas agendadas y atención de leads',responsible:'',stage:'ejecucion',startDate:'2026-05-18',endDate:'2026-05-29'},
+      {id:'c2p1s2',name:'Lead Scoring Predictivo: análisis del tipo de cliente y auto con mayor conversión',responsible:'',stage:'porhacer',startDate:'2026-05-25',endDate:'2026-06-05'},
+      {id:'c2p1s3',name:'Flujo automatizado de confirmación + recordatorio cita inspección (WhatsApp + email)',responsible:'',stage:'porhacer',startDate:'2026-05-25',endDate:'2026-06-19'},
+      {id:'c2p1s4',name:'Panel de citas de inspección del día por jefe de sucursal (visibilidad tiempo real)',responsible:'',stage:'porhacer',startDate:'2026-06-01',endDate:'2026-07-03'},
+    ]},
+    {id:'c2p2',name:'Palanca C2.2 – Capacitación y Auditoría de Protocolos en Llamadas de Inspección',responsible:'Jose Figueroa',stage:'porhacer',startDate:'',endDate:'',expanded:false,subtasks:[
+      {id:'c2p2s1',name:'Capacitación y auditoría de protocolos basada en éxito',responsible:'',stage:'porhacer',startDate:'2026-05-25',endDate:'2026-06-05'},
+      {id:'c2p2s2',name:'Análisis de llamadas con IA para detectar factores de éxito en conversión',responsible:'',stage:'porhacer',startDate:'2026-05-25',endDate:'2026-06-19'},
+      {id:'c2p2s3',name:'Dashboard de rendimiento individual por asesor en llamadas de compra',responsible:'',stage:'porhacer',startDate:'2026-06-08',endDate:'2026-06-26'},
+    ]},
+  ]},
+];
+const SAMPLE_VENTAS=[
+  {id:'okr_v1',code:'V1',expanded:true,name:'Conversión Lead → Lead SQL / Oportunidad Venta',meta:'10%',actual:'5.60%',responsible:'Maryorin Vivas Macedo',palancas:[
+    {id:'v1p1',name:'V1.1 – Conversión Lead con VPP → Lead SQL con VPP / Oportunidad Venta con VPP',responsible:'Yerko Pino',stage:'porhacer',startDate:'',endDate:'',expanded:false,stopReason:'',subtasks:[
+      {id:'v1p1s1',name:'Flujo diferenciado VPP: enrutamiento automático a asesor especializado en VPP',responsible:'',stage:'porhacer',startDate:'2026-06-01',endDate:'2026-06-12'},
+    ]},
+    {id:'v1p2',name:'V1.2 – Conversión Lead SQL Segmento + VPP (Flujo y Cadencia Exclusiva)',responsible:'Yerko Pino',stage:'porhacer',startDate:'',endDate:'',expanded:false,stopReason:'',subtasks:[
+      {id:'v1p2s1',name:'Flujo exclusivo para leads Segmento con VPP (Visualización en panel)',responsible:'',stage:'ejecucion',startDate:'2026-06-01',endDate:''},
+      {id:'v1p2s2',name:'Segmentación de leads por tipo y paneles de trabajo por grupos de foco',responsible:'',stage:'porhacer',startDate:'2026-05-25',endDate:'2026-05-29'},
+      {id:'v1p2s3',name:'Panel exclusivo de seguimiento comercial (jefes, supervisores, gerentes)',responsible:'',stage:'porhacer',startDate:'2026-06-01',endDate:'2026-06-26'},
+    ]},
+    {id:'v1p3',name:'V1.3 – Conversión Lead SQL + Financiamiento (Oportunidad de Venta)',responsible:'Yerko Pino',stage:'porhacer',startDate:'',endDate:'',expanded:false,stopReason:'',subtasks:[
+      {id:'v1p3s1',name:'Asignación directa al asesor financiero desde que el lead declara interés',responsible:'',stage:'porhacer',startDate:'2026-05-25',endDate:'2026-06-05'},
+      {id:'v1p3s2',name:'Apertura de motivos de descarte para dar feedback estructurado a Marketing',responsible:'',stage:'porhacer',startDate:'2026-05-25',endDate:'2026-06-05'},
+      {id:'v1p3s3',name:'Follow-up automatizado de financiamiento con simulación de cuotas personalizada',responsible:'',stage:'porhacer',startDate:'2026-06-15',endDate:'2026-07-03'},
+    ]},
+    {id:'v1p4',name:'V1.4 – Política comercial para segmento de clientes y VPP',responsible:'Yerko Pino',stage:'porhacer',startDate:'',endDate:'',expanded:false,stopReason:'',subtasks:[
+      {id:'v1p4s1',name:'Diseño e implementación de política comercial segmentada por perfil de cliente + VPP',responsible:'',stage:'ejecucion',startDate:'2026-05-18',endDate:'2026-06-12'},
+    ]},
+    {id:'v1p5',name:'V1.5 – Agregar al correo de Asignación de Cliente Potencial el Segmento de valor',responsible:'Yerko Pino',stage:'porhacer',startDate:'',endDate:'',expanded:false,stopReason:'',subtasks:[]},
+  ]},
+  {id:'okr_v2',code:'V2',expanded:true,name:'Conversión Lead → Cita de Venta Completada',meta:'20%',actual:'10.39%',responsible:'Maryorin Vivas Macedo',palancas:[
+    {id:'v2p1',name:'V2.1 – Automatización del Flujo de Confirmación y Recordatorio de Cita',responsible:'Maryorin Vivas Macedo',stage:'porhacer',startDate:'',endDate:'',expanded:false,stopReason:'',subtasks:[
+      {id:'v2p1s1',name:'Análisis del perfil de autos más vendidos y clientes que más compran → insights a Marketing',responsible:'',stage:'porhacer',startDate:'2026-05-25',endDate:'2026-06-05'},
+      {id:'v2p1s2',name:'Automatización flujo de confirmación + recordatorio de cita de venta',responsible:'',stage:'porhacer',startDate:'2026-05-25',endDate:'2026-06-19'},
+    ]},
+    {id:'v2p2',name:'V2.2 – Optimización del flujo de descarte del lead con cita',responsible:'Maryorin Vivas Macedo',stage:'porhacer',startDate:'',endDate:'',expanded:false,stopReason:'',subtasks:[
+      {id:'v2p2s1',name:'Flujo inteligente: antes de descartar lead con cita, validar si el cliente asistió a sucursal',responsible:'',stage:'porhacer',startDate:'2026-05-25',endDate:'2026-06-12'},
+    ]},
+    {id:'v2p3',name:'V2.3 – Incorporar motivos de cancelación de la cita',responsible:'Maryorin Vivas Macedo',stage:'porhacer',startDate:'',endDate:'',expanded:false,stopReason:'',subtasks:[
+      {id:'v2p3s1',name:'Captura y categorización obligatoria del motivo de no asistencia al cancelar lead con cita',responsible:'',stage:'porhacer',startDate:'2026-05-25',endDate:'2026-06-12'},
+      {id:'v2p3s2',name:'Dashboard de análisis de motivos de cancelación con feedback a Marketing y Comercial',responsible:'',stage:'porhacer',startDate:'2026-06-08',endDate:'2026-06-26'},
+    ]},
+    {id:'v2p4',name:'V2.4 – Expansión a Sucursales + Rutina Diaria Jefe de Sucursal',responsible:'Yerko Pino',stage:'porhacer',startDate:'',endDate:'',expanded:false,stopReason:'',subtasks:[
+      {id:'v2p4s1',name:'Expansión a todas las sucursales (2 zonas/semana) + rutina jefe + habilitación canal web',responsible:'',stage:'ejecucion',startDate:'2026-05-18',endDate:'2026-05-29'},
+      {id:'v2p4s2',name:'Reporte matutino automático al jefe de sucursal con las citas del día (desde CRM, tiempo real)',responsible:'',stage:'ejecucion',startDate:'2026-05-18',endDate:'2026-06-12'},
+    ]},
+    {id:'v2p5',name:'V2.5 – Diseño de estrategia y propuesta de valor para clientes con citas agendadas',responsible:'Yerko Pino',stage:'porhacer',startDate:'',endDate:'',expanded:false,stopReason:'',subtasks:[
+      {id:'v2p5s1',name:'Diseño de estrategia de experiencia diferenciada para clientes con cita de venta agendada',responsible:'',stage:'porhacer',startDate:'2026-06-01',endDate:'2026-06-26'},
+      {id:'v2p5s2',name:'Material digital pre-cita: ficha del auto con fotos HD',responsible:'',stage:'porhacer',startDate:'2026-06-01',endDate:'2026-07-03'},
+    ]},
+  ]},
+];
+const SAMPLE_INCIDENCIAS=[
+  {id:'inc1',lineaNegocio:'compras',stage:'ejecucion',titulo:'SLA de primer contacto superado en leads de alta prioridad',levantadaPor:'Maryorin Vivas Macedo',asignadoA:'Jose Figueroa',impactaEn:'C1.2 – Tiempo Promedio de Primer Contacto',startDate:'2026-05-10',endDate:'2026-05-31',stopReason:''},
+  {id:'inc2',lineaNegocio:'compras',stage:'definicion',titulo:'Leads duplicados ingresando al flujo sin filtro activo',levantadaPor:'Jose Figueroa',asignadoA:'Daniela Godoy',impactaEn:'C1.3 – Bajar duplicados',startDate:'2026-05-15',endDate:'2026-06-15',stopReason:''},
+  {id:'inc3',lineaNegocio:'ventas',stage:'porhacer',titulo:'Clientes no confirman citas de venta por falta de recordatorio automático',levantadaPor:'Yerko Pino',asignadoA:'Maryorin Vivas Macedo',impactaEn:'V2.1 – Automatización del Flujo de Confirmación',startDate:'2026-05-20',endDate:'2026-06-30',stopReason:''},
+  {id:'inc4',lineaNegocio:'ventas',stage:'monitoreo',titulo:'Asesores sin acceso al segmento VPP del cliente en la vista de CRM',levantadaPor:'Yerko Pino',asignadoA:'Gonzalo Cortes',impactaEn:'V1.1 – Conversión Lead con VPP',startDate:'2026-05-01',endDate:'2026-05-25',stopReason:''},
 ];
 
-const SAMPLE_VENTAS = [
-  {
-    id:'okr_v1', code:'V1', expanded:true,
-    name:'Conversión Lead → Lead SQL / Oportunidad Venta',
-    meta:'10%', actual:'5.60%', responsible:'Maryorin Vivas Macedo',
-    palancas:[
-      { id:'v1p1', name:'V1.1 – Conversión Lead con VPP → Lead SQL con VPP / Oportunidad Venta con VPP', responsible:'Yerko Pino', stage:'porhacer', startDate:'', endDate:'', expanded:false, stopReason:'', subtasks:[
-        { id:'v1p1s1', name:'Flujo diferenciado VPP: enrutamiento automático a asesor especializado en VPP', responsible:'', stage:'porhacer', startDate:'2026-06-01', endDate:'2026-06-12' },
-      ]},
-      { id:'v1p2', name:'V1.2 – Conversión Lead SQL (Oportunidad de Venta) Segmento + VPP (Flujo y Cadencia Exclusiva)', responsible:'Yerko Pino', stage:'porhacer', startDate:'', endDate:'', expanded:false, stopReason:'', subtasks:[
-        { id:'v1p2s1', name:'Flujo exclusivo para leads Segmento con VPP (Visualización en panel)',                responsible:'', stage:'ejecucion', startDate:'2026-06-01', endDate:'' },
-        { id:'v1p2s2', name:'Segmentación de leads por tipo y paneles de trabajo por grupos de foco',              responsible:'', stage:'porhacer',  startDate:'2026-05-25', endDate:'2026-05-29' },
-        { id:'v1p2s3', name:'Panel exclusivo de seguimiento comercial (jefes, supervisores, gerentes)',            responsible:'', stage:'porhacer',  startDate:'2026-06-01', endDate:'2026-06-26' },
-      ]},
-      { id:'v1p3', name:'V1.3 – Conversión Lead SQL + Financiamiento (Oportunidad de Venta)', responsible:'Yerko Pino', stage:'porhacer', startDate:'', endDate:'', expanded:false, stopReason:'', subtasks:[
-        { id:'v1p3s1', name:'Asignación directa al asesor financiero desde que el lead declara interés en financiamiento', responsible:'', stage:'porhacer', startDate:'2026-05-25', endDate:'2026-06-05' },
-        { id:'v1p3s2', name:'Apertura de motivos de descarte para dar feedback estructurado a Marketing',                  responsible:'', stage:'porhacer', startDate:'2026-05-25', endDate:'2026-06-05' },
-        { id:'v1p3s3', name:'Follow-up automatizado de financiamiento con simulación de cuotas personalizada',             responsible:'', stage:'porhacer', startDate:'2026-06-15', endDate:'2026-07-03' },
-      ]},
-      { id:'v1p4', name:'V1.4 – Política comercial para segmento de clientes y VPP', responsible:'Yerko Pino', stage:'porhacer', startDate:'', endDate:'', expanded:false, stopReason:'', subtasks:[
-        { id:'v1p4s1', name:'Diseño e implementación de política comercial segmentada por perfil de cliente + VPP', responsible:'', stage:'ejecucion', startDate:'2026-05-18', endDate:'2026-06-12' },
-      ]},
-      { id:'v1p5', name:'V1.5 – Agregar al correo de Asignación de Cliente Potencial el Segmento de valor', responsible:'Yerko Pino', stage:'porhacer', startDate:'', endDate:'', expanded:false, stopReason:'', subtasks:[] },
-    ]
-  },
-  {
-    id:'okr_v2', code:'V2', expanded:true,
-    name:'Conversión Lead → Cita de Venta Completada',
-    meta:'20%', actual:'10.39%', responsible:'Maryorin Vivas Macedo',
-    palancas:[
-      { id:'v2p1', name:'V2.1 – Automatización del Flujo de Confirmación y Recordatorio de Cita', responsible:'Maryorin Vivas Macedo', stage:'porhacer', startDate:'', endDate:'', expanded:false, stopReason:'', subtasks:[
-        { id:'v2p1s1', name:'Análisis del perfil de autos más vendidos y clientes que más compran → insights a Marketing',         responsible:'', stage:'porhacer', startDate:'2026-05-25', endDate:'2026-06-05' },
-        { id:'v2p1s2', name:'Automatización flujo de confirmación + recordatorio de cita de venta (elimina dependencia CRM manual)', responsible:'', stage:'porhacer', startDate:'2026-05-25', endDate:'2026-06-19' },
-      ]},
-      { id:'v2p2', name:'V2.2 – Optimización del flujo de descarte del lead con cita (no autocancelar)', responsible:'Maryorin Vivas Macedo', stage:'porhacer', startDate:'', endDate:'', expanded:false, stopReason:'', subtasks:[
-        { id:'v2p2s1', name:'Flujo inteligente: antes de descartar lead con cita, validar si el cliente asistió a sucursal', responsible:'', stage:'porhacer', startDate:'2026-05-25', endDate:'2026-06-12' },
-      ]},
-      { id:'v2p3', name:'V2.3 – Incorporar motivos de cancelación de la cita', responsible:'Maryorin Vivas Macedo', stage:'porhacer', startDate:'', endDate:'', expanded:false, stopReason:'', subtasks:[
-        { id:'v2p3s1', name:'Captura y categorización obligatoria del motivo de no asistencia al cancelar lead con cita', responsible:'', stage:'porhacer', startDate:'2026-05-25', endDate:'2026-06-12' },
-        { id:'v2p3s2', name:'Dashboard de análisis de motivos de cancelación con feedback a Marketing y Comercial',       responsible:'', stage:'porhacer', startDate:'2026-06-08', endDate:'2026-06-26' },
-      ]},
-      { id:'v2p4', name:'V2.4 – Expansión a Sucursales + Rutina Diaria Jefe de Sucursal', responsible:'Yerko Pino', stage:'porhacer', startDate:'', endDate:'', expanded:false, stopReason:'', subtasks:[
-        { id:'v2p4s1', name:'Expansión a todas las sucursales (2 zonas/semana) + rutina jefe + habilitación canal web',              responsible:'', stage:'ejecucion', startDate:'2026-05-18', endDate:'2026-05-29' },
-        { id:'v2p4s2', name:'Reporte matutino automático al jefe de sucursal con las citas del día (desde CRM, tiempo real)',        responsible:'', stage:'ejecucion', startDate:'2026-05-18', endDate:'2026-06-12' },
-      ]},
-      { id:'v2p5', name:'V2.5 – Diseño de estrategia y propuesta de valor para clientes con citas agendadas', responsible:'Yerko Pino', stage:'porhacer', startDate:'', endDate:'', expanded:false, stopReason:'', subtasks:[
-        { id:'v2p5s1', name:'Diseño de estrategia de experiencia diferenciada para clientes con cita de venta agendada', responsible:'', stage:'porhacer', startDate:'2026-06-01', endDate:'2026-06-26' },
-        { id:'v2p5s2', name:'Material digital pre-cita: ficha del auto con fotos HD',                                    responsible:'', stage:'porhacer', startDate:'2026-06-01', endDate:'2026-07-03' },
-      ]},
-    ]
-  },
-];
-
-/* ── INIT ── */
+// ── INIT ──
 const loaded=loadState();
-if(!loaded||!data.compras||!data.compras.length||!data.compras[0].palancas){
-  data={compras:JSON.parse(JSON.stringify(SAMPLE_COMPRAS)),ventas:JSON.parse(JSON.stringify(SAMPLE_VENTAS))};
-} else if(!data.ventas||!data.ventas.length){
-  data.ventas=JSON.parse(JSON.stringify(SAMPLE_VENTAS));
+if(!loaded||!data.compras||!data.compras.length){
+  data={
+    compras:JSON.parse(JSON.stringify(SAMPLE_COMPRAS)),
+    ventas:JSON.parse(JSON.stringify(SAMPLE_VENTAS)),
+    incidencias:JSON.parse(JSON.stringify(SAMPLE_INCIDENCIAS))
+  };
+} else {
+  if(!data.ventas||!data.ventas.length) data.ventas=JSON.parse(JSON.stringify(SAMPLE_VENTAS));
+  if(!data.incidencias) data.incidencias=JSON.parse(JSON.stringify(SAMPLE_INCIDENCIAS));
 }
+renderToolbar();
 renderBoard();
 </script>
 </body>
