@@ -73,6 +73,8 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#eef0f3;color:#333;font-
 .row-acts{display:flex;gap:2px;opacity:0;transition:opacity .15s;flex-shrink:0;margin-top:1px;}
 .ir-resp{padding:8px 8px;border-right:1px solid #edf0f3;display:flex;align-items:flex-start;overflow:hidden;}
 .resp-txt{font-size:10px;color:#555;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ir-consultados{padding:6px 8px;border-right:1px solid #edf0f3;display:flex;align-items:flex-start;overflow:hidden;}
+.consultados-txt{font-size:10px;color:#555;word-break:break-word;line-height:1.4;}
 .ir-stage{padding:5px 5px;border-right:1px solid #edf0f3;display:flex;align-items:center;justify-content:center;}
 .ir-stage:last-child{border-right:none;}
 .sc-active{display:flex;flex-direction:column;align-items:center;gap:2px;padding:5px 7px;border-radius:5px;width:100%;cursor:pointer;transition:filter .15s;}
@@ -291,6 +293,10 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#eef0f3;color:#333;font-
         <input type="text" id="f_resp_otro" placeholder="Nombre y área">
       </div>
       <div class="field">
+        <label>Consultados / Participantes</label>
+        <input type="text" id="f_consultados" placeholder="ej: Juan García, María López…" style="width:100%;padding:6px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px;font-family:inherit;">
+      </div>
+      <div class="field">
         <label>Etapa actual <span style="color:#E53935">*</span></label>
         <select id="f_stage">
           <option value="">— Selecciona etapa —</option>
@@ -493,12 +499,12 @@ function renderBoard(){
 function renderKanban(){
   const tab=currentTab,isC=tab==='compras';
   const detW=detenidoVisible?'1fr':'38px';
-  const cols=isC?`72px 1fr 108px repeat(5,1fr) ${detW}`:`1fr 108px repeat(5,1fr) ${detW}`;
+  const cols=isC?`72px 1fr 108px 150px repeat(5,1fr) ${detW}`:`1fr 108px 150px repeat(5,1fr) ${detW}`;
   const detCnt=countStage('detenido',tab);
   let h='';
   h+=`<div class="grid-header" style="display:grid;grid-template-columns:${cols}">`;
   if(isC)h+=`<div class="gh-cell">OKR</div>`;
-  h+=`<div class="gh-cell">Palanca / Iniciativa</div><div class="gh-cell">Responsable</div>`;
+  h+=`<div class="gh-cell">Palanca / Iniciativa</div><div class="gh-cell">Responsable</div><div class="gh-cell">Consultados</div>`;
   STAGES.forEach(st=>{
     const n=countStage(st.id,tab);
     h+=`<div class="gh-stage" id="gh-${st.id}" style="background:${st.bg};color:${st.color}" onclick="openPanel('${st.id}')" ondragover="onDragOver(event,'${st.id}')" ondragleave="onDragLeave(event)" ondrop="onDrop(event,'${st.id}')">
@@ -551,6 +557,7 @@ function renderPalancaRow(p,okr,cols,isC){
       <button class="act-btn act-del" onclick="delPalanca('${okr.id}','${p.id}')">×</button>
     </div></div>`;
   h+=`<div class="ir-resp"><span class="resp-txt">${escH(shortName(p.responsible))}</span></div>`;
+  h+=`<div class="ir-consultados"><span class="consultados-txt">${escH(p.consultados||'')}` + `</span></div>`;
   const isStop=p.stage==='detenido';
   STAGES.forEach((st,i)=>{
     h+=`<div class="ir-stage" ondragover="onStageOver(event,'${st.id}')" ondragleave="onStageLeave(event)" ondrop="onStageDrop(event,'${st.id}')">`;
@@ -588,6 +595,7 @@ function renderSubRow(sub,okrId,palId,cols,isC){
       <button class="act-btn act-del" onclick="delSub('${okrId}','${palId}','${sub.id}')">×</button>
     </div></div>`;
   h+=`<div class="ir-resp"><span class="resp-txt" style="font-size:9px">${escH(shortName(sub.responsible))}</span></div>`;
+  h+=`<div class="ir-consultados"><span class="consultados-txt">${escH(sub.consultados||'')}` + `</span></div>`;
   const isStopSub=sub.stage==='detenido';
   STAGES.forEach((st,i)=>{
     h+=`<div class="ir-stage" ondragover="onStageOver(event,'${st.id}')" ondragleave="onStageLeave(event)" ondrop="onStageDrop(event,'${st.id}')">`;
@@ -905,6 +913,7 @@ function _resetFields(){
   ['f_resp','f_stage','f_inc_linea','f_inc_stage','f_inc_levanta','f_inc_asigna']
   .forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
   document.getElementById('f_resp_otro_wrap').style.display='none';
+  const fcEl=document.getElementById('f_consultados'); if(fcEl) fcEl.value='';
   document.getElementById('f_inc_levanta_otro_wrap').style.display='none';
   document.getElementById('f_inc_asigna_otro_wrap').style.display='none';
 }
@@ -918,6 +927,7 @@ function onRespChange(){
   document.getElementById('f_resp_otro_wrap').style.display=v==='__otro__'?'':'none';
   if(v==='__otro__')setTimeout(()=>document.getElementById('f_resp_otro').focus(),50);
 }
+function _getConsultados(){ const el=document.getElementById('f_consultados'); return el?el.value.trim():''; }
 function _getResp(){
   const v=document.getElementById('f_resp').value;
   if(!v)return null;
@@ -995,6 +1005,7 @@ function openModalEditPalanca(okrId,palId){
   document.getElementById('f_stage').value=p.stage||'';
   document.getElementById('f_start').value=p.startDate||'';
   document.getElementById('f_end').value=p.endDate||'';
+  const fcPEl=document.getElementById('f_consultados'); if(fcPEl) fcPEl.value=p.consultados||'';
   document.getElementById('modal_bg').classList.add('open');
 }
 function openModalAddSub(okrId,palId){
@@ -1026,6 +1037,7 @@ function openModalEditSub(okrId,palId,subId){
   document.getElementById('f_stage').value=sub.stage||'';
   document.getElementById('f_start').value=sub.startDate||'';
   document.getElementById('f_end').value=sub.endDate||'';
+  const fcSEl=document.getElementById('f_consultados'); if(fcSEl) fcSEl.value=sub.consultados||'';
   document.getElementById('modal_bg').classList.add('open');
 }
 
@@ -1109,6 +1121,7 @@ function saveItem(){
   } else {
     const name=document.getElementById('f_name').value.trim();
     const resp=_getResp();
+    const consultados=_getConsultados();
     const stage=document.getElementById('f_stage').value;
     const startDate=document.getElementById('f_start').value;
     const endDate=document.getElementById('f_end').value;
@@ -1129,19 +1142,19 @@ function saveItem(){
     if(_mode==='add_palanca'){
       const okrId=_okrId||document.getElementById('f_okr_sel').value;
       const okr=getOkr(okrId);if(!okr){showToast('⚠ Selecciona un OKR');return;}
-      okr.palancas.push({id:uid(),name,responsible:resp,stage,startDate,endDate,expanded:false,subtasks:[]});
+      okr.palancas.push({id:uid(),name,responsible:resp,stage,startDate,endDate,consultados,expanded:false,subtasks:[]});
       showToast('Palanca agregada ✓');
     } else if(_mode==='edit_palanca'){
       const p=getPalanca(_okrId,_palId);
-      if(p)Object.assign(p,{name,responsible:resp,stage,startDate,endDate});
+      if(p)Object.assign(p,{name,responsible:resp,stage,startDate,endDate,consultados});
       showToast('Palanca actualizada ✓');
     } else if(_mode==='add_sub'){
       const p=getPalanca(_okrId,_palId);
-      if(p){p.subtasks.push({id:uid(),name,responsible:resp,stage,startDate,endDate});p.expanded=true;}
+      if(p){p.subtasks.push({id:uid(),name,responsible:resp,stage,startDate,endDate,consultados});p.expanded=true;}
       showToast('Iniciativa agregada ✓');
     } else if(_mode==='edit_sub'){
       const p=getPalanca(_okrId,_palId);
-      if(p){const s=p.subtasks.find(x=>x.id===_itemId);if(s)Object.assign(s,{name,responsible:resp,stage,startDate,endDate});}
+      if(p){const s=p.subtasks.find(x=>x.id===_itemId);if(s)Object.assign(s,{name,responsible:resp,stage,startDate,endDate,consultados});}
       showToast('Iniciativa actualizada ✓');
     }
   }
