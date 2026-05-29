@@ -3,7 +3,7 @@
     {
       "id": "okr_c1",
       "code": "C1",
-      "expanded": false,
+      "expanded": true,
       "name": "Conversión Lead → Lead SQL / Oportunidad Compra",
       "meta": "3.0%",
       "actual": "1.5%",
@@ -52,16 +52,16 @@
           "stage": "monitoreo",
           "startDate": "2026-01-15",
           "endDate": "2026-06-30",
-          "expanded": false,
+          "expanded": true,
           "subtasks": [
             {
               "id": "c1p2s1",
               "name": "Reasignación Express: reasignación automática de leads sin contacto al superar SLA",
-              "responsible": "Jose Figueroa",
-              "stage": "porhacer",
+              "responsible": "",
+              "stage": "definicion",
               "startDate": "2026-05-25",
               "endDate": "2026-06-12",
-              "consultados": "Maryorin"
+              "consultados": ""
             },
             {
               "id": "c1p2s2",
@@ -78,11 +78,11 @@
         {
           "id": "c1p3",
           "name": "Palanca C1.3 – Bajar duplicados (Regla de validación para descartar automáticamente estos leads)",
-          "responsible": "Jose Figueroa",
-          "stage": "porhacer",
-          "startDate": "2026-06-01",
-          "endDate": "2026-06-05",
-          "expanded": false,
+          "responsible": "",
+          "stage": "definicion",
+          "startDate": "2026-03-01",
+          "endDate": "",
+          "expanded": true,
           "subtasks": [],
           "consultados": ""
         },
@@ -93,7 +93,7 @@
           "stage": "porhacer",
           "startDate": "",
           "endDate": "",
-          "expanded": false,
+          "expanded": true,
           "subtasks": [],
           "consultados": ""
         },
@@ -104,7 +104,7 @@
           "stage": "porhacer",
           "startDate": "",
           "endDate": "",
-          "expanded": false,
+          "expanded": true,
           "subtasks": [],
           "consultados": ""
         },
@@ -137,7 +137,7 @@
           "stage": "monitoreo",
           "startDate": "2026-01-01",
           "endDate": "2026-06-30",
-          "expanded": true,
+          "expanded": false,
           "subtasks": [
             {
               "id": "c2p1s1",
@@ -227,7 +227,7 @@
           "id": "v1p1",
           "name": "V1.1 – Conversión Lead con VPP → Lead SQL con VPP / Oportunidad Venta con VPP",
           "responsible": "Yerko Pino",
-          "stage": "porhacer",
+          "stage": "definicion",
           "startDate": "2026-05-01",
           "endDate": "2026-12-31",
           "expanded": true,
@@ -239,7 +239,8 @@
               "responsible": "",
               "stage": "porhacer",
               "startDate": "2026-06-01",
-              "endDate": "2026-06-12"
+              "endDate": "2026-06-12",
+              "stopReason": "mientras se priorizará por temperatura"
             }
           ],
           "consultados": ""
@@ -248,7 +249,7 @@
           "id": "v1p2",
           "name": "V1.2 – Conversión Lead SQL Segmento + VPP (Flujo y Cadencia Exclusiva)",
           "responsible": "Yerko Pino",
-          "stage": "porhacer",
+          "stage": "definicion",
           "startDate": "2026-05-01",
           "endDate": "2026-12-31",
           "expanded": true,
@@ -285,7 +286,7 @@
           "id": "v1p3",
           "name": "V1.3 – Conversión Lead SQL + Financiamiento (Oportunidad de Venta)",
           "responsible": "Yerko Pino",
-          "stage": "porhacer",
+          "stage": "definicion",
           "startDate": "2026-05-01",
           "endDate": "2026-12-31",
           "expanded": true,
@@ -331,7 +332,7 @@
           "id": "v1p4",
           "name": "V1.4 – Política comercial para segmento de clientes y VPP",
           "responsible": "Yerko Pino",
-          "stage": "porhacer",
+          "stage": "definicion",
           "startDate": "2026-05-01",
           "endDate": "2026-07-31",
           "expanded": true,
@@ -341,7 +342,7 @@
               "id": "v1p4s1",
               "name": "Diseño de política comercial segmentada por perfil de cliente + VPP",
               "responsible": "Yerko Pino",
-              "stage": "ejecucion",
+              "stage": "definicion",
               "startDate": "2026-05-18",
               "endDate": "2026-06-12",
               "consultados": ""
@@ -360,14 +361,43 @@
         },
         {
           "id": "v1p5",
-          "name": "V1.5 – Agregar al correo de Asignación de Cliente Potencial el Segmento de valor",
+          "name": "V1.5 – Agregar información relevante al correo de Asignación de Cliente Potencial",
           "responsible": "Yerko Pino",
           "stage": "porhacer",
-          "startDate": "",
-          "endDate": "",
-          "expanded": false,
+          "startDate": "2026-05-29",
+          "endDate": "2026-06-30",
+          "expanded": true,
           "stopReason": "",
-          "subtasks": []
+          "subtasks": [
+            {
+              "id": "_72cu8b1",
+              "name": "Agregar SEGMENTO DE VALOR a correo asignación",
+              "responsible": "Maryorin Vivas Macedo",
+              "stage": "porhacer",
+              "startDate": "2026-05-29",
+              "endDate": "2026-06-26",
+              "consultados": ""
+            },
+            {
+              "id": "_vmw00ya",
+              "name": "Agregar VPP a correo asignación",
+              "responsible": "Maryorin Vivas Macedo",
+              "stage": "porhacer",
+              "startDate": "2026-05-29",
+              "endDate": "2026-06-26",
+              "consultados": ""
+            },
+            {
+              "id": "_aupr8zx",
+              "name": "Agregar FINANCIAMIENTO/PREAPROBADO a correo asignación",
+              "responsible": "Maryorin Vivas Macedo",
+              "stage": "porhacer",
+              "startDate": "2026-05-29",
+              "endDate": "2026-06-26",
+              "consultados": ""
+            }
+          ],
+          "consultados": ""
         }
       ]
     },
@@ -394,7 +424,7 @@
               "id": "v2p1s1",
               "name": "Análisis del perfil de autos más vendidos y clientes que más compran → insights a Marketing",
               "responsible": "",
-              "stage": "porhacer",
+              "stage": "definicion",
               "startDate": "2026-05-25",
               "endDate": "2026-06-05"
             },
@@ -463,24 +493,26 @@
           "stage": "porhacer",
           "startDate": "",
           "endDate": "",
-          "expanded": false,
+          "expanded": true,
           "stopReason": "",
           "subtasks": [
             {
               "id": "v2p4s1",
               "name": "Expansión a todas las sucursales (2 zonas/semana) + rutina jefe + habilitación canal web",
-              "responsible": "",
-              "stage": "ejecucion",
+              "responsible": "Yerko Pino",
+              "stage": "monitoreo",
               "startDate": "2026-05-18",
-              "endDate": "2026-05-29"
+              "endDate": "2026-06-30",
+              "consultados": ""
             },
             {
               "id": "v2p4s2",
               "name": "Reporte matutino automático al jefe de sucursal con las citas del día (desde CRM, tiempo real)",
-              "responsible": "",
+              "responsible": "Yerko Pino",
               "stage": "ejecucion",
               "startDate": "2026-05-18",
-              "endDate": "2026-06-12"
+              "endDate": "2026-06-12",
+              "consultados": ""
             }
           ]
         },
