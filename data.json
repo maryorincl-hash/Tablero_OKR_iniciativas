@@ -493,5 +493,18 @@
       ]
     }
   ],
-  "incidencias": []
+  "incidencias": [
+    {
+      "id": "_on7vmvq",
+      "lineaNegocio": "compras",
+      "stage": "definicion",
+      "titulo": "Leads de CHATBOT-IA viene con el campo urgencia vacío",
+      "levantadaPor": "Jose Figueroa",
+      "asignadoA": "Canales Digitales",
+      "impactaEn": "Monitoreo de colas y priorización de leads categoría Muy Alta y Alta",
+      "startDate": "2026-05-27",
+      "endDate": "2026-06-12",
+      "stopReason": ""
+    }
+  ]
 }
