@@ -39,10 +39,11 @@
             {
               "id": "c1p1s3",
               "name": "Primer contacto automático desde Llaima en Compra (iniciativa con Paula)",
-              "responsible": "",
+              "responsible": "Jose Figueroa",
               "stage": "porhacer",
               "startDate": "2026-05-25",
-              "endDate": "2026-06-12"
+              "endDate": "2026-06-12",
+              "consultados": "Pablo Polanco"
             }
           ],
           "stopReason": "eje"
