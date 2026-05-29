@@ -137,13 +137,13 @@
           "stage": "monitoreo",
           "startDate": "2026-01-01",
           "endDate": "2026-06-30",
-          "expanded": true,
+          "expanded": false,
           "subtasks": [
             {
               "id": "c2p1s1",
               "name": "Monitoreo de citas agendadas y atención de leads",
               "responsible": "",
-              "stage": "definicion",
+              "stage": "ejecucion",
               "startDate": "2026-05-18",
               "endDate": "2026-05-29"
             },
@@ -158,11 +158,10 @@
             {
               "id": "c2p1s3",
               "name": "Flujo automatizado de confirmación + recordatorio cita inspección (WhatsApp + email)",
-              "responsible": "Jose Figueroa",
+              "responsible": "",
               "stage": "porhacer",
               "startDate": "2026-05-25",
-              "endDate": "2026-06-19",
-              "consultados": "Pablo Polanco"
+              "endDate": "2026-06-19"
             },
             {
               "id": "c2p1s4",
@@ -229,9 +228,9 @@
           "name": "V1.1 – Conversión Lead con VPP → Lead SQL con VPP / Oportunidad Venta con VPP",
           "responsible": "Yerko Pino",
           "stage": "porhacer",
-          "startDate": "",
-          "endDate": "",
-          "expanded": false,
+          "startDate": "2026-05-01",
+          "endDate": "2026-12-31",
+          "expanded": true,
           "stopReason": "",
           "subtasks": [
             {
@@ -242,7 +241,8 @@
               "startDate": "2026-06-01",
               "endDate": "2026-06-12"
             }
-          ]
+          ],
+          "consultados": ""
         },
         {
           "id": "v1p2",
