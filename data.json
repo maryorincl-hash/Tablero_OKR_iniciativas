@@ -415,8 +415,8 @@
           "name": "V2.1 – Automatización del Flujo de Confirmación y Recordatorio de Cita",
           "responsible": "Maryorin Vivas Macedo",
           "stage": "porhacer",
-          "startDate": "",
-          "endDate": "",
+          "startDate": "2026-05-01",
+          "endDate": "2026-08-31",
           "expanded": true,
           "stopReason": "",
           "subtasks": [
@@ -436,7 +436,8 @@
               "startDate": "2026-05-25",
               "endDate": "2026-06-19"
             }
-          ]
+          ],
+          "consultados": ""
         },
         {
           "id": "v2p2",
