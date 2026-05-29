@@ -3,7 +3,7 @@
     {
       "id": "okr_c1",
       "code": "C1",
-      "expanded": false,
+      "expanded": true,
       "name": "Conversión Lead → Lead SQL / Oportunidad Compra",
       "meta": "3.0%",
       "actual": "1.5%",
