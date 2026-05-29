@@ -251,7 +251,7 @@
           "stage": "porhacer",
           "startDate": "",
           "endDate": "",
-          "expanded": false,
+          "expanded": true,
           "stopReason": "",
           "subtasks": [
             {
@@ -287,7 +287,7 @@
           "stage": "porhacer",
           "startDate": "",
           "endDate": "",
-          "expanded": false,
+          "expanded": true,
           "stopReason": "",
           "subtasks": [
             {
@@ -313,6 +313,15 @@
               "stage": "porhacer",
               "startDate": "2026-06-15",
               "endDate": "2026-07-03"
+            },
+            {
+              "id": "_51r8jx1",
+              "name": "Visualización Lead Preaprobado en Cliente Potencial",
+              "responsible": "Yerko Pino",
+              "stage": "definicion",
+              "startDate": "2026-05-28",
+              "endDate": "2026-06-19",
+              "consultados": "Forum/F&I/Canales Digitales"
             }
           ]
         },
