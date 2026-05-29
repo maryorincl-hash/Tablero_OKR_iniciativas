@@ -1525,7 +1525,8 @@ async function pushToGitHub(){
   if(!ghToken||!currentUser)return;
   setSyncStatus('guardando');
   try{
-    const str=JSON.stringify(data,null,2);const bytes2=new TextEncoder().encode(str);const content=btoa(String.fromCharCode(...bytes2));
+    const str=JSON.stringify(data,null,2);const bytes2=new TextEncoder().encode(str);
+      let content='';const chunkSize=8192;for(let i=0;i<bytes2.length;i+=chunkSize){content+=btoa(String.fromCharCode(...bytes2.slice(i,i+chunkSize)));}
     const body={message:'Actualizado por '+currentUser+' - '+new Date().toLocaleString('es-CL'),content:content};
     if(ghSha)body.sha=ghSha;
     const r=await fetch('https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/'+GH_FILE,
@@ -1543,10 +1544,21 @@ async function pullFromGitHub(){
       {headers:{'Authorization':'token '+ghToken,'Accept':'application/vnd.github.v3+json'}});
     if(r.ok){
       const j=await r.json();ghSha=j.sha;
-      const bytes=new Uint8Array([...atob(j.content)].map(c=>c.charCodeAt(0)));const remote=JSON.parse(new TextDecoder('utf-8').decode(bytes));
+      let remote=null;
+      try{
+        const clean=j.content.replace(/[
+]/g,'');
+        const bytes=new Uint8Array([...atob(clean)].map(c=>c.charCodeAt(0)));
+        remote=JSON.parse(new TextDecoder('utf-8').decode(bytes));
+      }catch(decErr){console.error('pullFromGitHub decode error:',decErr);setSyncStatus('error');return;}
       const hasData=remote&&((remote.compras&&remote.compras.length)||(remote.ventas&&remote.ventas.length));
-      if(hasData){data=remote;localStorage.setItem(KEY,JSON.stringify(data));setSyncStatus('ok');renderBoard();}
-      else{setSyncStatus('ok');}
+      if(hasData){
+        data=remote;localStorage.setItem(KEY,JSON.stringify(data));
+        setSyncStatus('ok');showToast('Datos sincronizados con GitHub');renderBoard();
+      } else {
+        setSyncStatus('ok');
+        console.warn('pullFromGitHub: data.json vacio, manteniendo datos locales');
+      }
     }else{setSyncStatus('error');}
   }catch(e){setSyncStatus('error');}
 }
@@ -1658,7 +1670,10 @@ async function initApp(){
   }
   renderToolbar();
   renderBoard();
-  if(ghToken) await pullFromGitHub();
+  if(ghToken){
+    try{ await pullFromGitHub(); }
+    catch(e){ console.error('initApp pullFromGitHub error:',e); showToast('No se pudo sincronizar con GitHub'); }
+  }
 }
 function showSetupModal(){
   return new Promise(resolve=>{
