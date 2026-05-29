@@ -75,12 +75,13 @@
         {
           "id": "c1p3",
           "name": "Palanca C1.3 – Bajar duplicados (Regla de validación para descartar automáticamente estos leads)",
-          "responsible": "",
+          "responsible": "Jose Figueroa",
           "stage": "definicion",
           "startDate": "2026-03-01",
           "endDate": "",
           "expanded": false,
-          "subtasks": []
+          "subtasks": [],
+          "consultados": ""
         },
         {
           "id": "c1p4",
@@ -209,7 +210,7 @@
     {
       "id": "okr_v1",
       "code": "V1",
-      "expanded": false,
+      "expanded": true,
       "name": "Conversión Lead → Lead SQL / Oportunidad Venta",
       "meta": "10%",
       "actual": "5.60%",
@@ -437,7 +438,7 @@
         {
           "id": "v2p4",
           "name": "V2.4 – Expansión a Sucursales + Rutina Diaria Jefe de Sucursal",
-          "responsible": "Jose Figueroa",
+          "responsible": "Yerko Pino",
           "stage": "porhacer",
           "startDate": "",
           "endDate": "",
@@ -460,13 +461,12 @@
               "startDate": "2026-05-18",
               "endDate": "2026-06-12"
             }
-          ],
-          "consultados": ""
+          ]
         },
         {
           "id": "v2p5",
           "name": "V2.5 – Diseño de estrategia y propuesta de valor para clientes con citas agendadas",
-          "responsible": "Jose Figueroa",
+          "responsible": "Yerko Pino",
           "stage": "porhacer",
           "startDate": "",
           "endDate": "",
@@ -489,8 +489,7 @@
               "startDate": "2026-06-01",
               "endDate": "2026-07-03"
             }
-          ],
-          "consultados": ""
+          ]
         }
       ]
     }
