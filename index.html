@@ -133,6 +133,36 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#eef0f3;color:#333;font-
 .ir-stage.drag-over{background:#e8f0fe!important;outline:2px dashed #4A90D9;outline-offset:-3px;border-radius:5px;}
 .gh-stage.drag-over{outline:2px dashed currentColor;outline-offset:-3px;filter:brightness(.88)!important;}
 .drag-hint{font-size:9px;color:#bbb;padding:4px 16px;background:white;border-bottom:1px solid #eee;text-align:right;}
+
+.exec-summary{background:linear-gradient(135deg,#0f3460 0%,#16213e 100%);color:white;padding:12px 20px;}
+.exec-summary-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.exec-summary-title{font-size:13px;font-weight:700;letter-spacing:.5px;opacity:.9;}
+.exec-summary-toggle{background:rgba(255,255,255,.15);border:none;color:white;padding:3px 10px;border-radius:10px;font-size:11px;cursor:pointer;}
+.exec-summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:10px;}
+.exec-okr-card{background:rgba(255,255,255,.08);border-radius:8px;padding:10px 14px;}
+.exec-okr-top{display:flex;align-items:center;gap:8px;margin-bottom:6px;}
+.exec-okr-badge{background:#FFE082;color:#795000;font-size:9px;font-weight:800;padding:2px 7px;border-radius:8px;}
+.exec-okr-name{font-size:11px;opacity:.85;line-height:1.3;flex:1;}
+.exec-okr-kpi{display:flex;gap:12px;font-size:11px;margin-bottom:6px;}
+.exec-okr-kpi span{opacity:.8;}
+.exec-okr-kpi strong{opacity:1;}
+.exec-progress-bar{height:5px;background:rgba(255,255,255,.2);border-radius:3px;overflow:hidden;}
+.exec-progress-fill{height:100%;border-radius:3px;transition:width .4s;}
+.exec-semaforo{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap;}
+.exec-sem-pill{font-size:9px;padding:2px 7px;border-radius:8px;font-weight:600;}
+/* Modo Comité */
+.comite-view{padding:16px 20px;}
+.comite-okr-block{margin-bottom:20px;border-radius:10px;overflow:hidden;box-shadow:0 1px 6px rgba(0,0,0,.08);}
+.comite-okr-header{background:#0f3460;color:white;padding:10px 16px;display:flex;align-items:center;gap:12px;}
+.comite-okr-code{background:#FFE082;color:#795000;font-size:10px;font-weight:800;padding:3px 9px;border-radius:8px;}
+.comite-okr-name{font-size:13px;font-weight:600;flex:1;}
+.comite-okr-kpi{font-size:11px;opacity:.8;}
+.comite-table{width:100%;border-collapse:collapse;background:white;}
+.comite-table th{background:#f5f7fa;font-size:10px;font-weight:700;color:#666;padding:6px 12px;text-align:left;border-bottom:1px solid #e0e0e0;}
+.comite-table td{padding:8px 12px;font-size:12px;border-bottom:1px solid #f0f0f0;vertical-align:top;}
+.comite-table tr:last-child td{border-bottom:none;}
+.comite-stage-pill{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:600;}
+.comite-notes{font-size:11px;color:#666;font-style:italic;margin-top:2px;}
 .gh-detenido-col{padding:6px 5px;text-align:center;cursor:pointer;border-right:1px solid #dde0e5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;transition:filter .15s;background:#FFF5F5;}
 .gh-detenido-col:last-child{border-right:none;}
 .gh-detenido-col:hover{filter:brightness(.95);}
@@ -207,6 +237,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#eef0f3;color:#333;font-
   <div class="tab" onclick="switchTab('incidencias')">⚠️ Incidencias</div>
 </div>
 
+<div id="exec_summary" style="display:none"></div>
 <div class="stage-bar" id="stage_bar"></div>
 
 <div class="toolbar" id="toolbar">
@@ -214,6 +245,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#eef0f3;color:#333;font-
   <div class="view-toggle">
     <button class="view-btn active" id="vbtn_board" onclick="setView('board')">☰ Tablero</button>
     <button class="view-btn" id="vbtn_gantt" onclick="setView('gantt')">📊 Gantt</button>
+    <button class="view-btn" id="vbtn_comite" onclick="setView('comite')" title="Vista simplificada para reuniones de comité">🎯 Comité</button>
   </div>
 </div>
 
@@ -311,6 +343,10 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#eef0f3;color:#333;font-
       <div class="field-row">
         <div class="field"><label>Fecha inicio</label><input type="date" id="f_start"></div>
         <div class="field"><label>Fecha fin</label><input type="date" id="f_end"></div>
+      </div>
+      <div class="field">
+        <label>📝 Notas / Contexto</label>
+        <textarea id="f_notes" placeholder="Decisiones tomadas, criterio de éxito, dependencias, próximos pasos…" style="width:100%;padding:6px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px;font-family:inherit;height:64px;resize:vertical;box-sizing:border-box;"></textarea>
       </div>
     </div>
 
@@ -504,7 +540,9 @@ function ganttTimeline(sd,ed,stage){
 // ── RENDER DISPATCH ──
 function renderBoard(){
   if(currentView==='gantt'){renderGantt();return;}
-  if(currentTab==='incidencias'){renderIncidencias();return;}
+  if(currentView==='comite'){renderExecSummary();renderComite();return;}
+  if(currentTab==='incidencias'){renderExecSummary();renderIncidencias();return;}
+  renderExecSummary();
   renderKanban();
 }
 
@@ -807,6 +845,78 @@ function renderGantt(){
 function toggleGanttGrp(key){ganttCollapsed[key]=!ganttCollapsed[key];renderGantt();}
 function toggleIncGrp(ln){ganttCollapsed['inc_grp_'+ln]=!ganttCollapsed['inc_grp_'+ln];renderIncidencias();}
 
+
+// ── RESUMEN EJECUTIVO ──
+let execVisible=false;
+function toggleExecSummary(){execVisible=!execVisible;renderExecSummary();}
+function renderExecSummary(){
+  const el=document.getElementById('exec_summary');if(!el)return;
+  const tab=currentTab==='incidencias'?'compras':currentTab;
+  const okrs=data[tab]||[];
+  if(!execVisible){el.style.display='none';return;}
+  el.style.display='';
+  const allStages=[...STAGES,STAGE_STOP];
+  let g='<div class="exec-summary"><div class="exec-summary-header"><span class="exec-summary-title">📊 SQUAD GESTIÓN DE LEADS — Resumen Ejecutivo</span><button class="exec-summary-toggle" onclick="toggleExecSummary()">✕ Cerrar</button></div><div class="exec-summary-grid">';
+  okrs.forEach(okr=>{
+    const allP=okr.palancas||[];
+    const allSub=allP.flatMap(p=>p.subtasks||[]);
+    const allItems=[...allP,...allSub];
+    const total=allItems.length;
+    const fin=allItems.filter(x=>x.stage==='finalizado'||x.stage==='deployed').length;
+    const det=allItems.filter(x=>x.stage==='detenido').length;
+    const pct=total>0?Math.round(fin/total*100):0;
+    const health=det>0?'#ef5350':pct>=70?'#66bb6a':pct>=30?'#ffa726':'#42a5f5';
+    const healthLbl=det>0?'⛔ Bloqueado':pct>=70?'✅ En buen ritmo':pct>=30?'⚠️ En progreso':'🔵 Iniciando';
+    const pctFill=Math.min(pct,100);
+    const stageCounts=allStages.map(s=>{const n=allItems.filter(x=>x.stage===s.id).length;return n>0?`<span class="exec-sem-pill" style="background:${s.bg};color:${s.color}">${s.label}: ${n}</span>`:''}).join('');
+    g+=`<div class="exec-okr-card">
+      <div class="exec-okr-top"><span class="exec-okr-badge">OKR ${escH(okr.code)}</span><span class="exec-okr-name">${escH(okr.name)}</span></div>
+      <div class="exec-okr-kpi"><span>Meta: <strong>${escH(okr.meta||'—')}</strong></span><span>Actual: <strong>${escH(okr.actual||'—')}</strong></span><span style="margin-left:auto;background:${health};color:white;padding:1px 7px;border-radius:8px;font-size:9px;font-weight:700;">${healthLbl}</span></div>
+      <div class="exec-progress-bar"><div class="exec-progress-fill" style="width:${pctFill}%;background:${health}"></div></div>
+      <div style="font-size:9px;opacity:.7;margin:3px 0">${fin}/${total} ítems completados (${pct}%)</div>
+      <div class="exec-semaforo">${stageCounts}</div>
+    </div>`;
+  });
+  g+='</div></div>';
+  el.innerHTML=g;
+}
+
+// ── MODO COMITÉ ──
+function renderComite(){
+  const tab=currentTab==='incidencias'?'compras':currentTab;
+  const okrs=data[tab]||[];
+  const allStages=[...STAGES,STAGE_STOP];
+  const stMap={};allStages.forEach(s=>stMap[s.id]=s);
+  let h='<div class="comite-view">';
+  okrs.forEach(okr=>{
+    h+=`<div class="comite-okr-block">
+      <div class="comite-okr-header">
+        <span class="comite-okr-code">OKR ${escH(okr.code)}</span>
+        <span class="comite-okr-name">${escH(okr.name)}</span>
+        <span class="comite-okr-kpi">Meta: ${escH(okr.meta||'—')} · Actual: ${escH(okr.actual||'—')}</span>
+      </div>
+      <table class="comite-table">
+        <thead><tr><th>Palanca</th><th>Responsable</th><th>Estado</th><th>Fechas</th><th>Notas</th></tr></thead>
+        <tbody>`;
+    (okr.palancas||[]).forEach(p=>{
+      const st=stMap[p.stage]||stMap['porhacer'];
+      const subCount=(p.subtasks||[]).length;
+      const subDone=(p.subtasks||[]).filter(s=>s.stage==='finalizado'||s.stage==='deployed').length;
+      const det=(p.subtasks||[]).filter(s=>s.stage==='detenido').length;
+      h+=`<tr>
+        <td><strong>${escH(p.name)}</strong><br><span style="font-size:10px;color:#888">${subCount} iniciativas · ${subDone} finalizadas${det>0?` · <span style="color:#B71C1C">⛔ ${det} detenida${det>1?'s':''}</span>`:''}</span></td>
+        <td>${escH(p.responsible||'—')}</td>
+        <td><span class="comite-stage-pill" style="background:${st.bg};color:${st.color}">${st.label}</span>${p.stopReason?`<br><span style="font-size:10px;color:#B71C1C">🚫 ${escH(p.stopReason)}</span>`:''}</td>
+        <td style="font-size:11px;white-space:nowrap">${p.startDate?fmtDate(p.startDate):'—'}<br>${p.endDate?fmtDate(p.endDate):'—'}</td>
+        <td style="max-width:200px">${p.notes?`<span style="font-size:11px;color:#444">${escH(p.notes)}</span>`:'<span style="color:#ccc;font-size:11px">—</span>'}</td>
+      </tr>`;
+    });
+    h+='</tbody></table></div>';
+  });
+  h+='</div>';
+  document.getElementById('board').innerHTML=h;
+}
+
 // ── STAGE BAR ──
 function renderStageBar(){
   const tab=currentTab;
@@ -838,7 +948,8 @@ function renderToolbar(){
        <button class="btn" onclick="openModalAddPalanca(null)">+ Nueva palanca</button>
        <button class="btn" onclick="toggleAll()">⊞ Expandir todo</button>
        <button class="btn" onclick="window.print()">🖨 Imprimir</button>
-       <button class="btn" onclick="exportParaClickUp()" style="background:#4466ff;color:white;margin-left:8px;">&#x2B06; Exportar para ClickUp</button>`;
+       <button class="btn" onclick="exportParaClickUp()" style="background:#4466ff;color:white;margin-left:8px;">&#x2B06; Exportar para ClickUp</button>
+       <button class="btn" onclick="execVisible=!execVisible;renderExecSummary()" style="background:#0f3460;color:white;margin-left:4px;">📊 Resumen</button>`;
   }
   h+=`<span id="sync_status" style="margin-left:12px;font-size:12px;color:#666;align-self:center;"></span>
       <span style="margin-left:auto;font-size:12px;background:#f0f0f0;padding:4px 10px;border-radius:12px;display:flex;align-items:center;gap:6px;">
@@ -854,6 +965,7 @@ function setView(view){
   currentView=view;
   document.getElementById('vbtn_board').classList.toggle('active',view==='board');
   document.getElementById('vbtn_gantt').classList.toggle('active',view==='gantt');
+  document.getElementById('vbtn_comite').classList.toggle('active',view==='comite');
   document.getElementById('drag_hint').style.display=(view==='board'&&currentTab!=='incidencias')?'':'none';
   renderBoard();
 }
@@ -891,7 +1003,8 @@ function openPanel(stageId){
   else{items.forEach(it=>{bh+=`<div class="sp-card" style="border-left:3px solid ${st.color}">
     <div class="sp-card-parent">${it._type==='sub'?'↳ Iniciativa de: ':'📌 Palanca de: '}${escH(it._parent)}</div>
     <div class="sp-card-name">${escH(it.name)}</div>
-    <div class="sp-card-meta">${it.responsible?`<span>👤 ${escH(it.responsible)}</span>`:''}${it.startDate||it.endDate?`<span>📅 ${fmtDate(it.startDate)}${it.endDate?' – '+fmtDate(it.endDate):''}</span>`:''}${it.stopReason?`<span style="color:#B71C1C;font-style:italic">🚫 Motivo: ${escH(it.stopReason)}</span>`:''}</div>
+    <div class="sp-card-meta">${it.responsible?`<span>👤 ${escH(it.responsible)}</span>`:''}${it.startDate||it.endDate?`<span>📅 ${fmtDate(it.startDate)}${it.endDate?' – '+fmtDate(it.endDate):''}</span>`:''}${it.stopReason?`<span style="color:#B71C1C;font-style:italic">🚫 Motivo: ${escH(it.stopReason)}</span>`:''}
+    ${it.notes?`<div style="margin-top:4px;font-size:11px;color:#444;background:#f9f9f9;border-radius:4px;padding:5px 8px;">📝 ${escH(it.notes)}</div>`:''}</div>
   </div>`;}); }
   document.getElementById('sp_body').innerHTML=bh;
   document.getElementById('side_panel').classList.add('open');
@@ -932,7 +1045,7 @@ function _showFields(type){
 }
 function _resetFields(){
   ['f_okr_code','f_okr_name','f_okr_meta','f_okr_actual','f_okr_resp',
-   'f_name','f_resp_otro','f_start','f_end',
+   'f_name','f_resp_otro','f_start','f_end','f_notes',
    'f_inc_titulo','f_inc_levanta_otro','f_inc_asigna_otro','f_inc_impacta','f_inc_start','f_inc_end']
   .forEach(id=>{const el=document.getElementById(id);if(el)el.value='';});
   ['f_resp','f_stage','f_inc_linea','f_inc_stage','f_inc_levanta','f_inc_asigna']
@@ -1031,6 +1144,7 @@ function openModalEditPalanca(okrId,palId){
   document.getElementById('f_start').value=p.startDate||'';
   document.getElementById('f_end').value=p.endDate||'';
   const fcPEl=document.getElementById('f_consultados'); if(fcPEl) fcPEl.value=p.consultados||'';
+  const fnPEl=document.getElementById('f_notes'); if(fnPEl) fnPEl.value=p.notes||'';
   document.getElementById('modal_bg').classList.add('open');
 }
 function openModalAddSub(okrId,palId){
@@ -1063,6 +1177,7 @@ function openModalEditSub(okrId,palId,subId){
   document.getElementById('f_start').value=sub.startDate||'';
   document.getElementById('f_end').value=sub.endDate||'';
   const fcSEl=document.getElementById('f_consultados'); if(fcSEl) fcSEl.value=sub.consultados||'';
+  const fnSEl=document.getElementById('f_notes'); if(fnSEl) fnSEl.value=sub.notes||'';
   document.getElementById('modal_bg').classList.add('open');
 }
 
@@ -1147,6 +1262,7 @@ function saveItem(){
     const name=document.getElementById('f_name').value.trim();
     const resp=_getResp();
     const consultados=_getConsultados();
+    const notes=document.getElementById('f_notes')?document.getElementById('f_notes').value.trim():'';
     const stage=document.getElementById('f_stage').value;
     const startDate=document.getElementById('f_start').value;
     const endDate=document.getElementById('f_end').value;
