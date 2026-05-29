@@ -1422,7 +1422,7 @@ function cambiarUsuario(){
   localStorage.removeItem('gh_token');
   location.reload();
 }
-initApp();
+window.addEventListener('load', initApp);
 function exportParaClickUp(){
   const exportData={
     compras:{okrs:(data.compras||[])},
