@@ -106,7 +106,7 @@
           "id": "c1p6",
           "name": "Palanca C1.6 – Comunicación del proceso de tasación comercial desde Llaima",
           "responsible": "Jose Figueroa",
-          "stage": "definicion",
+          "stage": "ejecucion",
           "startDate": "2026-04-01",
           "endDate": "",
           "expanded": false,
@@ -320,10 +320,10 @@
           "id": "v1p4",
           "name": "V1.4 – Política comercial para segmento de clientes y VPP",
           "responsible": "Yerko Pino",
-          "stage": "definicion",
-          "startDate": "2026-05-15",
-          "endDate": "2026-06-30",
-          "expanded": true,
+          "stage": "porhacer",
+          "startDate": "",
+          "endDate": "",
+          "expanded": false,
           "stopReason": "",
           "subtasks": [
             {
@@ -332,20 +332,9 @@
               "responsible": "",
               "stage": "ejecucion",
               "startDate": "2026-05-18",
-              "endDate": "2026-06-12",
-              "consultados": "Comercial/Clientes/MKT/Lead Management"
-            },
-            {
-              "id": "_nct34ua",
-              "name": "Implementación de política comercial segmentada por perfil de cliente + VPP",
-              "responsible": "Yerko Pino",
-              "stage": "porhacer",
-              "startDate": "2026-05-15",
-              "endDate": "2026-06-12",
-              "consultados": "Comercial/Clientes/MKT/Lead Management"
+              "endDate": "2026-06-12"
             }
-          ],
-          "consultados": "Comercial/Clientes/MKT/Lead Management"
+          ]
         },
         {
           "id": "v1p5",
@@ -354,7 +343,7 @@
           "stage": "porhacer",
           "startDate": "",
           "endDate": "",
-          "expanded": true,
+          "expanded": false,
           "stopReason": "",
           "subtasks": []
         }
@@ -449,17 +438,17 @@
           "id": "v2p4",
           "name": "V2.4 – Expansión a Sucursales + Rutina Diaria Jefe de Sucursal",
           "responsible": "Yerko Pino",
-          "stage": "ejecucion",
-          "startDate": "2026-05-01",
-          "endDate": "2026-06-12",
-          "expanded": true,
+          "stage": "porhacer",
+          "startDate": "",
+          "endDate": "",
+          "expanded": false,
           "stopReason": "",
           "subtasks": [
             {
               "id": "v2p4s1",
               "name": "Expansión a todas las sucursales (2 zonas/semana) + rutina jefe + habilitación canal web",
               "responsible": "",
-              "stage": "monitoreo",
+              "stage": "ejecucion",
               "startDate": "2026-05-18",
               "endDate": "2026-05-29"
             },
@@ -471,16 +460,15 @@
               "startDate": "2026-05-18",
               "endDate": "2026-06-12"
             }
-          ],
-          "consultados": ""
+          ]
         },
         {
           "id": "v2p5",
           "name": "V2.5 – Diseño de estrategia y propuesta de valor para clientes con citas agendadas",
           "responsible": "Yerko Pino",
           "stage": "porhacer",
-          "startDate": "2026-05-29",
-          "endDate": "2026-06-19",
+          "startDate": "",
+          "endDate": "",
           "expanded": false,
           "stopReason": "",
           "subtasks": [
@@ -500,19 +488,7 @@
               "startDate": "2026-06-01",
               "endDate": "2026-07-03"
             }
-          ],
-          "consultados": ""
-        },
-        {
-          "id": "_x8fberx",
-          "name": "Dejar por defecto Origen Agendamiento a Citas Creadas por Asesor",
-          "responsible": "Yerko Pino",
-          "stage": "porhacer",
-          "startDate": "2026-05-29",
-          "endDate": "2026-06-12",
-          "consultados": "",
-          "expanded": false,
-          "subtasks": []
+          ]
         }
       ]
     }
