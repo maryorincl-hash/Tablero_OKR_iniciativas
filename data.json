@@ -493,8 +493,8 @@
           "name": "V2.4 – Expansión a Sucursales + Rutina Diaria Jefe de Sucursal",
           "responsible": "Yerko Pino",
           "stage": "porhacer",
-          "startDate": "",
-          "endDate": "",
+          "startDate": "2026-05-01",
+          "endDate": "2026-07-31",
           "expanded": true,
           "stopReason": "",
           "subtasks": [
@@ -516,7 +516,8 @@
               "endDate": "2026-06-12",
               "consultados": ""
             }
-          ]
+          ],
+          "consultados": ""
         },
         {
           "id": "v2p5",
