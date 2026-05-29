@@ -466,7 +466,7 @@
         {
           "id": "v2p5",
           "name": "V2.5 – Diseño de estrategia y propuesta de valor para clientes con citas agendadas",
-          "responsible": "Yerko Pino",
+          "responsible": "Jose Figueroa",
           "stage": "porhacer",
           "startDate": "",
           "endDate": "",
@@ -489,7 +489,8 @@
               "startDate": "2026-06-01",
               "endDate": "2026-07-03"
             }
-          ]
+          ],
+          "consultados": ""
         }
       ]
     }
