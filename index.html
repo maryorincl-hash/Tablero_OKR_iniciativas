@@ -1526,7 +1526,8 @@ async function pushToGitHub(){
   setSyncStatus('guardando');
   try{
     const str=JSON.stringify(data,null,2);const bytes2=new TextEncoder().encode(str);
-      let content='';const chunkSize=8192;for(let i=0;i<bytes2.length;i+=chunkSize){content+=btoa(String.fromCharCode(...bytes2.slice(i,i+chunkSize)));}
+      let binStr='';for(let i=0;i<bytes2.length;i++)binStr+=String.fromCharCode(bytes2[i]);
+      const content=btoa(binStr);
     const body={message:'Actualizado por '+currentUser+' - '+new Date().toLocaleString('es-CL'),content:content};
     if(ghSha)body.sha=ghSha;
     const r=await fetch('https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/'+GH_FILE,
@@ -1547,8 +1548,10 @@ async function pullFromGitHub(){
       let remote=null;
       try{
         const clean=j.content.replace(/[
-]/g,'');
-        const bytes=new Uint8Array([...atob(clean)].map(c=>c.charCodeAt(0)));
+
+]/g,'');
+        const bin=atob(clean);const bytes=new Uint8Array(bin.length);
+        for(let i=0;i<bin.length;i++)bytes[i]=bin.charCodeAt(i);
         remote=JSON.parse(new TextDecoder('utf-8').decode(bytes));
       }catch(decErr){console.error('pullFromGitHub decode error:',decErr);setSyncStatus('error');return;}
       const hasData=remote&&((remote.compras&&remote.compras.length)||(remote.ventas&&remote.ventas.length));
