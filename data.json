@@ -176,10 +176,11 @@
             {
               "id": "c2p1s4",
               "name": "Panel de citas de inspección del día por jefe de sucursal (visibilidad tiempo real)",
-              "responsible": "",
+              "responsible": "Jose Figueroa",
               "stage": "porhacer",
               "startDate": "2026-06-01",
-              "endDate": "2026-07-03"
+              "endDate": "2026-06-12",
+              "consultados": "Daniela Godoy"
             }
           ],
           "consultados": ""
