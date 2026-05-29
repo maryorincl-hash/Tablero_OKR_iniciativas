@@ -3,7 +3,7 @@
     {
       "id": "okr_c1",
       "code": "C1",
-      "expanded": true,
+      "expanded": false,
       "name": "Conversión Lead → Lead SQL / Oportunidad Compra",
       "meta": "3.0%",
       "actual": "1.5%",
@@ -134,7 +134,7 @@
     {
       "id": "okr_c2",
       "code": "C2",
-      "expanded": true,
+      "expanded": false,
       "name": "Conversión Lead → Cita de Inspección Completada",
       "meta": "40%",
       "actual": "32%",
