@@ -16,7 +16,7 @@
           "stage": "ejecucion",
           "startDate": "2026-01-15",
           "endDate": "2026-06-30",
-          "expanded": false,
+          "expanded": true,
           "subtasks": [
             {
               "id": "c1p1s1",
@@ -134,7 +134,7 @@
     {
       "id": "okr_c2",
       "code": "C2",
-      "expanded": false,
+      "expanded": true,
       "name": "Conversión Lead → Cita de Inspección Completada",
       "meta": "40%",
       "actual": "32%",
@@ -147,7 +147,7 @@
           "stage": "monitoreo",
           "startDate": "2026-01-01",
           "endDate": "2026-06-30",
-          "expanded": false,
+          "expanded": true,
           "subtasks": [
             {
               "id": "c2p1s1",
