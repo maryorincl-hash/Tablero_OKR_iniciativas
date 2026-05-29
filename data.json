@@ -507,10 +507,11 @@
             {
               "id": "v2p4s2",
               "name": "Reporte matutino automático al jefe de sucursal con las citas del día (desde CRM, tiempo real)",
-              "responsible": "",
+              "responsible": "Yerko Pino",
               "stage": "ejecucion",
               "startDate": "2026-05-18",
-              "endDate": "2026-06-12"
+              "endDate": "2026-06-12",
+              "consultados": ""
             }
           ]
         },
