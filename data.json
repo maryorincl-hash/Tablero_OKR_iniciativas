@@ -1,1 +1,535 @@
-{"compras":[],"ventas":[],"incidencias":[]}
+{
+  "compras": [
+    {
+      "id": "okr_c1",
+      "code": "C1",
+      "expanded": true,
+      "name": "ConversiÃ³n Lead â†’ Lead SQL / Oportunidad Compra",
+      "meta": "3.0%",
+      "actual": "1.5%",
+      "responsible": "Maryorin Vivas Macedo",
+      "palancas": [
+        {
+          "id": "c1p1",
+          "name": "Palanca C1.1 â€“ Contactabilidad Global de Leads de Compra",
+          "responsible": "Jose Figueroa",
+          "stage": "ejecucion",
+          "startDate": "2026-01-15",
+          "endDate": "2026-06-30",
+          "expanded": false,
+          "subtasks": [
+            {
+              "id": "c1p1s1",
+              "name": "Cadencias de contacto automÃ¡ticas multicanal (email, WhatsApp, SMS)",
+              "responsible": "",
+              "stage": "porhacer",
+              "startDate": "2026-05-25",
+              "endDate": "2026-06-05"
+            },
+            {
+              "id": "c1p1s2",
+              "name": "OTP al inicio del flujo de compra para validar solo nÃºmeros reales",
+              "responsible": "",
+              "stage": "finalizado",
+              "startDate": "2026-03-23",
+              "endDate": "2026-05-08"
+            },
+            {
+              "id": "c1p1s3",
+              "name": "Primer contacto automÃ¡tico desde Llaima en Compra (iniciativa con Paula)",
+              "responsible": "",
+              "stage": "porhacer",
+              "startDate": "2026-05-25",
+              "endDate": "2026-06-12"
+            }
+          ]
+        },
+        {
+          "id": "c1p2",
+          "name": "Palanca C1.2 â€“ Tiempo Promedio de Primer Contacto (Leads Compra)",
+          "responsible": "Jose Figueroa",
+          "stage": "monitoreo",
+          "startDate": "2026-01-15",
+          "endDate": "2026-06-30",
+          "expanded": false,
+          "subtasks": [
+            {
+              "id": "c1p2s1",
+              "name": "ReasignaciÃ³n Express: reasignaciÃ³n automÃ¡tica de leads sin contacto al superar SLA",
+              "responsible": "",
+              "stage": "porhacer",
+              "startDate": "2026-05-25",
+              "endDate": "2026-06-12"
+            },
+            {
+              "id": "c1p2s2",
+              "name": "Monitoreo de colas y priorizaciÃ³n de leads categorÃ­a Muy Alta y Alta",
+              "responsible": "",
+              "stage": "ejecucion",
+              "startDate": "2026-05-11",
+              "endDate": "2026-05-29"
+            }
+          ]
+        },
+        {
+          "id": "c1p3",
+          "name": "Palanca C1.3 â€“ Bajar duplicados (Regla de validaciÃ³n para descartar automÃ¡ticamente estos leads)",
+          "responsible": "",
+          "stage": "definicion",
+          "startDate": "2026-03-01",
+          "endDate": "",
+          "expanded": false,
+          "subtasks": []
+        },
+        {
+          "id": "c1p4",
+          "name": "Palanca C1.4 â€“ Detectar clientes falsos (nombre, cantidad de leads vs patentes)",
+          "responsible": "",
+          "stage": "porhacer",
+          "startDate": "",
+          "endDate": "",
+          "expanded": false,
+          "subtasks": []
+        },
+        {
+          "id": "c1p5",
+          "name": "Palanca C1.5 â€“ OptimizaciÃ³n de la lista negra",
+          "responsible": "",
+          "stage": "porhacer",
+          "startDate": "",
+          "endDate": "",
+          "expanded": false,
+          "subtasks": []
+        },
+        {
+          "id": "c1p6",
+          "name": "Palanca C1.6 â€“ ComunicaciÃ³n del proceso de tasaciÃ³n comercial desde Llaima",
+          "responsible": "Jose Figueroa",
+          "stage": "definicion",
+          "startDate": "2026-04-01",
+          "endDate": "",
+          "expanded": false,
+          "subtasks": []
+        }
+      ]
+    },
+    {
+      "id": "okr_c2",
+      "code": "C2",
+      "expanded": true,
+      "name": "ConversiÃ³n Lead â†’ Cita de InspecciÃ³n Completada",
+      "meta": "40%",
+      "actual": "32%",
+      "responsible": "Maryorin Vivas Macedo",
+      "palancas": [
+        {
+          "id": "c2p1",
+          "name": "Palanca C2.1 â€“ ValidaciÃ³n y Seguimiento de Citas de InspecciÃ³n desde el Lead",
+          "responsible": "Jose Figueroa",
+          "stage": "monitoreo",
+          "startDate": "2026-01-01",
+          "endDate": "2026-06-30",
+          "expanded": false,
+          "subtasks": [
+            {
+              "id": "c2p1s1",
+              "name": "Monitoreo de citas agendadas y atenciÃ³n de leads",
+              "responsible": "",
+              "stage": "ejecucion",
+              "startDate": "2026-05-18",
+              "endDate": "2026-05-29"
+            },
+            {
+              "id": "c2p1s2",
+              "name": "Lead Scoring Predictivo: anÃ¡lisis del tipo de cliente y auto con mayor conversiÃ³n",
+              "responsible": "",
+              "stage": "porhacer",
+              "startDate": "2026-05-25",
+              "endDate": "2026-06-05"
+            },
+            {
+              "id": "c2p1s3",
+              "name": "Flujo automatizado de confirmaciÃ³n + recordatorio cita inspecciÃ³n (WhatsApp + email)",
+              "responsible": "",
+              "stage": "porhacer",
+              "startDate": "2026-05-25",
+              "endDate": "2026-06-19"
+            },
+            {
+              "id": "c2p1s4",
+              "name": "Panel de citas de inspecciÃ³n del dÃ­a por jefe de sucursal (visibilidad tiempo real)",
+              "responsible": "",
+              "stage": "porhacer",
+              "startDate": "2026-06-01",
+              "endDate": "2026-07-03"
+            }
+          ]
+        },
+        {
+          "id": "c2p2",
+          "name": "Palanca C2.2 â€“ CapacitaciÃ³n y AuditorÃ­a de Protocolos en Llamadas de InspecciÃ³n",
+          "responsible": "Jose Figueroa",
+          "stage": "porhacer",
+          "startDate": "",
+          "endDate": "",
+          "expanded": false,
+          "subtasks": [
+            {
+              "id": "c2p2s1",
+              "name": "CapacitaciÃ³n y auditorÃ­a de protocolos basada en Ã©xito",
+              "responsible": "",
+              "stage": "porhacer",
+              "startDate": "2026-05-25",
+              "endDate": "2026-06-05"
+            },
+            {
+              "id": "c2p2s2",
+              "name": "AnÃ¡lisis de llamadas con IA para detectar factores de Ã©xito en conversiÃ³n",
+              "responsible": "",
+              "stage": "porhacer",
+              "startDate": "2026-05-25",
+              "endDate": "2026-06-19"
+            },
+            {
+              "id": "c2p2s3",
+              "name": "Dashboard de rendimiento individual por asesor en llamadas de compra",
+              "responsible": "",
+              "stage": "porhacer",
+              "startDate": "2026-06-08",
+              "endDate": "2026-06-26"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "ventas": [
+    {
+      "id": "okr_v1",
+      "code": "V1",
+      "expanded": true,
+      "name": "ConversiÃ³n Lead â†’ Lead SQL / Oportunidad Venta",
+      "meta": "10%",
+      "actual": "5.60%",
+      "responsible": "Maryorin Vivas Macedo",
+      "palancas": [
+        {
+          "id": "v1p1",
+          "name": "V1.1 â€“ ConversiÃ³n Lead con VPP â†’ Lead SQL con VPP / Oportunidad Venta con VPP",
+          "responsible": "Yerko Pino",
+          "stage": "porhacer",
+          "startDate": "",
+          "endDate": "",
+          "expanded": false,
+          "stopReason": "",
+          "subtasks": [
+            {
+              "id": "v1p1s1",
+              "name": "Flujo diferenciado VPP: enrutamiento automÃ¡tico a asesor especializado en VPP",
+              "responsible": "",
+              "stage": "porhacer",
+              "startDate": "2026-06-01",
+              "endDate": "2026-06-12"
+            }
+          ]
+        },
+        {
+          "id": "v1p2",
+          "name": "V1.2 â€“ ConversiÃ³n Lead SQL Segmento + VPP (Flujo y Cadencia Exclusiva)",
+          "responsible": "Yerko Pino",
+          "stage": "porhacer",
+          "startDate": "",
+          "endDate": "",
+          "expanded": false,
+          "stopReason": "",
+          "subtasks": [
+            {
+              "id": "v1p2s1",
+              "name": "Flujo exclusivo para leads Segmento con VPP (VisualizaciÃ³n en panel)",
+              "responsible": "",
+              "stage": "ejecucion",
+              "startDate": "2026-06-01",
+              "endDate": ""
+            },
+            {
+              "id": "v1p2s2",
+              "name": "SegmentaciÃ³n de leads por tipo y paneles de trabajo por grupos de foco",
+              "responsible": "",
+              "stage": "porhacer",
+              "startDate": "2026-05-25",
+              "endDate": "2026-05-29"
+            },
+            {
+              "id": "v1p2s3",
+              "name": "Panel exclusivo de seguimiento comercial (jefes, supervisores, gerentes)",
+              "responsible": "",
+              "stage": "porhacer",
+              "startDate": "2026-06-01",
+              "endDate": "2026-06-26"
+            }
+          ]
+        },
+        {
+          "id": "v1p3",
+          "name": "V1.3 â€“ ConversiÃ³n Lead SQL + Financiamiento (Oportunidad de Venta)",
+          "responsible": "Yerko Pino",
+          "stage": "porhacer",
+          "startDate": "",
+          "endDate": "",
+          "expanded": false,
+          "stopReason": "",
+          "subtasks": [
+            {
+              "id": "v1p3s1",
+              "name": "AsignaciÃ³n directa al asesor financiero desde que el lead declara interÃ©s",
+              "responsible": "",
+              "stage": "porhacer",
+              "startDate": "2026-05-25",
+              "endDate": "2026-06-05"
+            },
+            {
+              "id": "v1p3s2",
+              "name": "Apertura de motivos de descarte para dar feedback estructurado a Marketing",
+              "responsible": "",
+              "stage": "porhacer",
+              "startDate": "2026-05-25",
+              "endDate": "2026-06-05"
+            },
+            {
+              "id": "v1p3s3",
+              "name": "Follow-up automatizado de financiamiento con simulaciÃ³n de cuotas personalizada",
+              "responsible": "",
+              "stage": "porhacer",
+              "startDate": "2026-06-15",
+              "endDate": "2026-07-03"
+            }
+          ]
+        },
+        {
+          "id": "v1p4",
+          "name": "V1.4 â€“ PolÃ­tica comercial para segmento de clientes y VPP",
+          "responsible": "Yerko Pino",
+          "stage": "porhacer",
+          "startDate": "",
+          "endDate": "",
+          "expanded": false,
+          "stopReason": "",
+          "subtasks": [
+            {
+              "id": "v1p4s1",
+              "name": "DiseÃ±o e implementaciÃ³n de polÃ­tica comercial segmentada por perfil de cliente + VPP",
+              "responsible": "",
+              "stage": "ejecucion",
+              "startDate": "2026-05-18",
+              "endDate": "2026-06-12"
+            }
+          ]
+        },
+        {
+          "id": "v1p5",
+          "name": "V1.5 â€“ Agregar al correo de AsignaciÃ³n de Cliente Potencial el Segmento de valor",
+          "responsible": "Yerko Pino",
+          "stage": "porhacer",
+          "startDate": "",
+          "endDate": "",
+          "expanded": false,
+          "stopReason": "",
+          "subtasks": []
+        }
+      ]
+    },
+    {
+      "id": "okr_v2",
+      "code": "V2",
+      "expanded": true,
+      "name": "ConversiÃ³n Lead â†’ Cita de Venta Completada",
+      "meta": "20%",
+      "actual": "10.39%",
+      "responsible": "Maryorin Vivas Macedo",
+      "palancas": [
+        {
+          "id": "v2p1",
+          "name": "V2.1 â€“ AutomatizaciÃ³n del Flujo de ConfirmaciÃ³n y Recordatorio de Cita",
+          "responsible": "Maryorin Vivas Macedo",
+          "stage": "porhacer",
+          "startDate": "",
+          "endDate": "",
+          "expanded": false,
+          "stopReason": "",
+          "subtasks": [
+            {
+              "id": "v2p1s1",
+              "name": "AnÃ¡lisis del perfil de autos mÃ¡s vendidos y clientes que mÃ¡s compran â†’ insights a Marketing",
+              "responsible": "",
+              "stage": "porhacer",
+              "startDate": "2026-05-25",
+              "endDate": "2026-06-05"
+            },
+            {
+              "id": "v2p1s2",
+              "name": "AutomatizaciÃ³n flujo de confirmaciÃ³n + recordatorio de cita de venta",
+              "responsible": "",
+              "stage": "porhacer",
+              "startDate": "2026-05-25",
+              "endDate": "2026-06-19"
+            }
+          ]
+        },
+        {
+          "id": "v2p2",
+          "name": "V2.2 â€“ OptimizaciÃ³n del flujo de descarte del lead con cita",
+          "responsible": "Maryorin Vivas Macedo",
+          "stage": "porhacer",
+          "startDate": "",
+          "endDate": "",
+          "expanded": false,
+          "stopReason": "",
+          "subtasks": [
+            {
+              "id": "v2p2s1",
+              "name": "Flujo inteligente: antes de descartar lead con cita, validar si el cliente asistiÃ³ a sucursal",
+              "responsible": "",
+              "stage": "porhacer",
+              "startDate": "2026-05-25",
+              "endDate": "2026-06-12"
+            }
+          ]
+        },
+        {
+          "id": "v2p3",
+          "name": "V2.3 â€“ Incorporar motivos de cancelaciÃ³n de la cita",
+          "responsible": "Maryorin Vivas Macedo",
+          "stage": "porhacer",
+          "startDate": "",
+          "endDate": "",
+          "expanded": false,
+          "stopReason": "",
+          "subtasks": [
+            {
+              "id": "v2p3s1",
+              "name": "Captura y categorizaciÃ³n obligatoria del motivo de no asistencia al cancelar lead con cita",
+              "responsible": "",
+              "stage": "porhacer",
+              "startDate": "2026-05-25",
+              "endDate": "2026-06-12"
+            },
+            {
+              "id": "v2p3s2",
+              "name": "Dashboard de anÃ¡lisis de motivos de cancelaciÃ³n con feedback a Marketing y Comercial",
+              "responsible": "",
+              "stage": "porhacer",
+              "startDate": "2026-06-08",
+              "endDate": "2026-06-26"
+            }
+          ]
+        },
+        {
+          "id": "v2p4",
+          "name": "V2.4 â€“ ExpansiÃ³n a Sucursales + Rutina Diaria Jefe de Sucursal",
+          "responsible": "Yerko Pino",
+          "stage": "porhacer",
+          "startDate": "",
+          "endDate": "",
+          "expanded": false,
+          "stopReason": "",
+          "subtasks": [
+            {
+              "id": "v2p4s1",
+              "name": "ExpansiÃ³n a todas las sucursales (2 zonas/semana) + rutina jefe + habilitaciÃ³n canal web",
+              "responsible": "",
+              "stage": "ejecucion",
+              "startDate": "2026-05-18",
+              "endDate": "2026-05-29"
+            },
+            {
+              "id": "v2p4s2",
+              "name": "Reporte matutino automÃ¡tico al jefe de sucursal con las citas del dÃ­a (desde CRM, tiempo real)",
+              "responsible": "",
+              "stage": "ejecucion",
+              "startDate": "2026-05-18",
+              "endDate": "2026-06-12"
+            }
+          ]
+        },
+        {
+          "id": "v2p5",
+          "name": "V2.5 â€“ DiseÃ±o de estrategia y propuesta de valor para clientes con citas agendadas",
+          "responsible": "Yerko Pino",
+          "stage": "porhacer",
+          "startDate": "",
+          "endDate": "",
+          "expanded": false,
+          "stopReason": "",
+          "subtasks": [
+            {
+              "id": "v2p5s1",
+              "name": "DiseÃ±o de estrategia de experiencia diferenciada para clientes con cita de venta agendada",
+              "responsible": "",
+              "stage": "porhacer",
+              "startDate": "2026-06-01",
+              "endDate": "2026-06-26"
+            },
+            {
+              "id": "v2p5s2",
+              "name": "Material digital pre-cita: ficha del auto con fotos HD",
+              "responsible": "",
+              "stage": "porhacer",
+              "startDate": "2026-06-01",
+              "endDate": "2026-07-03"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "incidencias": [
+    {
+      "id": "inc1",
+      "lineaNegocio": "compras",
+      "stage": "ejecucion",
+      "titulo": "SLA de primer contacto superado en leads de alta prioridad",
+      "levantadaPor": "Maryorin Vivas Macedo",
+      "asignadoA": "Jose Figueroa",
+      "impactaEn": "C1.2 â€“ Tiempo Promedio de Primer Contacto",
+      "startDate": "2026-05-10",
+      "endDate": "2026-05-31",
+      "stopReason": ""
+    },
+    {
+      "id": "inc2",
+      "lineaNegocio": "compras",
+      "stage": "definicion",
+      "titulo": "Leads duplicados ingresando al flujo sin filtro activo",
+      "levantadaPor": "Jose Figueroa",
+      "asignadoA": "Daniela Godoy",
+      "impactaEn": "C1.3 â€“ Bajar duplicados",
+      "startDate": "2026-05-15",
+      "endDate": "2026-06-15",
+      "stopReason": ""
+    },
+    {
+      "id": "inc3",
+      "lineaNegocio": "ventas",
+      "stage": "porhacer",
+      "titulo": "Clientes no confirman citas de venta por falta de recordatorio automÃ¡tico",
+      "levantadaPor": "Yerko Pino",
+      "asignadoA": "Maryorin Vivas Macedo",
+      "impactaEn": "V2.1 â€“ AutomatizaciÃ³n del Flujo de ConfirmaciÃ³n",
+      "startDate": "2026-05-20",
+      "endDate": "2026-06-30",
+      "stopReason": ""
+    },
+    {
+      "id": "inc4",
+      "lineaNegocio": "ventas",
+      "stage": "monitoreo",
+      "titulo": "Asesores sin acceso al segmento VPP del cliente en la vista de CRM",
+      "levantadaPor": "Yerko Pino",
+      "asignadoA": "Gonzalo Cortes",
+      "impactaEn": "V1.1 â€“ ConversiÃ³n Lead con VPP",
+      "startDate": "2026-05-01",
+      "endDate": "2026-05-25",
+      "stopReason": ""
+    }
+  ]
+}

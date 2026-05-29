@@ -1286,8 +1286,9 @@ async function pullFromGitHub(){
     if(r.ok){
       const j=await r.json();ghSha=j.sha;
       const remote=JSON.parse(decodeURIComponent(escape(atob(j.content))));
-      data=remote;localStorage.setItem(KEY,JSON.stringify(data));
-      setSyncStatus('ok');renderBoard();
+      const hasData=remote&&((remote.compras&&remote.compras.length)||(remote.ventas&&remote.ventas.length));
+      if(hasData){data=remote;localStorage.setItem(KEY,JSON.stringify(data));setSyncStatus('ok');renderBoard();}
+      else{setSyncStatus('ok');}
     }else{setSyncStatus('error');}
   }catch(e){setSyncStatus('error');}
 }
