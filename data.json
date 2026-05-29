@@ -122,12 +122,12 @@
           "id": "c1p6",
           "name": "Palanca C1.6 – Comunicación del proceso de tasación comercial desde Llaima",
           "responsible": "Jose Figueroa",
-          "stage": "definicion",
-          "startDate": "2026-04-01",
-          "endDate": "",
+          "stage": "porhacer",
+          "startDate": "2026-06-01",
+          "endDate": "2026-06-05",
           "expanded": true,
           "subtasks": [],
-          "consultados": ""
+          "consultados": "Melannie Mora - Manuel Chavez- Javiera Barcoj"
         }
       ]
     },
