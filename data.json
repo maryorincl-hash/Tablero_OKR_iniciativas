@@ -484,18 +484,5 @@
       ]
     }
   ],
-  "incidencias": [
-    {
-      "id": "inc4",
-      "lineaNegocio": "ventas",
-      "stage": "monitoreo",
-      "titulo": "Asesores sin acceso al segmento VPP del cliente en la vista de CRM",
-      "levantadaPor": "Yerko Pino",
-      "asignadoA": "Gonzalo Cortes",
-      "impactaEn": "V1.1 – Conversión Lead con VPP",
-      "startDate": "2026-05-01",
-      "endDate": "2026-05-25",
-      "stopReason": ""
-    }
-  ]
+  "incidencias": []
 }
