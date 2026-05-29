@@ -467,9 +467,9 @@
           "name": "V2.5 – Diseño de estrategia y propuesta de valor para clientes con citas agendadas",
           "responsible": "Yerko Pino",
           "stage": "porhacer",
-          "startDate": "",
-          "endDate": "",
-          "expanded": false,
+          "startDate": "2026-05-01",
+          "endDate": "2026-07-02",
+          "expanded": true,
           "stopReason": "",
           "subtasks": [
             {
@@ -488,7 +488,8 @@
               "startDate": "2026-06-01",
               "endDate": "2026-07-03"
             }
-          ]
+          ],
+          "consultados": ""
         }
       ]
     }
