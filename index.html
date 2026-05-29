@@ -1102,6 +1102,9 @@ function renderToolbar(){
        <button class="btn" onclick="execVisible=!execVisible;renderExecSummary()" style="background:#0f3460;color:white;margin-left:4px;">📊 Resumen</button>`;
   }
   h+=`<span id="sync_status" style="margin-left:12px;font-size:12px;color:#666;align-self:center;"></span>
+      <button id="btn_guardar" onclick="guardarAhora()" title="Guardar cambios en GitHub" style="margin-left:8px;padding:6px 16px;background:#2e7d32;color:white;border:none;border-radius:6px;font-size:12px;font-weight:700;cursor:pointer;display:flex;align-items:center;gap:5px;">
+        <span id="btn_guardar_icon">💾</span> Guardar
+      </button>
       <span style="margin-left:auto;font-size:12px;background:#f0f0f0;padding:4px 10px;border-radius:12px;display:flex;align-items:center;gap:6px;">
         👤 <strong>${currentUser||'Sin usuario'}</strong>
         <button onclick="cambiarUsuario()" style="border:none;background:none;cursor:pointer;font-size:11px;color:#888;">cambiar</button>
@@ -1534,6 +1537,17 @@ function saveState(){
   localStorage.setItem(KEY,JSON.stringify(data));
   clearTimeout(saveTimer);
   saveTimer=setTimeout(pushToGitHub,2000);
+}
+async function guardarAhora(){
+  const btn=document.getElementById('btn_guardar');
+  const icon=document.getElementById('btn_guardar_icon');
+  if(btn){btn.disabled=true;btn.style.background='#666';}
+  if(icon)icon.innerHTML='⏳';
+  clearTimeout(saveTimer);
+  await pushToGitHub();
+  if(icon)icon.innerHTML='✅';
+  if(btn){btn.style.background='#2e7d32';}
+  setTimeout(()=>{if(icon)icon.innerHTML='💾';if(btn)btn.disabled=false;},2000);
 }
 async function pushToGitHub(){
   if(!ghToken||!currentUser)return;
