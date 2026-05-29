@@ -1559,49 +1559,44 @@ async function guardarAhora(){
   }
   setTimeout(()=>{if(icon)icon.innerHTML='💾';if(btn){btn.disabled=false;btn.style.background='#2e7d32';}},3000);
 }
-async function fetchSha(){
-  try{
-    const r=await fetch('https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/'+GH_FILE,
-      {headers:{'Authorization':'token '+ghToken,'Accept':'application/vnd.github.v3+json'}});
-    if(r.ok){const j=await r.json();ghSha=j.sha;return true;}
-  }catch(e){}
-  return false;
-}
 async function pushToGitHub(){
   if(!ghToken||!currentUser)return;
   setSyncStatus('guardando');
+  const API='https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/'+GH_FILE;
+  const HDR={'Authorization':'token '+ghToken,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'};
   try{
-    // Siempre obtener SHA actualizado antes de guardar
-    if(!ghSha) await fetchSha();
+    // Paso 1: obtener SHA actual SIEMPRE (no usar caché)
+    const shaR=await fetch(API,{headers:HDR});
+    if(!shaR.ok){
+      showToast('Error al conectar con GitHub ('+shaR.status+'). Verifica tu token.');
+      setSyncStatus('error');return;
+    }
+    const shaJ=await shaR.json();
+    ghSha=shaJ.sha;
+
+    // Paso 2: codificar datos
     const str=JSON.stringify(data,null,2);
-    const bytes2=new TextEncoder().encode(str);
-    let binStr='';for(let i=0;i<bytes2.length;i++)binStr+=String.fromCharCode(bytes2[i]);
-    const content=btoa(binStr);
-    const body={message:'Guardado por '+currentUser+' - '+new Date().toLocaleString('es-CL'),content:content};
-    if(ghSha)body.sha=ghSha;
-    const r=await fetch('https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/'+GH_FILE,
-      {method:'PUT',headers:{'Authorization':'token '+ghToken,'Content-Type':'application/json'},body:JSON.stringify(body)});
-    if(r.ok){
-      const j=await r.json();ghSha=j.content.sha;
-      data._guardadoEn=Date.now();
+    const bytes=new TextEncoder().encode(str);
+    let bin='';for(let i=0;i<bytes.length;i++)bin+=String.fromCharCode(bytes[i]);
+    const content=btoa(bin);
+
+    // Paso 3: guardar
+    const body={message:'Guardado por '+currentUser+' - '+new Date().toLocaleString('es-CL'),content,sha:ghSha};
+    const putR=await fetch(API,{method:'PUT',headers:HDR,body:JSON.stringify(body)});
+    if(putR.ok){
+      const putJ=await putR.json();
+      ghSha=putJ.content.sha;
       localStorage.setItem(KEY,JSON.stringify(data));
       setSyncStatus('ok');
-    } else if(r.status===409||r.status===422){
-      // Conflicto SHA: obtener SHA real y reintentar
-      await fetchSha();
-      if(ghSha){
-        body.sha=ghSha;
-        const r2=await fetch('https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/'+GH_FILE,
-          {method:'PUT',headers:{'Authorization':'token '+ghToken,'Content-Type':'application/json'},body:JSON.stringify(body)});
-        if(r2.ok){const j2=await r2.json();ghSha=j2.content.sha;setSyncStatus('ok');}
-        else{const e=await r2.json();setSyncStatus('error');console.error('push error:',e);}
-      }
     } else {
-      const errBody=await r.json().catch(()=>({}));
-      console.error('pushToGitHub error',r.status,errBody);
+      const err=await putR.json().catch(()=>({}));
+      showToast('Error al guardar ('+putR.status+'): '+(err.message||''));
       setSyncStatus('error');
     }
-  }catch(e){console.error('pushToGitHub exception:',e);setSyncStatus('error');}
+  }catch(e){
+    showToast('Error de red al guardar. Revisa tu conexión.');
+    setSyncStatus('error');
+  }
 }
 async function pullFromGitHub(){
   setSyncStatus('cargando');
