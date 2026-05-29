@@ -437,7 +437,7 @@
         {
           "id": "v2p4",
           "name": "V2.4 – Expansión a Sucursales + Rutina Diaria Jefe de Sucursal",
-          "responsible": "Yerko Pino",
+          "responsible": "Jose Figueroa",
           "stage": "porhacer",
           "startDate": "",
           "endDate": "",
@@ -460,7 +460,8 @@
               "startDate": "2026-05-18",
               "endDate": "2026-06-12"
             }
-          ]
+          ],
+          "consultados": ""
         },
         {
           "id": "v2p5",
