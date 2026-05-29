@@ -124,7 +124,7 @@
     {
       "id": "okr_c2",
       "code": "C2",
-      "expanded": true,
+      "expanded": false,
       "name": "Conversión Lead → Cita de Inspección Completada",
       "meta": "40%",
       "actual": "32%",
@@ -360,15 +360,14 @@
         },
         {
           "id": "v1p5",
-          "name": "V1.5 – Agregar información relevante al correo de Asignación de Cliente Potencial",
+          "name": "V1.5 – Agregar al correo de Asignación de Cliente Potencial el Segmento de valor",
           "responsible": "Yerko Pino",
           "stage": "porhacer",
           "startDate": "",
           "endDate": "",
           "expanded": false,
           "stopReason": "",
-          "subtasks": [],
-          "consultados": ""
+          "subtasks": []
         }
       ]
     },
