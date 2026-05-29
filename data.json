@@ -334,7 +334,7 @@
           "stage": "porhacer",
           "startDate": "",
           "endDate": "",
-          "expanded": false,
+          "expanded": true,
           "stopReason": "",
           "subtasks": [
             {
@@ -344,6 +344,15 @@
               "stage": "ejecucion",
               "startDate": "2026-05-18",
               "endDate": "2026-06-12"
+            },
+            {
+              "id": "_k4gbhr8",
+              "name": "Implementación de política comercial segmentada por perfil de cliente + VPP",
+              "responsible": "Yerko Pino",
+              "stage": "porhacer",
+              "startDate": "2026-05-29",
+              "endDate": "2026-07-11",
+              "consultados": ""
             }
           ]
         },
