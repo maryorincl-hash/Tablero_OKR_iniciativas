@@ -75,41 +75,38 @@
         {
           "id": "c1p3",
           "name": "Palanca C1.3 – Bajar duplicados (Regla de validación para descartar automáticamente estos leads)",
-          "responsible": "Jose Figueroa",
+          "responsible": "",
           "stage": "definicion",
           "startDate": "2026-03-01",
           "endDate": "",
           "expanded": false,
-          "subtasks": [],
-          "consultados": ""
+          "subtasks": []
         },
         {
           "id": "c1p4",
           "name": "Palanca C1.4 – Detectar clientes falsos (nombre, cantidad de leads vs patentes)",
-          "responsible": "Jose Figueroa",
+          "responsible": "",
           "stage": "porhacer",
           "startDate": "",
           "endDate": "",
           "expanded": false,
-          "subtasks": [],
-          "consultados": ""
+          "subtasks": []
         },
         {
           "id": "c1p5",
           "name": "Palanca C1.5 – Optimización de la lista negra",
-          "responsible": "Jose Figueroa",
+          "responsible": "",
           "stage": "porhacer",
           "startDate": "",
           "endDate": "",
           "expanded": false,
-          "subtasks": [],
-          "consultados": ""
+          "subtasks": []
         },
         {
           "id": "c1p6",
           "name": "Palanca C1.6 – Comunicación del proceso de tasación comercial desde Llaima",
           "responsible": "Jose Figueroa",
-          "stage": "definicion",
+          "stage": "ejecucion",
           "startDate": "2026-04-01",
           "endDate": "",
           "expanded": false,
