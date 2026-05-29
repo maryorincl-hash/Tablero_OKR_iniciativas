@@ -249,8 +249,8 @@
           "name": "V1.2 – Conversión Lead SQL Segmento + VPP (Flujo y Cadencia Exclusiva)",
           "responsible": "Yerko Pino",
           "stage": "porhacer",
-          "startDate": "",
-          "endDate": "",
+          "startDate": "2026-05-01",
+          "endDate": "2026-12-31",
           "expanded": true,
           "stopReason": "",
           "subtasks": [
@@ -278,7 +278,8 @@
               "startDate": "2026-06-01",
               "endDate": "2026-06-26"
             }
-          ]
+          ],
+          "consultados": ""
         },
         {
           "id": "v1p3",
@@ -374,7 +375,7 @@
           "stage": "porhacer",
           "startDate": "",
           "endDate": "",
-          "expanded": false,
+          "expanded": true,
           "stopReason": "",
           "subtasks": [
             {
