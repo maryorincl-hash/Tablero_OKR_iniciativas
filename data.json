@@ -78,7 +78,7 @@
           "stage": "definicion",
           "startDate": "2026-03-01",
           "endDate": "",
-          "expanded": false,
+          "expanded": true,
           "subtasks": []
         },
         {
