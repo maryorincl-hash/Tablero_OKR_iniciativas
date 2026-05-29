@@ -42,7 +42,8 @@
               "startDate": "2026-05-25",
               "endDate": "2026-06-12"
             }
-          ]
+          ],
+          "consultados": ""
         },
         {
           "id": "c1p2",
@@ -59,7 +60,8 @@
               "responsible": "",
               "stage": "definicion",
               "startDate": "2026-05-25",
-              "endDate": "2026-06-12"
+              "endDate": "2026-06-12",
+              "consultados": ""
             },
             {
               "id": "c1p2s2",
@@ -67,9 +69,11 @@
               "responsible": "",
               "stage": "monitoreo",
               "startDate": "2026-05-11",
-              "endDate": "2026-05-29"
+              "endDate": "2026-05-29",
+              "consultados": ""
             }
-          ]
+          ],
+          "consultados": ""
         },
         {
           "id": "c1p3",
@@ -79,7 +83,8 @@
           "startDate": "2026-03-01",
           "endDate": "",
           "expanded": true,
-          "subtasks": []
+          "subtasks": [],
+          "consultados": ""
         },
         {
           "id": "c1p4",
@@ -89,7 +94,8 @@
           "startDate": "",
           "endDate": "",
           "expanded": false,
-          "subtasks": []
+          "subtasks": [],
+          "consultados": ""
         },
         {
           "id": "c1p5",
@@ -99,7 +105,8 @@
           "startDate": "",
           "endDate": "",
           "expanded": false,
-          "subtasks": []
+          "subtasks": [],
+          "consultados": ""
         },
         {
           "id": "c1p6",
@@ -109,7 +116,8 @@
           "startDate": "2026-04-01",
           "endDate": "",
           "expanded": false,
-          "subtasks": []
+          "subtasks": [],
+          "consultados": ""
         }
       ]
     },
@@ -163,7 +171,8 @@
               "startDate": "2026-06-01",
               "endDate": "2026-07-03"
             }
-          ]
+          ],
+          "consultados": ""
         },
         {
           "id": "c2p2",
@@ -198,7 +207,8 @@
               "startDate": "2026-06-08",
               "endDate": "2026-06-26"
             }
-          ]
+          ],
+          "consultados": ""
         }
       ]
     }
