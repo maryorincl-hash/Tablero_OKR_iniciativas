@@ -1583,6 +1583,8 @@ async function pushToGitHub(){
       {method:'PUT',headers:{'Authorization':'token '+ghToken,'Content-Type':'application/json'},body:JSON.stringify(body)});
     if(r.ok){
       const j=await r.json();ghSha=j.content.sha;
+      data._guardadoEn=Date.now();
+      localStorage.setItem(KEY,JSON.stringify(data));
       setSyncStatus('ok');
     } else if(r.status===409||r.status===422){
       // Conflicto SHA: obtener SHA real y reintentar
@@ -1615,15 +1617,8 @@ async function pullFromGitHub(){
       }
       const hasData=remote&&((remote.compras&&remote.compras.length)||(remote.ventas&&remote.ventas.length));
       if(hasData){
-        // Solo sobreescribir si GitHub tiene más datos o si local está vacío
-        const localOkrs=(data.compras||[]).length+(data.ventas||[]).length;
-        const remoteOkrs=(remote.compras||[]).length+(remote.ventas||[]).length;
-        if(remoteOkrs>=localOkrs||localOkrs===0){
-          data=remote;localStorage.setItem(KEY,JSON.stringify(data));
-          setSyncStatus('ok');renderBoard();
-        } else {
-          setSyncStatus('ok'); // mantener datos locales más completos
-        }
+        data=remote;localStorage.setItem(KEY,JSON.stringify(data));
+        setSyncStatus('ok');showToast('Datos actualizados desde GitHub');renderBoard();
       } else {setSyncStatus('ok');}
     }else{setSyncStatus('error');}
   }catch(e){console.error('pullFromGitHub error:',e);setSyncStatus('error');}
@@ -1738,8 +1733,15 @@ async function initApp(){
   renderToolbar();
   renderBoard();
   if(ghToken){
-    try{ await pullFromGitHub(); }
-    catch(e){ console.error('initApp pullFromGitHub error:',e); showToast('No se pudo sincronizar con GitHub'); }
+    try{
+      // Solo obtener SHA para poder guardar después (no sobreescribir datos locales)
+      await fetchSha();
+      // Si no hay datos locales, cargar desde GitHub
+      if(!loaded||!data.compras||!data.compras.length){
+        await pullFromGitHub();
+      }
+    }
+    catch(e){ console.error('initApp error:',e); }
   }
 }
 function showSetupModal(){
