@@ -500,6 +500,17 @@
               "endDate": "2026-07-03"
             }
           ]
+        },
+        {
+          "id": "_x8fberx",
+          "name": "Dejar por defecto Origen Agendamiento a Citas Creadas por Asesor",
+          "responsible": "Yerko Pino",
+          "stage": "porhacer",
+          "startDate": "2026-05-29",
+          "endDate": "2026-06-12",
+          "consultados": "",
+          "expanded": false,
+          "subtasks": []
         }
       ]
     }
