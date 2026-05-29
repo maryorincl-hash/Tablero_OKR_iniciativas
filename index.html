@@ -1267,7 +1267,7 @@ async function pushToGitHub(){
   if(!ghToken||!currentUser)return;
   setSyncStatus('guardando');
   try{
-    const content=btoa(unescape(encodeURIComponent(JSON.stringify(data,null,2))));
+    const str=JSON.stringify(data,null,2);const bytes2=new TextEncoder().encode(str);const content=btoa(String.fromCharCode(...bytes2));
     const body={message:'Actualizado por '+currentUser+' - '+new Date().toLocaleString('es-CL'),content:content};
     if(ghSha)body.sha=ghSha;
     const r=await fetch('https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/'+GH_FILE,
@@ -1285,7 +1285,7 @@ async function pullFromGitHub(){
       {headers:{'Authorization':'token '+ghToken,'Accept':'application/vnd.github.v3+json'}});
     if(r.ok){
       const j=await r.json();ghSha=j.sha;
-      const remote=JSON.parse(decodeURIComponent(escape(atob(j.content))));
+      const bytes=new Uint8Array([...atob(j.content)].map(c=>c.charCodeAt(0)));const remote=JSON.parse(new TextDecoder('utf-8').decode(bytes));
       const hasData=remote&&((remote.compras&&remote.compras.length)||(remote.ventas&&remote.ventas.length));
       if(hasData){data=remote;localStorage.setItem(KEY,JSON.stringify(data));setSyncStatus('ok');renderBoard();}
       else{setSyncStatus('ok');}
