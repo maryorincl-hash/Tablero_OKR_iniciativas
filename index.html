@@ -822,7 +822,8 @@ function renderToolbar(){
     h=`<button class="btn btn-primary" onclick="openModalAddOkr()">+ Nuevo OKR</button>
        <button class="btn" onclick="openModalAddPalanca(null)">+ Nueva palanca</button>
        <button class="btn" onclick="toggleAll()">⊞ Expandir todo</button>
-       <button class="btn" onclick="window.print()">🖨 Imprimir</button>`;
+       <button class="btn" onclick="window.print()">🖨 Imprimir</button>
+       <button class="btn" onclick="exportParaClickUp()" style="background:#4466ff;color:white;margin-left:8px;">&#x2B06; Exportar para ClickUp</button>`;
   }
   document.getElementById('toolbar_btns').innerHTML=h;
 }
@@ -1347,6 +1348,20 @@ if(!loaded||!data.compras||!data.compras.length){
 }
 renderToolbar();
 renderBoard();
+function exportParaClickUp(){
+  const data={
+    compras:{okrs:(STATE.compras&&STATE.compras.okrs?STATE.compras.okrs:[])},
+    ventas:{okrs:(STATE.ventas&&STATE.ventas.okrs?STATE.ventas.okrs:[])},
+    exportado_en:new Date().toISOString()
+  };
+  const json=JSON.stringify(data,null,2);
+  const blob=new Blob([json],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download='tablero_export.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+}
 function saveConsultados(type,id1,id2,value){
   if(type==='palanca'){
     const p=getPalanca(id1,id2); if(p){ p.consultados=value; saveState(); }
