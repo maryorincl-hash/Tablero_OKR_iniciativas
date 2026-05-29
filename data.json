@@ -345,7 +345,7 @@
               "consultados": "Comercial/Clientes/MKT/Lead Management"
             }
           ],
-          "consultados": ""
+          "consultados": "Comercial/Clientes/MKT/Lead Management"
         },
         {
           "id": "v1p5",
@@ -354,7 +354,7 @@
           "stage": "porhacer",
           "startDate": "",
           "endDate": "",
-          "expanded": false,
+          "expanded": true,
           "stopReason": "",
           "subtasks": []
         }
