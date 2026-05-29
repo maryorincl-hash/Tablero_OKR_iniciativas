@@ -447,7 +447,7 @@
           "stage": "porhacer",
           "startDate": "",
           "endDate": "",
-          "expanded": false,
+          "expanded": true,
           "stopReason": "",
           "subtasks": [
             {
@@ -467,7 +467,7 @@
           "stage": "porhacer",
           "startDate": "",
           "endDate": "",
-          "expanded": false,
+          "expanded": true,
           "stopReason": "",
           "subtasks": [
             {
@@ -532,7 +532,7 @@
               "id": "v2p5s1",
               "name": "Diseño de estrategia de experiencia diferenciada para clientes con cita de venta agendada",
               "responsible": "",
-              "stage": "porhacer",
+              "stage": "definicion",
               "startDate": "2026-06-01",
               "endDate": "2026-06-26"
             },
