@@ -1034,10 +1034,7 @@ async function renderMetas(){
   meses.forEach(m=>{h+='<option value="'+m+'"'+(metasFiltroMes===m?' selected':'')+'>'+m+'</option>';});
   h+='</select><select onchange="metasFiltroSemana=this.value;renderMetas()"><option value="todas">Todas las semanas</option>';
   semanas.forEach(s=>{h+='<option value="'+s.codigo+'"'+(metasFiltroSemana===s.codigo?' selected':'')+'>'+s.label+'</option>';});
-  h+='</select><button id="btn_refresh_metas" onclick="refreshMetasFromSharePoint()" style="padding:6px 14px;border:none;border-radius:6px;font-size:12px;background:#0f3460;color:white;cursor:pointer;margin-left:auto;display:flex;align-items:center;gap:6px;">
-      <span id="refresh_metas_icon">&#x1F504;</span> Actualizar desde Excel
-    </button>
-    <span id="refresh_metas_status" style="font-size:11px;color:#888;margin-left:8px;"></span></div>';
+  h+=`</select><button id="btn_refresh_metas" onclick="refreshMetasFromSharePoint()" style="padding:6px 14px;border:none;border-radius:6px;font-size:12px;background:#0f3460;color:white;cursor:pointer;margin-left:auto;"><span id="refresh_metas_icon">&#x1F504;</span> Actualizar desde Excel</button><span id="refresh_metas_status" style="font-size:11px;color:#888;margin-left:8px;"></span></div>`;
   ['compras','ventas'].forEach(function(linea){
     const okrsL=okrsVis.filter(o=>o.linea===linea);
     if(!okrsL.length)return;
