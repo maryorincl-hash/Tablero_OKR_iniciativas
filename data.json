@@ -105,7 +105,17 @@
           "startDate": "2026-06-01",
           "endDate": "2026-06-05",
           "expanded": true,
-          "subtasks": [],
+          "subtasks": [
+            {
+              "id": "_7l5w3jg",
+              "name": "Cruzar la informacion de los empleados americar para ver quien esta ocupando el cotizador",
+              "responsible": "Jose Figueroa",
+              "stage": "porhacer",
+              "startDate": "2026-06-01",
+              "endDate": "2026-06-12",
+              "consultados": "Melannie Mora"
+            }
+          ],
           "consultados": "Melannie Mora"
         },
         {
