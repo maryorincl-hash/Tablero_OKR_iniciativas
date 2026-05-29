@@ -97,12 +97,13 @@
         {
           "id": "c1p5",
           "name": "Palanca C1.5 – Optimización de la lista negra",
-          "responsible": "",
+          "responsible": "Jose Figueroa",
           "stage": "porhacer",
           "startDate": "",
           "endDate": "",
           "expanded": false,
-          "subtasks": []
+          "subtasks": [],
+          "consultados": ""
         },
         {
           "id": "c1p6",
