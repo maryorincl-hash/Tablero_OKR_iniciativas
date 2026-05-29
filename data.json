@@ -492,14 +492,14 @@
           "stage": "porhacer",
           "startDate": "",
           "endDate": "",
-          "expanded": false,
+          "expanded": true,
           "stopReason": "",
           "subtasks": [
             {
               "id": "v2p4s1",
               "name": "Expansión a todas las sucursales (2 zonas/semana) + rutina jefe + habilitación canal web",
               "responsible": "",
-              "stage": "ejecucion",
+              "stage": "monitoreo",
               "startDate": "2026-05-18",
               "endDate": "2026-05-29"
             },
