@@ -66,11 +66,11 @@
             {
               "id": "c1p2s2",
               "name": "Monitoreo de colas y priorización de leads categoría Muy Alta y Alta",
-              "responsible": "Jose Figueroa",
+              "responsible": "",
               "stage": "monitoreo",
               "startDate": "2026-05-11",
               "endDate": "2026-05-29",
-              "consultados": "Melannie Mora"
+              "consultados": ""
             }
           ],
           "consultados": ""
@@ -93,7 +93,7 @@
           "stage": "porhacer",
           "startDate": "",
           "endDate": "",
-          "expanded": false,
+          "expanded": true,
           "subtasks": [],
           "consultados": ""
         },
@@ -104,7 +104,7 @@
           "stage": "porhacer",
           "startDate": "",
           "endDate": "",
-          "expanded": false,
+          "expanded": true,
           "subtasks": [],
           "consultados": ""
         },
@@ -115,7 +115,7 @@
           "stage": "definicion",
           "startDate": "2026-04-01",
           "endDate": "",
-          "expanded": false,
+          "expanded": true,
           "subtasks": [],
           "consultados": ""
         }
