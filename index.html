@@ -955,7 +955,12 @@ async function refreshMetasFromSharePoint(){
       if(status)status.innerHTML='<span style="color:#c00">Error: '+j.msg+'</span>';
     }
   } catch(e){
-    if(status)status.innerHTML='<span style="color:#c00">Servidor no disponible. Ejecuta: <code>Start-ScheduledTask SyncMetasServer</code></span>';
+    if(status)status.innerHTML='';
+    const msg=document.createElement('div');
+    msg.style.cssText='position:fixed;bottom:24px;right:24px;background:#c62828;color:white;padding:14px 20px;border-radius:10px;font-size:13px;z-index:9999;box-shadow:0 4px 16px rgba(0,0,0,.3);max-width:360px;';
+    msg.innerHTML='<strong>Servidor no disponible</strong><br>El servidor local no esta corriendo.<br><br>Ejecuta en PowerShell:<br><code style="background:rgba(0,0,0,.3);padding:4px 8px;border-radius:4px;font-size:11px;">Start-Process powershell -Args \"-ExecutionPolicy Bypass -File $env:USERPROFILE\Documents\okr-automation\scripts\refresh_metas_server.ps1\"</code><br><br><button onclick="this.parentElement.remove()" style="margin-top:8px;padding:4px 12px;border:none;background:rgba(255,255,255,.2);color:white;border-radius:6px;cursor:pointer;">Cerrar</button>';
+    document.body.appendChild(msg);
+    setTimeout(()=>msg.remove(),15000);
   }
   if(icon)icon.innerHTML='&#x1F504;';
   btn.disabled=false;
