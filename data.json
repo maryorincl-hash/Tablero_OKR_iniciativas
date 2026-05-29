@@ -57,11 +57,11 @@
             {
               "id": "c1p2s1",
               "name": "Reasignación Express: reasignación automática de leads sin contacto al superar SLA",
-              "responsible": "Jose Figueroa",
-              "stage": "porhacer",
+              "responsible": "",
+              "stage": "definicion",
               "startDate": "2026-05-25",
               "endDate": "2026-06-12",
-              "consultados": "Maryorin"
+              "consultados": ""
             },
             {
               "id": "c1p2s2",
@@ -78,10 +78,10 @@
         {
           "id": "c1p3",
           "name": "Palanca C1.3 – Bajar duplicados (Regla de validación para descartar automáticamente estos leads)",
-          "responsible": "Jose Figueroa",
-          "stage": "porhacer",
-          "startDate": "2026-06-01",
-          "endDate": "2026-06-05",
+          "responsible": "",
+          "stage": "definicion",
+          "startDate": "2026-03-01",
+          "endDate": "",
           "expanded": true,
           "subtasks": [],
           "consultados": ""
@@ -124,7 +124,7 @@
     {
       "id": "okr_c2",
       "code": "C2",
-      "expanded": false,
+      "expanded": true,
       "name": "Conversión Lead → Cita de Inspección Completada",
       "meta": "40%",
       "actual": "32%",
@@ -360,14 +360,25 @@
         },
         {
           "id": "v1p5",
-          "name": "V1.5 – Agregar al correo de Asignación de Cliente Potencial el Segmento de valor",
+          "name": "V1.5 – Agregar información relevante al correo de Asignación de Cliente Potencial",
           "responsible": "Yerko Pino",
           "stage": "porhacer",
           "startDate": "",
           "endDate": "",
-          "expanded": false,
+          "expanded": true,
           "stopReason": "",
-          "subtasks": []
+          "subtasks": [
+            {
+              "id": "_72cu8b1",
+              "name": "Agregar SEGMENTO DE VALOR a correo asignación",
+              "responsible": "Maryorin Vivas Macedo",
+              "stage": "porhacer",
+              "startDate": "2026-05-29",
+              "endDate": "2026-06-26",
+              "consultados": ""
+            }
+          ],
+          "consultados": ""
         }
       ]
     },
