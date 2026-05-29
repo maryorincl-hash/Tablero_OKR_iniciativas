@@ -106,7 +106,7 @@
           "id": "c1p6",
           "name": "Palanca C1.6 – Comunicación del proceso de tasación comercial desde Llaima",
           "responsible": "Jose Figueroa",
-          "stage": "ejecucion",
+          "stage": "definicion",
           "startDate": "2026-04-01",
           "endDate": "",
           "expanded": false,
@@ -309,7 +309,7 @@
               "id": "_r1symte",
               "name": "Volver a tomar los pre aprobados desde Llaima",
               "responsible": "Yerko Pino",
-              "stage": "definicion",
+              "stage": "ejecucion",
               "startDate": "2026-05-28",
               "endDate": "2026-06-19",
               "consultados": "Forum / Integraciones / Canales Digitales"
