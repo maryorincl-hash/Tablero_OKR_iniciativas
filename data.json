@@ -498,10 +498,11 @@
             {
               "id": "v2p4s1",
               "name": "Expansión a todas las sucursales (2 zonas/semana) + rutina jefe + habilitación canal web",
-              "responsible": "",
+              "responsible": "Yerko Pino",
               "stage": "monitoreo",
               "startDate": "2026-05-18",
-              "endDate": "2026-05-29"
+              "endDate": "2026-06-30",
+              "consultados": ""
             },
             {
               "id": "v2p4s2",
