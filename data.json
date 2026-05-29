@@ -339,11 +339,12 @@
           "subtasks": [
             {
               "id": "v1p4s1",
-              "name": "Diseño e implementación de política comercial segmentada por perfil de cliente + VPP",
-              "responsible": "",
+              "name": "Diseño de política comercial segmentada por perfil de cliente + VPP",
+              "responsible": "Yerko Pino",
               "stage": "ejecucion",
               "startDate": "2026-05-18",
-              "endDate": "2026-06-12"
+              "endDate": "2026-06-12",
+              "consultados": ""
             },
             {
               "id": "_k4gbhr8",
