@@ -486,42 +486,6 @@
   ],
   "incidencias": [
     {
-      "id": "inc1",
-      "lineaNegocio": "compras",
-      "stage": "ejecucion",
-      "titulo": "SLA de primer contacto superado en leads de alta prioridad",
-      "levantadaPor": "Maryorin Vivas Macedo",
-      "asignadoA": "Jose Figueroa",
-      "impactaEn": "C1.2 – Tiempo Promedio de Primer Contacto",
-      "startDate": "2026-05-10",
-      "endDate": "2026-05-31",
-      "stopReason": ""
-    },
-    {
-      "id": "inc2",
-      "lineaNegocio": "compras",
-      "stage": "definicion",
-      "titulo": "Leads duplicados ingresando al flujo sin filtro activo",
-      "levantadaPor": "Jose Figueroa",
-      "asignadoA": "Daniela Godoy",
-      "impactaEn": "C1.3 – Bajar duplicados",
-      "startDate": "2026-05-15",
-      "endDate": "2026-06-15",
-      "stopReason": ""
-    },
-    {
-      "id": "inc3",
-      "lineaNegocio": "ventas",
-      "stage": "porhacer",
-      "titulo": "Clientes no confirman citas de venta por falta de recordatorio automático",
-      "levantadaPor": "Yerko Pino",
-      "asignadoA": "Maryorin Vivas Macedo",
-      "impactaEn": "V2.1 – Automatización del Flujo de Confirmación",
-      "startDate": "2026-05-20",
-      "endDate": "2026-06-30",
-      "stopReason": ""
-    },
-    {
       "id": "inc4",
       "lineaNegocio": "ventas",
       "stage": "monitoreo",
