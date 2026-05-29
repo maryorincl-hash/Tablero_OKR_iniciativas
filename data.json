@@ -237,9 +237,10 @@
               "id": "v1p1s1",
               "name": "Flujo diferenciado VPP: enrutamiento automático a asesor especializado en VPP",
               "responsible": "",
-              "stage": "porhacer",
+              "stage": "detenido",
               "startDate": "2026-06-01",
-              "endDate": "2026-06-12"
+              "endDate": "2026-06-12",
+              "stopReason": "mientras se priorizará por temperatura"
             }
           ],
           "consultados": ""
