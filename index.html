@@ -524,8 +524,8 @@ function renderKanban(){
       <span class="stage-pill" style="background:${st.color};color:white">${st.label}</span>
       <span class="stage-cnt" style="color:${st.color}">${n}</span></div>`;
   });
-  h+=`<div class="gh-detenido-col" id="gh-detenido" onclick="toggleDetenido()" ondragover="onDragOver(event,'detenido')" ondragleave="onDragLeave(event)" ondrop="onDrop(event,'detenido')" title="${detenidoVisible?'Colapsar':'Expandir'} columna Detenido">
-    ${detenidoVisible?`<span class="stage-pill" style="background:#B71C1C;color:white">🚫 Detenido</span><span class="det-col-cnt">${detCnt}</span>`:`<span class="det-col-collapsed">🚫 ${detCnt>0?detCnt:''}</span>`}
+  h+=`<div class="gh-detenido-col" id="gh-detenido" ondragover="onDragOver(event,'detenido')" ondragleave="onDragLeave(event)" ondrop="onDrop(event,'detenido')">
+    ${detenidoVisible?`<span class="stage-pill" style="background:#B71C1C;color:white;cursor:pointer" onclick="openPanel('detenido')">🚫 Detenido</span><span class="det-col-cnt" style="cursor:pointer" onclick="openPanel('detenido')">${detCnt}</span><span onclick="toggleDetenido()" title="Colapsar" style="font-size:10px;cursor:pointer;color:#B71C1C;margin-top:2px">▶ colapsar</span>`:`<span class="det-col-collapsed" style="cursor:pointer" onclick="openPanel('detenido')" title="Ver detenidos">🚫 ${detCnt>0?detCnt:''}</span>`}
   </div></div>`;
   if(!data[tab].length){
     h+=`<div class="no-items">Sin OKRs aún.<br><br><button class="btn btn-primary btn-sm" onclick="openModalAddOkr()">+ Agregar primer OKR</button></div>`;
@@ -871,12 +871,12 @@ function toggleDetenido(){detenidoVisible=!detenidoVisible;renderBoard();}
 
 // ── SIDE PANEL ──
 function openPanel(stageId){
-  const st=STAGES.find(s=>s.id===stageId);
+  const st=stageId==='detenido'?STAGE_STOP:(STAGES.find(s=>s.id===stageId)||STAGE_STOP);
   const items=[];
   data[currentTab].forEach(okr=>{
     okr.palancas.forEach(p=>{
-      if(p.stage===stageId)items.push({name:p.name,responsible:p.responsible,startDate:p.startDate,endDate:p.endDate,_type:'palanca',_parent:`OKR ${okr.code}: ${okr.name}`});
-      p.subtasks.forEach(sub=>{if(sub.stage===stageId)items.push({...sub,_type:'sub',_parent:`${p.name}`});});
+      if(p.stage===stageId)items.push({name:p.name,responsible:p.responsible,startDate:p.startDate,endDate:p.endDate,stopReason:p.stopReason||'',_type:'palanca',_parent:`OKR ${okr.code}: ${okr.name}`});
+      p.subtasks.forEach(sub=>{if(sub.stage===stageId)items.push({...sub,stopReason:sub.stopReason||'',_type:'sub',_parent:`${p.name}`});});
     });
   });
   document.getElementById('sp_title').innerHTML=`<span style="color:${st.color}">● ${st.label}</span>`;
@@ -886,7 +886,7 @@ function openPanel(stageId){
   else{items.forEach(it=>{bh+=`<div class="sp-card" style="border-left:3px solid ${st.color}">
     <div class="sp-card-parent">${it._type==='sub'?'↳ Iniciativa de: ':'📌 Palanca de: '}${escH(it._parent)}</div>
     <div class="sp-card-name">${escH(it.name)}</div>
-    <div class="sp-card-meta">${it.responsible?`<span>👤 ${escH(it.responsible)}</span>`:''}${it.startDate||it.endDate?`<span>📅 ${fmtDate(it.startDate)}${it.endDate?' – '+fmtDate(it.endDate):''}</span>`:''}</div>
+    <div class="sp-card-meta">${it.responsible?`<span>👤 ${escH(it.responsible)}</span>`:''}${it.startDate||it.endDate?`<span>📅 ${fmtDate(it.startDate)}${it.endDate?' – '+fmtDate(it.endDate):''}</span>`:''}${it.stopReason?`<span style="color:#B71C1C;font-style:italic">🚫 Motivo: ${escH(it.stopReason)}</span>`:''}</div>
   </div>`;}); }
   document.getElementById('sp_body').innerHTML=bh;
   document.getElementById('side_panel').classList.add('open');
