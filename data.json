@@ -20,11 +20,12 @@
           "subtasks": [
             {
               "id": "c1p1s1",
-              "name": "Cadencias de contacto automáticas multicanal (email, WhatsApp, SMS)",
-              "responsible": "",
+              "name": "Cadencias de contacto automáticas multicanal (email, WhMS)atsApp, S",
+              "responsible": "Jose Figueroa",
               "stage": "porhacer",
               "startDate": "2026-05-25",
-              "endDate": "2026-06-05"
+              "endDate": "2026-06-05",
+              "consultados": "Maryorin"
             },
             {
               "id": "c1p1s2",
