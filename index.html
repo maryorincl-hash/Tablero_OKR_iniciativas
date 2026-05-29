@@ -1538,33 +1538,24 @@ async function pushToGitHub(){
   }catch(e){setSyncStatus('error');}
 }
 async function pullFromGitHub(){
-  if(!ghToken)return;
   setSyncStatus('cargando');
   try{
-    const r=await fetch('https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/'+GH_FILE,
-      {headers:{'Authorization':'token '+ghToken,'Accept':'application/vnd.github.v3+json'}});
+    const rawUrl='https://raw.githubusercontent.com/'+GH_OWNER+'/'+GH_REPO+'/main/'+GH_FILE+'?v='+Date.now();
+    const r=await fetch(rawUrl);
     if(r.ok){
-      const j=await r.json();ghSha=j.sha;
-      let remote=null;
-      try{
-        const clean=j.content.replace(/[
-
-]/g,'');
-        const bin=atob(clean);const bytes=new Uint8Array(bin.length);
-        for(let i=0;i<bin.length;i++)bytes[i]=bin.charCodeAt(i);
-        remote=JSON.parse(new TextDecoder('utf-8').decode(bytes));
-      }catch(decErr){console.error('pullFromGitHub decode error:',decErr);setSyncStatus('error');return;}
-      const hasData=remote&&((remote.compras&&remote.compras.length)||(remote.ventas&&remote.ventas.length));
-      if(hasData){
-        data=remote;localStorage.setItem(KEY,JSON.stringify(data));
-        setSyncStatus('ok');showToast('Datos sincronizados con GitHub');renderBoard();
-      } else {
-        setSyncStatus('ok');
-        console.warn('pullFromGitHub: data.json vacio, manteniendo datos locales');
+      const remote=await r.json();
+      if(ghToken){
+        fetch('https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/'+GH_FILE,
+          {headers:{'Authorization':'token '+ghToken,'Accept':'application/vnd.github.v3+json'}})
+          .then(res=>res.json()).then(j=>{if(j.sha)ghSha=j.sha;}).catch(()=>{});
       }
+      const hasData=remote&&((remote.compras&&remote.compras.length)||(remote.ventas&&remote.ventas.length));
+      if(hasData){data=remote;localStorage.setItem(KEY,JSON.stringify(data));setSyncStatus('ok');renderBoard();}
+      else{setSyncStatus('ok');}
     }else{setSyncStatus('error');}
-  }catch(e){setSyncStatus('error');}
+  }catch(e){console.error('pullFromGitHub error:',e);setSyncStatus('error');}
 }
+
 function setSyncStatus(s){
   const el=document.getElementById('sync_status');if(!el)return;
   const map={ok:'✅ Guardado',guardando:'⏳ Guardando...','cargando':'⏳ Cargando...',conflicto:'🔄 Conflicto, recargando...',error:'❌ Error al guardar'};
