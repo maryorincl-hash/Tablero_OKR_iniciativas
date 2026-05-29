@@ -818,6 +818,11 @@ function renderStageBar(){
       <div><div class="sc-num" style="color:${st.color}">${n}</div><div class="sc-label">${st.label}</div></div>
     </div>`;
   });
+  const detN=countStage('detenido',tab);
+  h+=`<div class="stage-count" onclick="${tab==='incidencias'?`openIncPanel('detenido')`:`openPanel('detenido')`}" style="opacity:${detN>0?1:0.45}">
+    <div class="sc-dot" style="background:#B71C1C"></div>
+    <div><div class="sc-num" style="color:#B71C1C">${detN}</div><div class="sc-label">DETENIDO</div></div>
+  </div>`;
   document.getElementById('stage_bar').innerHTML=h;
 }
 
