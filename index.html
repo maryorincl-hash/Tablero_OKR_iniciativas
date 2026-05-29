@@ -1541,29 +1541,65 @@ function saveState(){
 async function guardarAhora(){
   const btn=document.getElementById('btn_guardar');
   const icon=document.getElementById('btn_guardar_icon');
-  if(btn){btn.disabled=true;btn.style.background='#666';}
+  if(btn){btn.disabled=true;btn.style.background='#555';}
   if(icon)icon.innerHTML='⏳';
   clearTimeout(saveTimer);
+  const statusBefore=document.getElementById('sync_status');
+  const prevStatus=statusBefore?statusBefore.textContent:'';
   await pushToGitHub();
-  if(icon)icon.innerHTML='✅';
-  if(btn){btn.style.background='#2e7d32';}
-  setTimeout(()=>{if(icon)icon.innerHTML='💾';if(btn)btn.disabled=false;},2000);
+  const statusEl=document.getElementById('sync_status');
+  const saved=statusEl&&statusEl.textContent.includes('Guardado');
+  if(saved){
+    if(icon)icon.innerHTML='✅';
+    if(btn)btn.style.background='#2e7d32';
+  } else {
+    if(icon)icon.innerHTML='❌';
+    if(btn)btn.style.background='#c62828';
+    showToast('Error al guardar. Verifica tu token de acceso.');
+  }
+  setTimeout(()=>{if(icon)icon.innerHTML='💾';if(btn){btn.disabled=false;btn.style.background='#2e7d32';}},3000);
+}
+async function fetchSha(){
+  try{
+    const r=await fetch('https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/'+GH_FILE,
+      {headers:{'Authorization':'token '+ghToken,'Accept':'application/vnd.github.v3+json'}});
+    if(r.ok){const j=await r.json();ghSha=j.sha;return true;}
+  }catch(e){}
+  return false;
 }
 async function pushToGitHub(){
   if(!ghToken||!currentUser)return;
   setSyncStatus('guardando');
   try{
-    const str=JSON.stringify(data,null,2);const bytes2=new TextEncoder().encode(str);
-      let binStr='';for(let i=0;i<bytes2.length;i++)binStr+=String.fromCharCode(bytes2[i]);
-      const content=btoa(binStr);
-    const body={message:'Actualizado por '+currentUser+' - '+new Date().toLocaleString('es-CL'),content:content};
+    // Siempre obtener SHA actualizado antes de guardar
+    if(!ghSha) await fetchSha();
+    const str=JSON.stringify(data,null,2);
+    const bytes2=new TextEncoder().encode(str);
+    let binStr='';for(let i=0;i<bytes2.length;i++)binStr+=String.fromCharCode(bytes2[i]);
+    const content=btoa(binStr);
+    const body={message:'Guardado por '+currentUser+' - '+new Date().toLocaleString('es-CL'),content:content};
     if(ghSha)body.sha=ghSha;
     const r=await fetch('https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/'+GH_FILE,
       {method:'PUT',headers:{'Authorization':'token '+ghToken,'Content-Type':'application/json'},body:JSON.stringify(body)});
-    if(r.ok){const j=await r.json();ghSha=j.content.sha;setSyncStatus('ok');}
-    else if(r.status===409){setSyncStatus('conflicto');await pullFromGitHub();}
-    else{setSyncStatus('error');}
-  }catch(e){setSyncStatus('error');}
+    if(r.ok){
+      const j=await r.json();ghSha=j.content.sha;
+      setSyncStatus('ok');
+    } else if(r.status===409||r.status===422){
+      // Conflicto SHA: obtener SHA real y reintentar
+      await fetchSha();
+      if(ghSha){
+        body.sha=ghSha;
+        const r2=await fetch('https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/'+GH_FILE,
+          {method:'PUT',headers:{'Authorization':'token '+ghToken,'Content-Type':'application/json'},body:JSON.stringify(body)});
+        if(r2.ok){const j2=await r2.json();ghSha=j2.content.sha;setSyncStatus('ok');}
+        else{const e=await r2.json();setSyncStatus('error');console.error('push error:',e);}
+      }
+    } else {
+      const errBody=await r.json().catch(()=>({}));
+      console.error('pushToGitHub error',r.status,errBody);
+      setSyncStatus('error');
+    }
+  }catch(e){console.error('pushToGitHub exception:',e);setSyncStatus('error');}
 }
 async function pullFromGitHub(){
   setSyncStatus('cargando');
