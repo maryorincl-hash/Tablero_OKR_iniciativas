@@ -323,7 +323,7 @@
           "stage": "definicion",
           "startDate": "",
           "endDate": "",
-          "expanded": false,
+          "expanded": true,
           "stopReason": "",
           "subtasks": [
             {
@@ -333,6 +333,15 @@
               "stage": "ejecucion",
               "startDate": "2026-05-18",
               "endDate": "2026-06-12"
+            },
+            {
+              "id": "_nct34ua",
+              "name": "Implementación de política comercial segmentada por perfil de cliente + VPP",
+              "responsible": "Yerko Pino",
+              "stage": "porhacer",
+              "startDate": "2026-05-15",
+              "endDate": "2026-06-12",
+              "consultados": "Comercial/Clientes/MKT/Lead Management"
             }
           ],
           "consultados": ""
