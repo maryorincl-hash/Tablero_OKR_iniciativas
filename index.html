@@ -419,6 +419,16 @@ const STAGES=[
   {id:'finalizado',label:'Finalizado',   color:'#2E7D32',bg:'#C8E6C9'},
 ];
 const STAGE_STOP={id:'detenido',label:'Detenido',color:'#B71C1C',bg:'#FFEBEE'};
+
+// ── GITHUB SYNC CONFIG ──
+const GH_OWNER='maryorincl-hash';
+const GH_REPO='Tablero_OKR_iniciativas';
+const GH_FILE='data.json';
+let ghToken=localStorage.getItem('gh_token')||'';
+let currentUser=localStorage.getItem('current_user')||'';
+let ghSha=null;
+let saveTimer=null;
+
 const USERS=['Andres Korenblit','Claudia Heredia','Daniela Godoy','Diego Tomas Villegas Gutierrez',
   'Felipe Esteban Arroyo Ceballos','Gonzalo Cortes','Ivan Balaguera','Jose Figueroa',
   'Kelvin Noriega Algarin','Matías Felipe Romero Diez','Maryorin Vivas Macedo','Yerko Pino'];
@@ -825,6 +835,12 @@ function renderToolbar(){
        <button class="btn" onclick="window.print()">🖨 Imprimir</button>
        <button class="btn" onclick="exportParaClickUp()" style="background:#4466ff;color:white;margin-left:8px;">&#x2B06; Exportar para ClickUp</button>`;
   }
+  h+=`<span id="sync_status" style="margin-left:12px;font-size:12px;color:#666;align-self:center;"></span>
+      <span style="margin-left:auto;font-size:12px;background:#f0f0f0;padding:4px 10px;border-radius:12px;display:flex;align-items:center;gap:6px;">
+        👤 <strong>${currentUser||'Sin usuario'}</strong>
+        <button onclick="cambiarUsuario()" style="border:none;background:none;cursor:pointer;font-size:11px;color:#888;">cambiar</button>
+      </span>
+      <button class="btn" onclick="pullFromGitHub()" title="Cargar cambios de otros usuarios" style="margin-left:6px;">🔄</button>`;
   document.getElementById('toolbar_btns').innerHTML=h;
 }
 
@@ -1242,7 +1258,44 @@ function onStageLeave(e){e.currentTarget.classList.remove('drag-over');}
 function onStageDrop(e,stageId){e.preventDefault();e.stopPropagation();document.querySelectorAll('.drag-over').forEach(el=>el.classList.remove('drag-over'));_applyStageChange(stageId);}
 
 // ── PERSISTENCE ──
-function saveState(){try{localStorage.setItem(KEY,JSON.stringify(data));}catch(e){}}
+function saveState(){
+  localStorage.setItem(KEY,JSON.stringify(data));
+  clearTimeout(saveTimer);
+  saveTimer=setTimeout(pushToGitHub,2000);
+}
+async function pushToGitHub(){
+  if(!ghToken||!currentUser)return;
+  setSyncStatus('guardando');
+  try{
+    const content=btoa(unescape(encodeURIComponent(JSON.stringify(data,null,2))));
+    const body={message:'Actualizado por '+currentUser+' - '+new Date().toLocaleString('es-CL'),content:content};
+    if(ghSha)body.sha=ghSha;
+    const r=await fetch('https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/'+GH_FILE,
+      {method:'PUT',headers:{'Authorization':'token '+ghToken,'Content-Type':'application/json'},body:JSON.stringify(body)});
+    if(r.ok){const j=await r.json();ghSha=j.content.sha;setSyncStatus('ok');}
+    else if(r.status===409){setSyncStatus('conflicto');await pullFromGitHub();}
+    else{setSyncStatus('error');}
+  }catch(e){setSyncStatus('error');}
+}
+async function pullFromGitHub(){
+  if(!ghToken)return;
+  setSyncStatus('cargando');
+  try{
+    const r=await fetch('https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/'+GH_FILE,
+      {headers:{'Authorization':'token '+ghToken,'Accept':'application/vnd.github.v3+json'}});
+    if(r.ok){
+      const j=await r.json();ghSha=j.sha;
+      const remote=JSON.parse(decodeURIComponent(escape(atob(j.content))));
+      data=remote;localStorage.setItem(KEY,JSON.stringify(data));
+      setSyncStatus('ok');renderBoard();
+    }else{setSyncStatus('error');}
+  }catch(e){setSyncStatus('error');}
+}
+function setSyncStatus(s){
+  const el=document.getElementById('sync_status');if(!el)return;
+  const map={ok:'✅ Guardado',guardando:'⏳ Guardando...','cargando':'⏳ Cargando...',conflicto:'🔄 Conflicto, recargando...',error:'❌ Error al guardar'};
+  el.textContent=map[s]||s;
+}
 function loadState(){const r=localStorage.getItem(KEY);if(!r)return false;try{data=JSON.parse(r);return true;}catch(e){localStorage.removeItem(KEY);return false;}}
 
 // ── TOAST ──
@@ -1335,26 +1388,48 @@ const SAMPLE_INCIDENCIAS=[
 ];
 
 // ── INIT ──
-const loaded=loadState();
-if(!loaded||!data.compras||!data.compras.length){
-  data={
-    compras:JSON.parse(JSON.stringify(SAMPLE_COMPRAS)),
-    ventas:JSON.parse(JSON.stringify(SAMPLE_VENTAS)),
-    incidencias:JSON.parse(JSON.stringify(SAMPLE_INCIDENCIAS))
-  };
-} else {
-  if(!data.ventas||!data.ventas.length) data.ventas=JSON.parse(JSON.stringify(SAMPLE_VENTAS));
-  if(!data.incidencias) data.incidencias=JSON.parse(JSON.stringify(SAMPLE_INCIDENCIAS));
+async function initApp(){
+  if(!currentUser||!ghToken){await showSetupModal();}
+  const loaded=loadState();
+  if(!loaded||!data.compras||!data.compras.length){
+    data={compras:JSON.parse(JSON.stringify(SAMPLE_COMPRAS)),ventas:JSON.parse(JSON.stringify(SAMPLE_VENTAS)),incidencias:JSON.parse(JSON.stringify(SAMPLE_INCIDENCIAS))};
+  } else {
+    if(!data.ventas||!data.ventas.length) data.ventas=JSON.parse(JSON.stringify(SAMPLE_VENTAS));
+    if(!data.incidencias) data.incidencias=JSON.parse(JSON.stringify(SAMPLE_INCIDENCIAS));
+  }
+  renderToolbar();
+  renderBoard();
+  if(ghToken) await pullFromGitHub();
 }
-renderToolbar();
-renderBoard();
+function showSetupModal(){
+  return new Promise(resolve=>{
+    document.getElementById('setup_modal').style.display='flex';
+    document.getElementById('setup_ok').onclick=()=>{
+      const u=document.getElementById('setup_user').value;
+      const t=document.getElementById('setup_token').value.trim();
+      if(!u){alert('Selecciona tu usuario');return;}
+      if(!t){alert('Ingresa tu token de GitHub');return;}
+      currentUser=u;ghToken=t;
+      localStorage.setItem('current_user',u);
+      localStorage.setItem('gh_token',t);
+      document.getElementById('setup_modal').style.display='none';
+      resolve();
+    };
+  });
+}
+function cambiarUsuario(){
+  localStorage.removeItem('current_user');
+  localStorage.removeItem('gh_token');
+  location.reload();
+}
+initApp();
 function exportParaClickUp(){
-  const data={
-    compras:{okrs:(STATE.compras&&STATE.compras.okrs?STATE.compras.okrs:[])},
-    ventas:{okrs:(STATE.ventas&&STATE.ventas.okrs?STATE.ventas.okrs:[])},
+  const exportData={
+    compras:{okrs:(data.compras||[])},
+    ventas:{okrs:(data.ventas||[])},
     exportado_en:new Date().toISOString()
   };
-  const json=JSON.stringify(data,null,2);
+  const json=JSON.stringify(exportData,null,2);
   const blob=new Blob([json],{type:'application/json'});
   const a=document.createElement('a');
   a.href=URL.createObjectURL(blob);
@@ -1372,5 +1447,33 @@ function saveConsultados(type,id1,id2,value){
   }
 }
 </script>
+
+<!-- MODAL SETUP USUARIO -->
+<div id="setup_modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,0.6);z-index:9999;align-items:center;justify-content:center;">
+  <div style="background:white;border-radius:12px;padding:32px;width:380px;box-shadow:0 8px 32px rgba(0,0,0,0.2);">
+    <h2 style="margin:0 0 8px;font-size:18px;">👤 Identificate para continuar</h2>
+    <p style="color:#666;font-size:13px;margin:0 0 20px;">Los datos se comparten entre el equipo via GitHub. Solo debes hacer esto una vez.</p>
+    <label style="font-size:13px;font-weight:600;display:block;margin-bottom:4px;">¿Quién eres?</label>
+    <select id="setup_user" style="width:100%;padding:8px;border:1px solid #ddd;border-radius:6px;font-size:14px;margin-bottom:14px;">
+      <option value="">-- Selecciona tu nombre --</option>
+      <option>Andres Korenblit</option>
+      <option>Claudia Heredia</option>
+      <option>Daniela Godoy</option>
+      <option>Diego Tomas Villegas Gutierrez</option>
+      <option>Felipe Esteban Arroyo Ceballos</option>
+      <option>Gonzalo Cortes</option>
+      <option>Ivan Balaguera</option>
+      <option>Jose Figueroa</option>
+      <option>Kelvin Noriega Algarin</option>
+      <option>Matías Felipe Romero Diez</option>
+      <option>Maryorin Vivas Macedo</option>
+      <option>Yerko Pino</option>
+    </select>
+    <label style="font-size:13px;font-weight:600;display:block;margin-bottom:4px;">Token de GitHub <a href="https://github.com/settings/tokens/new?scopes=repo&description=Tablero+OKR" target="_blank" style="font-weight:normal;font-size:11px;">(crear token)</a></label>
+    <input id="setup_token" type="password" placeholder="ghp_xxxxxxxxxxxx" style="width:100%;padding:8px;border:1px solid #ddd;border-radius:6px;font-size:13px;margin-bottom:6px;box-sizing:border-box;">
+    <p style="color:#888;font-size:11px;margin:0 0 18px;">Solo se guarda en tu navegador. Solicita el token al administrador del repo.</p>
+    <button id="setup_ok" style="width:100%;padding:10px;background:#4466ff;color:white;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;">Entrar al tablero →</button>
+  </div>
+</div>
 </body>
 </html>
