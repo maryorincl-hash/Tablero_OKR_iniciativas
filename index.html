@@ -150,6 +150,21 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#eef0f3;color:#333;font-
 .exec-progress-fill{height:100%;border-radius:3px;transition:width .4s;}
 .exec-semaforo{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap;}
 .exec-sem-pill{font-size:9px;padding:2px 7px;border-radius:8px;font-weight:600;}
+
+.metas-view{padding:16px 20px;}
+.metas-filters{display:flex;gap:10px;align-items:center;margin-bottom:16px;flex-wrap:wrap;}
+.metas-filters select{padding:6px 12px;border:1px solid #ddd;border-radius:6px;font-size:12px;background:white;cursor:pointer;}
+.metas-section-title{font-size:11px;font-weight:800;letter-spacing:1px;color:#888;margin:16px 0 8px;padding-bottom:4px;border-bottom:2px solid #eee;}
+.metas-table{width:100%;border-collapse:collapse;background:white;border-radius:10px;overflow:hidden;box-shadow:0 1px 6px rgba(0,0,0,.07);margin-bottom:16px;}
+.metas-table th{background:#0f3460;color:white;font-size:10px;font-weight:700;padding:8px 10px;text-align:center;white-space:nowrap;}
+.metas-table th:first-child{text-align:left;}.metas-table td{padding:7px 10px;font-size:12px;border-bottom:1px solid #f0f0f0;vertical-align:middle;}
+.metas-table tr:last-child td{border-bottom:none;}.metas-table tr.okr-row td{background:#f0f4ff;font-weight:700;}
+.metas-table tr.pal-row td{background:white;}.metas-table tr.pal-row td:first-child{padding-left:24px;color:#444;}
+.meta-badge{display:inline-block;padding:2px 8px;border-radius:8px;font-size:10px;font-weight:700;white-space:nowrap;}
+.meta-ok{background:#e8f5e9;color:#2e7d32;}.meta-warn{background:#fff8e1;color:#f57f17;}.meta-bad{background:#ffebee;color:#c62828;}
+.meta-empty{color:#ccc;font-style:italic;}.semana-col{text-align:center;}
+.trend-bar-wrap{width:60px;height:7px;background:#eee;border-radius:4px;display:inline-block;vertical-align:middle;margin-left:4px;}
+.trend-bar-fill{height:100%;border-radius:4px;}
 /* Modo Comité */
 .comite-view{padding:16px 20px;}
 .comite-okr-block{margin-bottom:20px;border-radius:10px;overflow:hidden;box-shadow:0 1px 6px rgba(0,0,0,.08);}
@@ -235,6 +250,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#eef0f3;color:#333;font-
   <div class="tab active" onclick="switchTab('compras')">🛒 Compras</div>
   <div class="tab" onclick="switchTab('ventas')">🚗 Ventas</div>
   <div class="tab" onclick="switchTab('incidencias')">⚠️ Incidencias</div>
+  <div class="tab" id="tab_metas" onclick="switchTab('metas')">📈 Avance Metas</div>
 </div>
 
 <div id="exec_summary" style="display:none"></div>
@@ -541,6 +557,7 @@ function ganttTimeline(sd,ed,stage){
 function renderBoard(){
   if(currentView==='gantt'){renderGantt();return;}
   if(currentView==='comite'){renderExecSummary();renderComite();return;}
+  if(currentTab==='metas'){renderMetas();return;}
   if(currentTab==='incidencias'){renderExecSummary();renderIncidencias();return;}
   renderExecSummary();
   renderKanban();
@@ -917,6 +934,91 @@ function renderComite(){
   document.getElementById('board').innerHTML=h;
 }
 
+
+// == AVANCE METAS ==
+let metasData=null,metasFiltroSemana='todas',metasFiltroMes='todos',metasFiltroLinea='todas';
+async function loadMetas(){
+  if(metasData)return metasData;
+  try{const r=await fetch('metas.json?v='+Date.now());metasData=await r.json();}catch(e){metasData=null;}
+  return metasData;
+}
+function semaforo(val,meta,unidad){
+  if(val===''||val===undefined||val===null)return '<span class="meta-empty">-</span>';
+  const v=parseFloat(String(val).replace(',','.'));
+  const mStr=String(meta).replace('%','').replace(',','.').replace('<','').replace('h','').trim();
+  const m=parseFloat(mStr);
+  if(isNaN(v)||isNaN(m))return '<span class="meta-badge" style="background:#f5f5f5;color:#666">'+val+(unidad==='%'?'%':unidad==='h'?' h':'')+'</span>';
+  const menosMejor=unidad==='h'||String(meta).includes('<');
+  const ratio=menosMejor?(m===0?1:m/v):(m===0?1:v/m);
+  const cls=ratio>=0.95?'meta-ok':ratio>=0.7?'meta-warn':'meta-bad';
+  return '<span class="meta-badge '+cls+'">'+val+(unidad==='%'?'%':unidad==='h'?' h':'')+'</span>';
+}
+function barraP(val,meta,unidad){
+  if(val===''||val===undefined)return '';
+  const v=parseFloat(String(val).replace(',','.'));
+  const m=parseFloat(String(meta).replace('%','').replace(',','.').replace('<','').replace('h','').trim());
+  if(isNaN(v)||isNaN(m)||m===0)return '';
+  const menosMejor=unidad==='h'||String(meta).includes('<');
+  const pct=Math.min(menosMejor?m/v*100:v/m*100,100);
+  const color=pct>=95?'#66bb6a':pct>=70?'#ffa726':'#ef5350';
+  return '<span class="trend-bar-wrap"><span class="trend-bar-fill" style="width:'+pct+'%;background:'+color+'"></span></span>';
+}
+async function renderMetas(){
+  const el=document.getElementById('board');
+  el.innerHTML='<div style="padding:20px;color:#888">Cargando datos de metas...</div>';
+  const d=await loadMetas();
+  if(!d){el.innerHTML='<div style="padding:20px;color:#c00">No se pudo cargar metas.json</div>';return;}
+  const semanas=d.semanas;
+  const meses=[...new Set(semanas.map(s=>s.mes))];
+  let semsVis=semanas.filter(s=>{
+    if(metasFiltroMes!=='todos'&&s.mes!==metasFiltroMes)return false;
+    if(metasFiltroSemana!=='todas'&&s.codigo!==metasFiltroSemana)return false;
+    return true;
+  });
+  let okrsVis=d.okrs.filter(o=>metasFiltroLinea==='todas'||o.linea===metasFiltroLinea);
+  const ultimaSem=semsVis.filter(s=>okrsVis.some(o=>o.valores[s.codigo]!=='')).slice(-1)[0]||semsVis[semsVis.length-1];
+  let h='<div class="metas-view">';
+  h+='<div class="metas-filters"><strong style="font-size:12px;color:#333">Filtrar:</strong>';
+  h+='<select onchange="metasFiltroLinea=this.value;renderMetas()"><option value="todas">Todas las lineas</option>';
+  h+='<option value="compras"'+(metasFiltroLinea==='compras'?' selected':'')+'>Compras</option>';
+  h+='<option value="ventas"'+(metasFiltroLinea==='ventas'?' selected':'')+'>Ventas</option></select>';
+  h+='<select onchange="metasFiltroMes=this.value;metasFiltroSemana=\'todas\';renderMetas()"><option value="todos">Todos los meses</option>';
+  meses.forEach(m=>{h+='<option value="'+m+'"'+(metasFiltroMes===m?' selected':'')+'>'+m+'</option>';});
+  h+='</select><select onchange="metasFiltroSemana=this.value;renderMetas()"><option value="todas">Todas las semanas</option>';
+  semanas.forEach(s=>{h+='<option value="'+s.codigo+'"'+(metasFiltroSemana===s.codigo?' selected':'')+'>'+s.label+'</option>';});
+  h+='</select><button onclick="metasData=null;renderMetas()" style="padding:6px 12px;border:1px solid #ddd;border-radius:6px;font-size:12px;background:white;cursor:pointer;margin-left:auto">Actualizar</button></div>';
+  ['compras','ventas'].forEach(function(linea){
+    const okrsL=okrsVis.filter(o=>o.linea===linea);
+    if(!okrsL.length)return;
+    h+='<div class="metas-section-title">'+(linea==='compras'?'COMPRAS':'VENTAS')+'</div>';
+    h+='<table class="metas-table"><thead><tr><th style="width:240px">Indicador / Palanca</th><th>Meta</th><th>Base</th>';
+    semsVis.forEach(s=>{h+='<th class="semana-col">'+s.label+'</th>';});
+    if(ultimaSem)h+='<th>Estado</th>';
+    h+='</tr></thead><tbody>';
+    okrsL.forEach(function(okr){
+      const uv=ultimaSem?okr.valores[ultimaSem.codigo]:'';
+      h+='<tr class="okr-row"><td>OKR '+escH(okr.codigo)+' - '+escH(okr.nombre)+'</td>';
+      h+='<td style="text-align:center;font-weight:700">'+escH(okr.meta)+'</td>';
+      h+='<td style="text-align:center;color:#888">'+escH(okr.baseline)+'</td>';
+      semsVis.forEach(s=>{h+='<td class="semana-col">'+semaforo(okr.valores[s.codigo],okr.meta,okr.unidad)+'</td>';});
+      if(ultimaSem)h+='<td>'+semaforo(uv,okr.meta,okr.unidad)+barraP(uv,okr.meta,okr.unidad)+'</td>';
+      h+='</tr>';
+      (okr.palancas||[]).forEach(function(p){
+        const uvp=ultimaSem?p.valores[ultimaSem.codigo]:'';
+        h+='<tr class="pal-row"><td> &nbsp;&nbsp;'+escH(p.codigo)+' - '+escH(p.nombre)+'</td>';
+        h+='<td style="text-align:center">'+escH(p.meta)+'</td>';
+        h+='<td style="text-align:center;color:#888">'+escH(p.baseline)+'</td>';
+        semsVis.forEach(s=>{h+='<td class="semana-col">'+semaforo(p.valores[s.codigo],p.meta,p.unidad)+'</td>';});
+        if(ultimaSem)h+='<td>'+semaforo(uvp,p.meta,p.unidad)+barraP(uvp,p.meta,p.unidad)+'</td>';
+        h+='</tr>';
+      });
+    });
+    h+='</tbody></table>';
+  });
+  h+='<div style="font-size:10px;color:#aaa;margin-top:8px">Fuente: Seguimiento_por_Squad.xlsx &mdash; Squad: '+escH(d.squad)+' &mdash; '+escH(d.periodo)+'</div></div>';
+  el.innerHTML=h;
+}
+
 // ── STAGE BAR ──
 function renderStageBar(){
   const tab=currentTab;
@@ -975,7 +1077,8 @@ function switchTab(tab){
   currentTab=tab;
   document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',
     (i===0&&tab==='compras')||(i===1&&tab==='ventas')||(i===2&&tab==='incidencias')));
-  document.getElementById('drag_hint').style.display=(currentView==='board'&&tab!=='incidencias')?'':'none';
+  document.getElementById('drag_hint').style.display=(currentView==='board'&&tab!=='incidencias'&&tab!=='metas')?'':'none';
+  const sb=document.getElementById('stage_bar');if(sb)sb.style.display=tab==='metas'?'none':'';
   renderToolbar();
   renderBoard();
 }

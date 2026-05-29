@@ -1,0 +1,72 @@
+{
+  "squad": "Gestión de Leads",
+  "periodo": "Q2 2026",
+  "semanas": [
+    {"codigo":"S3","fecha":"2026-05-04","label":"S3 04/05","mes":"Mayo"},
+    {"codigo":"S4","fecha":"2026-05-11","label":"S4 11/05","mes":"Mayo"},
+    {"codigo":"S5","fecha":"2026-05-18","label":"S5 18/05","mes":"Mayo"},
+    {"codigo":"S6","fecha":"2026-05-25","label":"S6 25/05","mes":"Mayo"},
+    {"codigo":"S7","fecha":"2026-06-01","label":"S7 01/06","mes":"Junio"},
+    {"codigo":"S8","fecha":"2026-06-08","label":"S8 08/06","mes":"Junio"},
+    {"codigo":"S9","fecha":"2026-06-15","label":"S9 15/06","mes":"Junio"},
+    {"codigo":"S10","fecha":"2026-06-22","label":"S10 22/06","mes":"Junio"},
+    {"codigo":"S11","fecha":"2026-06-29","label":"S11 29/06","mes":"Junio"},
+    {"codigo":"S12","fecha":"2026-07-06","label":"S12 06/07","mes":"Julio"}
+  ],
+  "okrs": [
+    {
+      "codigo":"C1","nombre":"% Conversión Lead → Lead SQL / Oportunidad (Compra)",
+      "linea":"compras","meta":"3%","baseline":"1.50%","unidad":"%",
+      "valores":{"S3":"4.50","S4":"5.70","S5":"7.79","S6":"4.51","S7":"","S8":"","S9":"","S10":"","S11":"","S12":""},
+      "palancas":[
+        {"codigo":"C1.1","nombre":"Contactabilidad Global de Leads de Compra","meta":"70%","baseline":"53%","unidad":"%",
+         "valores":{"S3":"61.60","S4":"60.20","S5":"57.11","S6":"96.57","S7":"","S8":"","S9":"","S10":"","S11":"","S12":""}},
+        {"codigo":"C1.2","nombre":"Tiempo Promedio de Primer Contacto (Leads Compra)","meta":"< 6h","baseline":"8h","unidad":"h",
+         "valores":{"S3":"3","S4":"2.5","S5":"1.19","S6":"1.31","S7":"","S8":"","S9":"","S10":"","S11":"","S12":""}}
+      ]
+    },
+    {
+      "codigo":"C2","nombre":"% de Leads que Completan Cita de Inspección",
+      "linea":"compras","meta":"40%","baseline":"32%","unidad":"%",
+      "valores":{"S3":"35.79","S4":"34.11","S5":"27.55","S6":"32.62","S7":"","S8":"","S9":"","S10":"","S11":"","S12":""},
+      "palancas":[
+        {"codigo":"C2.1","nombre":"Validación y Seguimiento de Citas de Inspección desde el Lead","meta":"40%","baseline":"32%","unidad":"%",
+         "valores":{"S3":"35.79","S4":"34.11","S5":"27.55","S6":"32.62","S7":"","S8":"","S9":"","S10":"","S11":"","S12":""}},
+        {"codigo":"C2.2","nombre":"Capacitación y Auditoría de Protocolos en Llamadas de Inspección","meta":"100%","baseline":"0%","unidad":"%",
+         "valores":{"S3":"0","S4":"0","S5":"0","S6":"0","S7":"","S8":"","S9":"","S10":"","S11":"","S12":""}}
+      ]
+    },
+    {
+      "codigo":"V1","nombre":"Conversión Lead → Lead SQL / Oportunidad Venta",
+      "linea":"ventas","meta":"10%","baseline":"5.60%","unidad":"%",
+      "valores":{"S3":"5.50","S4":"5.40","S5":"5.00","S6":"7.58","S7":"","S8":"","S9":"","S10":"","S11":"","S12":""},
+      "palancas":[
+        {"codigo":"V1.1","nombre":"Conversión Lead con VPP → Lead SQL con VPP","meta":"15%","baseline":"9.81%","unidad":"%",
+         "valores":{"S3":"16.00","S4":"17.10","S5":"16.60","S6":"17.21","S7":"","S8":"","S9":"","S10":"","S11":"","S12":""}},
+        {"codigo":"V1.2","nombre":"Conversión Lead SQL Segmento + VPP (Flujo y Cadencia Exclusiva)","meta":"25%","baseline":"16.77%","unidad":"%",
+         "valores":{"S3":"23.40","S4":"31.40","S5":"30.20","S6":"27.91","S7":"","S8":"","S9":"","S10":"","S11":"","S12":""}},
+        {"codigo":"V1.3","nombre":"Conversión Lead SQL + Financiamiento (Oportunidad de Venta)","meta":"14%","baseline":"9.14%","unidad":"%",
+         "valores":{"S3":"5.40","S4":"6.00","S5":"5.90","S6":"27.36","S7":"","S8":"","S9":"","S10":"","S11":"","S12":""}},
+        {"codigo":"V1.4","nombre":"Política comercial para segmento de clientes y VPP","meta":"100%","baseline":"0%","unidad":"%",
+         "valores":{"S3":"5","S4":"5","S5":"5","S6":"10","S7":"","S8":"","S9":"","S10":"","S11":"","S12":""}}
+      ]
+    },
+    {
+      "codigo":"V2","nombre":"Tasa de Citas de Venta Completadas / Efectivas (Asistencia a Piso)",
+      "linea":"ventas","meta":"20%","baseline":"10.39%","unidad":"%",
+      "valores":{"S3":"15.79","S4":"12.00","S5":"40.00","S6":"29.87","S7":"","S8":"","S9":"","S10":"","S11":"","S12":""},
+      "palancas":[
+        {"codigo":"V2.1","nombre":"Automatización del Flujo de Confirmación y Recordatorio de Cita","meta":"100%","baseline":"0%","unidad":"%",
+         "valores":{"S3":"0","S4":"0","S5":"0","S6":"0","S7":"","S8":"","S9":"","S10":"","S11":"","S12":""}},
+        {"codigo":"V2.2","nombre":"Optimización del flujo de descarte del lead con cita","meta":"100%","baseline":"0%","unidad":"%",
+         "valores":{"S3":"0","S4":"0","S5":"0","S6":"0","S7":"","S8":"","S9":"","S10":"","S11":"","S12":""}},
+        {"codigo":"V2.3","nombre":"Incorporar motivos de cancelación de la cita","meta":"100%","baseline":"0%","unidad":"%",
+         "valores":{"S3":"0","S4":"0","S5":"0","S6":"0","S7":"","S8":"","S9":"","S10":"","S11":"","S12":""}},
+        {"codigo":"V2.4","nombre":"Expansión a Sucursales + Rutina Diaria Jefe de Sucursal","meta":"100%","baseline":"0%","unidad":"%",
+         "valores":{"S3":"0","S4":"10","S5":"30","S6":"50","S7":"","S8":"","S9":"","S10":"","S11":"","S12":""}},
+        {"codigo":"V2.5","nombre":"Diseño de estrategia y propuesta de valor para clientes con citas","meta":"100%","baseline":"0%","unidad":"%",
+         "valores":{"S3":"0","S4":"10","S5":"30","S6":"50","S7":"","S8":"","S9":"","S10":"","S11":"","S12":""}}
+      ]
+    }
+  ]
+}
