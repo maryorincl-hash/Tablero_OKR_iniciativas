@@ -3,7 +3,7 @@
     {
       "id": "okr_c1",
       "code": "C1",
-      "expanded": true,
+      "expanded": false,
       "name": "Conversión Lead → Lead SQL / Oportunidad Compra",
       "meta": "3.0%",
       "actual": "1.5%",
@@ -82,7 +82,7 @@
           "stage": "porhacer",
           "startDate": "2026-06-01",
           "endDate": "2026-06-05",
-          "expanded": true,
+          "expanded": false,
           "subtasks": [],
           "consultados": "Melannie"
         },
@@ -147,7 +147,7 @@
           "stage": "monitoreo",
           "startDate": "2026-01-01",
           "endDate": "2026-06-30",
-          "expanded": false,
+          "expanded": true,
           "subtasks": [
             {
               "id": "c2p1s1",
