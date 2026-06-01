@@ -13,40 +13,40 @@
           "id": "c1p1",
           "name": "Palanca C1.1 – Contactabilidad Global de Leads de Compra",
           "responsible": "Jose Figueroa",
-          "stage": "ejecucion",
+          "stage": "monitoreo",
           "startDate": "2026-01-15",
           "endDate": "2026-06-30",
           "expanded": true,
           "subtasks": [
             {
               "id": "c1p1s1",
-              "name": "Cadencias de contacto automáticas multicanal (email, WhatsApp, SMS)",
-              "responsible": "",
+              "name": "Cadencias de contacto automáticas multicanal (email, WhMS)atsApp, S",
+              "responsible": "Jose Figueroa",
               "stage": "porhacer",
               "startDate": "2026-05-25",
               "endDate": "2026-06-05",
-              "consultados": ""
+              "consultados": "Maryorin"
             },
             {
               "id": "c1p1s2",
               "name": "OTP al inicio del flujo de compra para validar solo números reales",
-              "responsible": "",
+              "responsible": "Jose Figueroa",
               "stage": "finalizado",
               "startDate": "2026-03-23",
               "endDate": "2026-05-08",
-              "consultados": ""
+              "consultados": "Martin Flores"
             },
             {
               "id": "c1p1s3",
               "name": "Primer contacto automático desde Llaima en Compra (iniciativa con Paula)",
               "responsible": "Jose Figueroa",
               "stage": "porhacer",
-              "startDate": "2026-06-01",
-              "endDate": "2026-06-26",
-              "consultados": "Pablo Polanco"
+              "startDate": "2026-05-25",
+              "endDate": "2026-06-12",
+              "consultados": "Pablo Polanco - Martin Flores - Maryorin Vivas"
             }
           ],
-          "consultados": ""
+          "stopReason": "eje"
         },
         {
           "id": "c1p2",
@@ -55,82 +55,65 @@
           "stage": "monitoreo",
           "startDate": "2026-01-15",
           "endDate": "2026-06-30",
-          "expanded": true,
+          "expanded": false,
           "subtasks": [
             {
               "id": "c1p2s1",
               "name": "Reasignación Express: reasignación automática de leads sin contacto al superar SLA",
-              "responsible": "Jose Figueroa",
+              "responsible": "",
               "stage": "porhacer",
               "startDate": "2026-05-25",
-              "endDate": "2026-06-12",
-              "consultados": "Maryorin"
+              "endDate": "2026-06-12"
             },
             {
               "id": "c1p2s2",
               "name": "Monitoreo de colas y priorización de leads categoría Muy Alta y Alta",
-              "responsible": "Jose Figueroa",
-              "stage": "monitoreo",
+              "responsible": "",
+              "stage": "ejecucion",
               "startDate": "2026-05-11",
-              "endDate": "2026-06-30",
-              "consultados": "Melannie Mora"
+              "endDate": "2026-05-29"
             }
-          ],
-          "consultados": ""
+          ]
         },
         {
           "id": "c1p3",
           "name": "Palanca C1.3 – Bajar duplicados (Regla de validación para descartar automáticamente estos leads)",
-          "responsible": "Jose Figueroa",
-          "stage": "porhacer",
-          "startDate": "2026-06-01",
-          "endDate": "2026-06-05",
-          "expanded": true,
-          "subtasks": [],
-          "consultados": "Melannie"
+          "responsible": "",
+          "stage": "definicion",
+          "startDate": "2026-03-01",
+          "endDate": "",
+          "expanded": false,
+          "subtasks": []
         },
         {
           "id": "c1p4",
           "name": "Palanca C1.4 – Detectar clientes falsos (nombre, cantidad de leads vs patentes)",
-          "responsible": "Melannie Mora",
+          "responsible": "",
           "stage": "porhacer",
-          "startDate": "2026-06-01",
-          "endDate": "2026-06-06",
-          "expanded": true,
-          "subtasks": [],
-          "consultados": "José Tomás Figueroa"
+          "startDate": "",
+          "endDate": "",
+          "expanded": false,
+          "subtasks": []
         },
         {
           "id": "c1p5",
           "name": "Palanca C1.5 – Optimización de la lista negra",
-          "responsible": "Jose Figueroa",
+          "responsible": "",
           "stage": "porhacer",
-          "startDate": "2026-06-01",
-          "endDate": "2026-06-05",
-          "expanded": true,
-          "subtasks": [
-            {
-              "id": "_7l5w3jg",
-              "name": "Cruzar la informacion de los empleados americar para ver quien esta ocupando el cotizador",
-              "responsible": "Jose Figueroa",
-              "stage": "porhacer",
-              "startDate": "2026-06-01",
-              "endDate": "2026-06-12",
-              "consultados": "Melannie Mora"
-            }
-          ],
-          "consultados": "Melannie Mora"
+          "startDate": "",
+          "endDate": "",
+          "expanded": false,
+          "subtasks": []
         },
         {
           "id": "c1p6",
           "name": "Palanca C1.6 – Comunicación del proceso de tasación comercial desde Llaima",
           "responsible": "Jose Figueroa",
-          "stage": "porhacer",
-          "startDate": "2026-06-01",
-          "endDate": "2026-06-05",
-          "expanded": true,
-          "subtasks": [],
-          "consultados": "Melannie Mora - Manuel Chavez- Javiera Barcoj"
+          "stage": "definicion",
+          "startDate": "2026-04-01",
+          "endDate": "",
+          "expanded": false,
+          "subtasks": []
         }
       ]
     },
@@ -150,7 +133,7 @@
           "stage": "monitoreo",
           "startDate": "2026-01-01",
           "endDate": "2026-06-30",
-          "expanded": true,
+          "expanded": false,
           "subtasks": [
             {
               "id": "c2p1s1",
@@ -158,8 +141,7 @@
               "responsible": "",
               "stage": "ejecucion",
               "startDate": "2026-05-18",
-              "endDate": "2026-05-29",
-              "consultados": ""
+              "endDate": "2026-05-29"
             },
             {
               "id": "c2p1s2",
@@ -167,8 +149,7 @@
               "responsible": "",
               "stage": "porhacer",
               "startDate": "2026-05-25",
-              "endDate": "2026-06-05",
-              "consultados": ""
+              "endDate": "2026-06-05"
             },
             {
               "id": "c2p1s3",
@@ -176,20 +157,17 @@
               "responsible": "",
               "stage": "porhacer",
               "startDate": "2026-05-25",
-              "endDate": "2026-06-19",
-              "consultados": ""
+              "endDate": "2026-06-19"
             },
             {
               "id": "c2p1s4",
               "name": "Panel de citas de inspección del día por jefe de sucursal (visibilidad tiempo real)",
-              "responsible": "Jose Figueroa",
+              "responsible": "",
               "stage": "porhacer",
               "startDate": "2026-06-01",
-              "endDate": "2026-06-12",
-              "consultados": "Daniela Godoy"
+              "endDate": "2026-07-03"
             }
-          ],
-          "consultados": ""
+          ]
         },
         {
           "id": "c2p2",
@@ -225,7 +203,7 @@
               "endDate": "2026-06-26"
             }
           ],
-          "consultados": ""
+          "consultados": "Maryorin"
         }
       ]
     }
@@ -245,9 +223,9 @@
           "name": "V1.1 – Conversión Lead con VPP → Lead SQL con VPP / Oportunidad Venta con VPP",
           "responsible": "Yerko Pino",
           "stage": "porhacer",
-          "startDate": "2026-05-01",
-          "endDate": "2026-12-31",
-          "expanded": true,
+          "startDate": "",
+          "endDate": "",
+          "expanded": false,
           "stopReason": "",
           "subtasks": [
             {
@@ -258,17 +236,16 @@
               "startDate": "2026-06-01",
               "endDate": "2026-06-12"
             }
-          ],
-          "consultados": ""
+          ]
         },
         {
           "id": "v1p2",
           "name": "V1.2 – Conversión Lead SQL Segmento + VPP (Flujo y Cadencia Exclusiva)",
           "responsible": "Yerko Pino",
           "stage": "porhacer",
-          "startDate": "2026-05-01",
-          "endDate": "2026-12-31",
-          "expanded": true,
+          "startDate": "",
+          "endDate": "",
+          "expanded": false,
           "stopReason": "",
           "subtasks": [
             {
@@ -295,16 +272,15 @@
               "startDate": "2026-06-01",
               "endDate": "2026-06-26"
             }
-          ],
-          "consultados": ""
+          ]
         },
         {
           "id": "v1p3",
           "name": "V1.3 – Conversión Lead SQL + Financiamiento (Oportunidad de Venta)",
           "responsible": "Yerko Pino",
           "stage": "porhacer",
-          "startDate": "2026-05-01",
-          "endDate": "2026-12-31",
+          "startDate": "",
+          "endDate": "",
           "expanded": true,
           "stopReason": "",
           "subtasks": [
@@ -320,7 +296,7 @@
               "id": "v1p3s2",
               "name": "Apertura de motivos de descarte para dar feedback estructurado a Marketing",
               "responsible": "",
-              "stage": "definicion",
+              "stage": "porhacer",
               "startDate": "2026-05-25",
               "endDate": "2026-06-05"
             },
@@ -333,47 +309,35 @@
               "endDate": "2026-07-03"
             },
             {
-              "id": "_51r8jx1",
-              "name": "Visualización Lead Preaprobado en Cliente Potencial",
+              "id": "_r1symte",
+              "name": "Volver a tomar los pre aprobados desde Llaima",
               "responsible": "Yerko Pino",
               "stage": "definicion",
               "startDate": "2026-05-28",
               "endDate": "2026-06-19",
-              "consultados": "Forum/F&I/Canales Digitales"
+              "consultados": "Forum / Integraciones / Canales Digitales"
             }
-          ],
-          "consultados": ""
+          ]
         },
         {
           "id": "v1p4",
           "name": "V1.4 – Política comercial para segmento de clientes y VPP",
           "responsible": "Yerko Pino",
           "stage": "porhacer",
-          "startDate": "2026-05-01",
-          "endDate": "2026-07-31",
-          "expanded": true,
+          "startDate": "",
+          "endDate": "",
+          "expanded": false,
           "stopReason": "",
           "subtasks": [
             {
               "id": "v1p4s1",
-              "name": "Diseño de política comercial segmentada por perfil de cliente + VPP",
-              "responsible": "Yerko Pino",
+              "name": "Diseño e implementación de política comercial segmentada por perfil de cliente + VPP",
+              "responsible": "",
               "stage": "ejecucion",
               "startDate": "2026-05-18",
-              "endDate": "2026-06-12",
-              "consultados": ""
-            },
-            {
-              "id": "_k4gbhr8",
-              "name": "Implementación de política comercial segmentada por perfil de cliente + VPP",
-              "responsible": "Yerko Pino",
-              "stage": "porhacer",
-              "startDate": "2026-05-29",
-              "endDate": "2026-07-11",
-              "consultados": ""
+              "endDate": "2026-06-12"
             }
-          ],
-          "consultados": ""
+          ]
         },
         {
           "id": "v1p5",
@@ -404,7 +368,7 @@
           "stage": "porhacer",
           "startDate": "",
           "endDate": "",
-          "expanded": true,
+          "expanded": false,
           "stopReason": "",
           "subtasks": [
             {
@@ -506,9 +470,9 @@
           "name": "V2.5 – Diseño de estrategia y propuesta de valor para clientes con citas agendadas",
           "responsible": "Yerko Pino",
           "stage": "porhacer",
-          "startDate": "2026-05-01",
-          "endDate": "2026-07-02",
-          "expanded": true,
+          "startDate": "",
+          "endDate": "",
+          "expanded": false,
           "stopReason": "",
           "subtasks": [
             {
@@ -527,59 +491,22 @@
               "startDate": "2026-06-01",
               "endDate": "2026-07-03"
             }
-          ],
-          "consultados": ""
+          ]
         }
       ]
     }
   ],
   "incidencias": [
     {
-      "id": "inc1",
-      "lineaNegocio": "compras",
-      "stage": "ejecucion",
-      "titulo": "SLA de primer contacto superado en leads de alta prioridad",
-      "levantadaPor": "Maryorin Vivas Macedo",
-      "asignadoA": "Jose Figueroa",
-      "impactaEn": "C1.2 – Tiempo Promedio de Primer Contacto",
-      "startDate": "2026-05-10",
-      "endDate": "2026-05-31",
-      "stopReason": ""
-    },
-    {
-      "id": "inc2",
+      "id": "_on7vmvq",
       "lineaNegocio": "compras",
       "stage": "definicion",
-      "titulo": "Leads duplicados ingresando al flujo sin filtro activo",
+      "titulo": "Leads de CHATBOT-IA viene con el campo urgencia vacío",
       "levantadaPor": "Jose Figueroa",
-      "asignadoA": "Daniela Godoy",
-      "impactaEn": "C1.3 – Bajar duplicados",
-      "startDate": "2026-05-15",
-      "endDate": "2026-06-15",
-      "stopReason": ""
-    },
-    {
-      "id": "inc3",
-      "lineaNegocio": "ventas",
-      "stage": "porhacer",
-      "titulo": "Clientes no confirman citas de venta por falta de recordatorio automático",
-      "levantadaPor": "Yerko Pino",
-      "asignadoA": "Maryorin Vivas Macedo",
-      "impactaEn": "V2.1 – Automatización del Flujo de Confirmación",
-      "startDate": "2026-05-20",
-      "endDate": "2026-06-30",
-      "stopReason": ""
-    },
-    {
-      "id": "inc4",
-      "lineaNegocio": "ventas",
-      "stage": "monitoreo",
-      "titulo": "Asesores sin acceso al segmento VPP del cliente en la vista de CRM",
-      "levantadaPor": "Yerko Pino",
-      "asignadoA": "Gonzalo Cortes",
-      "impactaEn": "V1.1 – Conversión Lead con VPP",
-      "startDate": "2026-05-01",
-      "endDate": "2026-05-25",
+      "asignadoA": "Canales Digitales",
+      "impactaEn": "Monitoreo de colas y priorización de leads categoría Muy Alta y Alta",
+      "startDate": "2026-05-27",
+      "endDate": "2026-06-12",
       "stopReason": ""
     }
   ]
