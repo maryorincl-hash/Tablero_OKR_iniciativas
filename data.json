@@ -604,18 +604,6 @@
       "stopReason": ""
     },
     {
-      "id": "inc3",
-      "lineaNegocio": "ventas",
-      "stage": "porhacer",
-      "titulo": "Clientes no confirman citas de venta por falta de recordatorio automático",
-      "levantadaPor": "Yerko Pino",
-      "asignadoA": "Maryorin Vivas Macedo",
-      "impactaEn": "V2.1 – Automatización del Flujo de Confirmación",
-      "startDate": "2026-05-20",
-      "endDate": "2026-06-30",
-      "stopReason": ""
-    },
-    {
       "id": "inc4",
       "lineaNegocio": "ventas",
       "stage": "monitoreo",
