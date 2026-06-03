@@ -1852,10 +1852,11 @@ async function syncToClickUp(){
     if(sd)body.start_date=new Date(sd).getTime();
     if(ed)body.due_date=new Date(ed).getTime();
     const uid=CU_USERS[responsible?.trim()];
-    if(uid)body.assignees=[uid];
+    if(uid)body.assignees={add:[uid]};
     try{
       const r=await fetch('https://api.clickup.com/api/v2/task/'+taskId,{method:'PUT',headers:hdrs,body:JSON.stringify(body)});
-      if(r.ok)ok++;else{err++;console.warn('CU error',taskId,r.status);}
+      if(!r.ok){err++;const t=await r.text();console.warn('CU error',taskId,r.status,t);}
+      else ok++;
     }catch(e){err++;console.warn('CU fetch err',taskId,e);}
   }
   for(const linea of['compras','ventas']){
