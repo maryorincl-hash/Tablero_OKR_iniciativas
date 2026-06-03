@@ -1877,7 +1877,12 @@ async function syncToClickUp(){
     cuApiKey=k.trim();
     localStorage.setItem('cu_api_key',cuApiKey);
   }
-  showToast('⏳ Sincronizando con ClickUp...');
+  // Toast persistente mientras dura el sync
+  const toast=document.getElementById('toast');
+  toast.textContent='⏳ Sincronizando con ClickUp...';
+  toast.classList.add('show');
+  clearTimeout(_tT);
+
   const hdrs={'Authorization':cuApiKey,'Content-Type':'application/json'};
   let ok=0,skip=0,err=0;
 
@@ -1926,21 +1931,28 @@ async function syncToClickUp(){
     await cuSend(taskId,body);
   }
 
-  for(const linea of['compras','ventas']){
-    for(const okr of data[linea]||[]){
-      const oid=CU_IDS[okr.name?.trim()];
-      if(oid)await cuUpdateOkr(oid,okr);else skip++;
-      for(const p of okr.palancas||[]){
-        const pid=CU_IDS[p.name?.trim()];
-        if(pid)await cuUpdate(pid,p.stage,p.startDate,p.endDate,p.responsible);else skip++;
-        for(const sub of p.subtasks||[]){
-          const sid=CU_IDS[sub.name?.trim()];
-          if(sid)await cuUpdate(sid,sub.stage,sub.startDate,sub.endDate,sub.responsible);else skip++;
+  try{
+    for(const linea of['compras','ventas']){
+      for(const okr of data[linea]||[]){
+        const oid=CU_IDS[okr.name?.trim()];
+        if(oid)await cuUpdateOkr(oid,okr);else skip++;
+        for(const p of okr.palancas||[]){
+          const pid=CU_IDS[p.name?.trim()];
+          if(pid)await cuUpdate(pid,p.stage,p.startDate,p.endDate,p.responsible);else skip++;
+          for(const sub of p.subtasks||[]){
+            const sid=CU_IDS[sub.name?.trim()];
+            if(sid)await cuUpdate(sid,sub.stage,sub.startDate,sub.endDate,sub.responsible);else skip++;
+          }
         }
       }
     }
+  }catch(fatal){
+    err++;
+    console.error('Sync error inesperado:',fatal);
+  }finally{
+    toast.classList.remove('show');
+    showSyncResult(ok,skip,err);
   }
-  showSyncResult(ok,skip,err);
 }
 function saveConsultados(type,id1,id2,value){
   if(type==='palanca'){
