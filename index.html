@@ -127,6 +127,15 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#eef0f3;color:#333;font-
 .modal-hint{font-size:9px;color:#ccc;margin-right:auto;}
 .toast{position:fixed;bottom:20px;right:20px;background:#1a1a2e;color:white;padding:8px 16px;border-radius:6px;font-size:11px;box-shadow:0 4px 12px rgba(0,0,0,.25);opacity:0;transform:translateY(8px);transition:opacity .2s,transform .2s;pointer-events:none;z-index:500;}
 .toast.show{opacity:1;transform:translateY(0);}
+.cu-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:599;}
+.cu-overlay.show{display:block;}
+.cu-result{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(.88);background:white;border-radius:14px;padding:36px 44px;box-shadow:0 12px 48px rgba(0,0,0,.28);z-index:600;text-align:center;min-width:300px;opacity:0;transition:opacity .25s,transform .25s;pointer-events:none;}
+.cu-result.show{opacity:1;transform:translate(-50%,-50%) scale(1);pointer-events:auto;}
+.cu-result-icon{font-size:48px;line-height:1;margin-bottom:12px;}
+.cu-result-title{font-size:20px;font-weight:700;margin-bottom:8px;}
+.cu-result-detail{font-size:14px;color:#555;line-height:1.7;white-space:pre-line;}
+.cu-result-close{margin-top:20px;padding:9px 28px;border:none;border-radius:8px;background:#4466ff;color:white;font-size:14px;font-weight:600;cursor:pointer;font-family:inherit;transition:background .15s;}
+.cu-result-close:hover{background:#2244cc;}
 .sc-active[draggable="true"]{cursor:grab;}
 .sc-active[draggable="true"]:active{cursor:grabbing;}
 .dragging .sc-active{opacity:.35;}
@@ -461,6 +470,13 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#eef0f3;color:#333;font-
 </div>
 
 <div id="toast" class="toast"></div>
+<div id="cu_overlay" class="cu-overlay" onclick="closeSyncResult()"></div>
+<div id="cu_result" class="cu-result">
+  <div class="cu-result-icon" id="cu_icon"></div>
+  <div class="cu-result-title" id="cu_title"></div>
+  <div class="cu-result-detail" id="cu_detail"></div>
+  <button class="cu-result-close" onclick="closeSyncResult()">Cerrar</button>
+</div>
 
 <script>
 const STAGES=[
@@ -1692,6 +1708,25 @@ function loadState(){const r=localStorage.getItem(KEY);if(!r)return false;try{da
 // ── TOAST ──
 let _tT=null;
 function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');clearTimeout(_tT);_tT=setTimeout(()=>t.classList.remove('show'),2300);}
+let _srT=null;
+function showSyncResult(ok,skip,err){
+  const success=err===0;
+  document.getElementById('cu_icon').textContent=success?'✅':'⚠️';
+  document.getElementById('cu_title').style.color=success?'#2E7D32':'#E65100';
+  document.getElementById('cu_title').textContent=success?'Sincronización completada':'Sincronización con errores';
+  let detail=`${ok} tarea${ok!==1?'s':''} actualizadas en ClickUp`;
+  if(skip)detail+=`\n⚠ ${skip} elemento${skip!==1?'s':''} sin ID registrado`;
+  if(err)detail+=`\n❌ ${err} error${err!==1?'es':''} — revisa la consola (F12)`;
+  document.getElementById('cu_detail').textContent=detail;
+  document.getElementById('cu_overlay').classList.add('show');
+  document.getElementById('cu_result').classList.add('show');
+  clearTimeout(_srT);
+  _srT=setTimeout(closeSyncResult,7000);
+}
+function closeSyncResult(){
+  document.getElementById('cu_result').classList.remove('show');
+  document.getElementById('cu_overlay').classList.remove('show');
+}
 
 // ── KEYBOARD ──
 document.getElementById('modal_bg').addEventListener('click',e=>{if(e.target===e.currentTarget)closeModal();});
@@ -1905,8 +1940,7 @@ async function syncToClickUp(){
       }
     }
   }
-  const msg=`ClickUp ✅ ${ok} actualizados${skip?` · ⚠ ${skip} sin ID`:''}${err?` · ❌ ${err} errores`:''}`;
-  showToast(msg);
+  showSyncResult(ok,skip,err);
 }
 function saveConsultados(type,id1,id2,value){
   if(type==='palanca'){
