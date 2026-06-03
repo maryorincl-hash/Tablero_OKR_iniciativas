@@ -1846,11 +1846,23 @@ async function syncToClickUp(){
   const hdrs={'Authorization':cuApiKey,'Content-Type':'application/json'};
   let ok=0,skip=0,err=0;
 
+  const CF_START='859461a2-35d1-4a0c-9c8d-16c994939d8b';
+  const CF_END  ='4095a490-d748-4572-b820-0d4a4f1cb823';
+  async function cuSetField(taskId,fieldId,value){
+    try{
+      await fetch('https://api.clickup.com/api/v2/task/'+taskId+'/field/'+fieldId,
+        {method:'POST',headers:hdrs,body:JSON.stringify({value})});
+    }catch(e){console.warn('CU field err',taskId,fieldId,e);}
+  }
   async function cuSend(taskId,body){
     try{
       const r=await fetch('https://api.clickup.com/api/v2/task/'+taskId,{method:'PUT',headers:hdrs,body:JSON.stringify(body)});
       if(!r.ok){err++;const t=await r.text();console.warn('CU error',taskId,r.status,t);}
-      else ok++;
+      else{
+        ok++;
+        if(body.start_date)await cuSetField(taskId,CF_START,body.start_date);
+        if(body.due_date)  await cuSetField(taskId,CF_END,  body.due_date);
+      }
     }catch(e){err++;console.warn('CU fetch err',taskId,e);}
   }
 
