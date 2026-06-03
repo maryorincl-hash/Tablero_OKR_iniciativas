@@ -480,6 +480,62 @@ let ghToken=localStorage.getItem('gh_token')||'';
 let currentUser=localStorage.getItem('current_user')||'';
 let ghSha=null;
 let saveTimer=null;
+let cuApiKey=localStorage.getItem('cu_api_key')||'';
+
+const CU_STATUS={porhacer:'backlog',definicion:'in design',ejecucion:'in development',monitoreo:'in testing',finalizado:'deployed',detenido:'paused'};
+const CU_IDS={
+  'Conversión Lead → Lead SQL / Oportunidad Compra':'868jpgvm1',
+  'Conversión Lead → Cita de Inspección Completada':'868jphfyj',
+  'Palanca C1.1 – Contactabilidad Global de Leads de Compra':'868jpgvu4',
+  'Palanca C1.2 – Tiempo Promedio de Primer Contacto (Leads Compra)':'868jpgvz1',
+  'Palanca C1.3 – Bajar duplicados (Regla de validación para descartar automáticamente estos leads)':'868jwvyee',
+  'Palanca C1.4 – Detectar clientes falsos (nombre, cantidad de leads vs patentes)':'868jwvyev',
+  'Palanca C1.5 – Optimización de la lista negra':'868jwvzn9',
+  'Palanca C1.6 – Comunicación del proceso de tasación comercial desde Llaima':'868jwvznw',
+  'Palanca C2.1 – Validación y Seguimiento de Citas de Inspección desde el Lead':'868jphg5t',
+  'Palanca C2.2 – Capacitación y Auditoría de Protocolos en Llamadas de Inspección':'868jphgb2',
+  'Cadencias de contacto automáticas multicanal (email, WhatsApp, SMS)':'868jpgx4f',
+  'Primer contacto automático desde Llaima en Compra (iniciativa con Paula)':'868jpgxpk',
+  'OTP al inicio del flujo de compra para validar solo números reales':'868jpgxu5',
+  'Reasignación Express: reasignación automática de leads sin contacto al superar SLA':'868jphbq8',
+  'Monitoreo de colas y priorización de leads categoría Muy Alta y Alta':'868jphbwt',
+  'Monitoreo de citas agendadas y atención de leads':'868jphgr5',
+  'Flujo automatizado de confirmación + recordatorio cita inspección (WhatsApp + email)':'868jphh0b',
+  'Lead Scoring Predictivo: análisis del tipo de cliente y auto con mayor conversión':'868jphh3y',
+  'Panel de citas de inspección del día por jefe de sucursal (visibilidad tiempo real)':'868jphh7r',
+  'Capacitación y auditoría de protocolos basada en éxito':'868jphpfq',
+  'Análisis de llamadas con IA para detectar factores de éxito en conversión':'868jphpjp',
+  'Dashboard de rendimiento individual por asesor en llamadas de compra':'868jphpn5',
+  'Conversión Lead → Lead SQL / Oportunidad Venta':'868jphqgq',
+  'Conversión Lead → Cita de Venta Completada':'868jpj3we',
+  'V1.1 – Conversión Lead con VPP → Lead SQL con VPP / Oportunidad Venta con VPP':'868jphqp1',
+  'V1.2 – Conversión Lead SQL Segmento + VPP (Flujo y Cadencia Exclusiva)':'868jphqrt',
+  'V1.3 – Conversión Lead SQL + Financiamiento (Oportunidad de Venta)':'868jphqun',
+  'V1.4 – Política comercial para segmento de clientes y VPP':'868jphqwq',
+  'V1.5 – Agregar al correo de Asignación de Cliente Potencial el Segmento de valor':'868jww0tj',
+  'V2.1 – Automatización del Flujo de Confirmación y Recordatorio de Cita':'868jpj40f',
+  'V2.2 – Optimización del flujo de descarte del lead con cita':'868jpj430',
+  'V2.3 – Incorporar motivos de cancelación de la cita':'868jpj46c',
+  'V2.4 – Expansión a Sucursales + Rutina Diaria Jefe de Sucursal':'868jpj48j',
+  'V2.5 – Diseño de estrategia y propuesta de valor para clientes con citas agendadas':'868jpj4b1',
+  'Flujo diferenciado VPP: enrutamiento automático a asesor especializado en VPP':'868jphr5w',
+  'Flujo exclusivo para leads Segmento con VPP (Visualización en panel)':'868jphrjp',
+  'Segmentación de leads por tipo y paneles de trabajo por grupos de foco':'868jphrn3',
+  'Panel exclusivo de seguimiento comercial (jefes, supervisores, gerentes)':'868jphrw0',
+  'Asignación directa al asesor financiero desde que el lead declara interés':'868jphu2k',
+  'Apertura de motivos de descarte para dar feedback estructurado a Marketing':'868jphu4c',
+  'Follow-up automatizado de financiamiento con simulación de cuotas personalizada':'868jphu91',
+  'Diseño e implementación de política comercial segmentada por perfil de cliente + VPP':'868jpj1t9',
+  'Análisis del perfil de autos más vendidos y clientes que más compran → insights a Marketing':'868jpj5v0',
+  'Automatización flujo de confirmación + recordatorio de cita de venta':'868jpj5wy',
+  'Flujo inteligente: antes de descartar lead con cita, validar si el cliente asistió a sucursal':'868jpj630',
+  'Captura y categorización obligatoria del motivo de no asistencia al cancelar lead con cita':'868jpj6mt',
+  'Dashboard de análisis de motivos de cancelación con feedback a Marketing y Comercial':'868jpj6pu',
+  'Expansión a todas las sucursales (2 zonas/semana) + rutina jefe + habilitación canal web':'868jpj86k',
+  'Reporte matutino automático al jefe de sucursal con las citas del día (desde CRM, tiempo real)':'868jpj8eb',
+  'Diseño de estrategia de experiencia diferenciada para clientes con cita de venta agendada':'868jpj9p8',
+  'Material digital pre-cita: ficha del auto con fotos HD':'868jpj9tr',
+};
 
 const USERS=['Andres Korenblit','Claudia Heredia','Daniela Godoy','Diego Tomas Villegas Gutierrez',
   'Felipe Esteban Arroyo Ceballos','Gonzalo Cortes','Ivan Balaguera','Jose Figueroa',
@@ -1098,7 +1154,7 @@ function renderToolbar(){
        <button class="btn" onclick="openModalAddPalanca(null)">+ Nueva palanca</button>
        <button class="btn" onclick="toggleAll()">⊞ Expandir todo</button>
        <button class="btn" onclick="window.print()">🖨 Imprimir</button>
-       <button class="btn" onclick="exportParaClickUp()" style="background:#4466ff;color:white;margin-left:8px;">&#x2B06; Exportar para ClickUp</button>
+       <button class="btn" onclick="syncToClickUp()" style="background:#4466ff;color:white;margin-left:8px;">&#x2B06; Sincronizar con ClickUp</button>
        <button class="btn" onclick="execVisible=!execVisible;renderExecSummary()" style="background:#0f3460;color:white;margin-left:4px;">📊 Resumen</button>`;
   }
   h+=`<span id="sync_status" style="margin-left:12px;font-size:12px;color:#666;align-self:center;"></span>
@@ -1745,11 +1801,13 @@ function showSetupModal(){
     document.getElementById('setup_ok').onclick=()=>{
       const u=document.getElementById('setup_user').value;
       const t=document.getElementById('setup_token').value.trim();
+      const ck=document.getElementById('setup_cu_key').value.trim();
       if(!u){alert('Selecciona tu usuario');return;}
       if(!t){alert('Ingresa tu token de GitHub');return;}
       currentUser=u;ghToken=t;
       localStorage.setItem('current_user',u);
       localStorage.setItem('gh_token',t);
+      if(ck){cuApiKey=ck;localStorage.setItem('cu_api_key',ck);}
       document.getElementById('setup_modal').style.display='none';
       resolve();
     };
@@ -1762,19 +1820,43 @@ function cambiarUsuario(){
   location.reload();
 }
 window.addEventListener('load', initApp);
-function exportParaClickUp(){
-  const exportData={
-    compras:{okrs:(data.compras||[])},
-    ventas:{okrs:(data.ventas||[])},
-    exportado_en:new Date().toISOString()
-  };
-  const json=JSON.stringify(exportData,null,2);
-  const blob=new Blob([json],{type:'application/json'});
-  const a=document.createElement('a');
-  a.href=URL.createObjectURL(blob);
-  a.download='tablero_export.json';
-  a.click();
-  URL.revokeObjectURL(a.href);
+async function syncToClickUp(){
+  if(!cuApiKey){
+    const k=prompt('Ingresa tu API Key de ClickUp\n(ClickUp → tu avatar → Configuración → Aplicaciones → API Keys):');
+    if(!k||!k.trim())return;
+    cuApiKey=k.trim();
+    localStorage.setItem('cu_api_key',cuApiKey);
+  }
+  showToast('⏳ Sincronizando con ClickUp...');
+  const hdrs={'Authorization':cuApiKey,'Content-Type':'application/json'};
+  let ok=0,skip=0,err=0;
+  async function cuUpdate(taskId,stage,sd,ed){
+    const cuStatus=CU_STATUS[stage];
+    if(!cuStatus){skip++;return;}
+    const body={status:cuStatus};
+    if(sd)body.start_date=new Date(sd).getTime();
+    if(ed)body.due_date=new Date(ed).getTime();
+    try{
+      const r=await fetch('https://api.clickup.com/api/v2/task/'+taskId,{method:'PUT',headers:hdrs,body:JSON.stringify(body)});
+      if(r.ok)ok++;else{err++;console.warn('CU error',taskId,r.status);}
+    }catch(e){err++;console.warn('CU fetch err',taskId,e);}
+  }
+  for(const linea of['compras','ventas']){
+    for(const okr of data[linea]||[]){
+      const oid=CU_IDS[okr.name?.trim()];
+      if(oid)await cuUpdate(oid,okr.stage,null,null);else skip++;
+      for(const p of okr.palancas||[]){
+        const pid=CU_IDS[p.name?.trim()];
+        if(pid)await cuUpdate(pid,p.stage,p.startDate,p.endDate);else skip++;
+        for(const sub of p.subtasks||[]){
+          const sid=CU_IDS[sub.name?.trim()];
+          if(sid)await cuUpdate(sid,sub.stage,sub.startDate,sub.endDate);else skip++;
+        }
+      }
+    }
+  }
+  const msg=`ClickUp ✅ ${ok} actualizados${skip?` · ⚠ ${skip} sin ID`:''}${err?` · ❌ ${err} errores`:''}`;
+  showToast(msg);
 }
 function saveConsultados(type,id1,id2,value){
   if(type==='palanca'){
@@ -1809,9 +1891,12 @@ function saveConsultados(type,id1,id2,value){
       <option>Melannie Mora</option>
       <option>Yerko Pino</option>
     </select>
-    <label style="font-size:13px;font-weight:600;display:block;margin-bottom:4px;">Token de acceso</label>
+    <label style="font-size:13px;font-weight:600;display:block;margin-bottom:4px;">Token de acceso (GitHub)</label>
     <input id="setup_token" type="password" placeholder="ghp_xxxxxxxxxxxx" style="width:100%;padding:8px;border:1px solid #ddd;border-radius:6px;font-size:13px;margin-bottom:6px;box-sizing:border-box;">
-    <p style="color:#888;font-size:11px;margin:0 0 18px;">Token proporcionado por el administrador del tablero.</p>
+    <p style="color:#888;font-size:11px;margin:0 0 14px;">Token proporcionado por el administrador del tablero.</p>
+    <label style="font-size:13px;font-weight:600;display:block;margin-bottom:4px;">API Key de ClickUp <span style="font-weight:normal;font-size:11px;">(avatar → Configuración → Aplicaciones → API Keys)</span></label>
+    <input id="setup_cu_key" type="password" placeholder="pk_xxxxxxxxxxxxxxxxxx" style="width:100%;padding:8px;border:1px solid #ddd;border-radius:6px;font-size:13px;margin-bottom:6px;box-sizing:border-box;">
+    <p style="color:#888;font-size:11px;margin:0 0 18px;">Necesaria para sincronizar directo con ClickUp desde el tablero.</p>
     <button id="setup_ok" style="width:100%;padding:10px;background:#4466ff;color:white;border:none;border-radius:8px;font-size:15px;font-weight:600;cursor:pointer;">Entrar al tablero →</button>
   </div>
 </div>
