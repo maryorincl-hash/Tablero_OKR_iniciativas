@@ -165,11 +165,12 @@
             },
             {
               "id": "c2p1s4",
-              "name": "Panel de citas de inspección del día por jefe de sucursal (visibilidad tiempo real)",
-              "responsible": "",
-              "stage": "porhacer",
-              "startDate": "2026-06-01",
-              "endDate": "2026-07-03"
+              "name": "Panel de citas de inspección (Inspector / Jefe)",
+              "responsible": "Maryorin Vivas Macedo",
+              "stage": "definicion",
+              "startDate": "2026-06-05",
+              "endDate": "2026-07-17",
+              "consultados": ""
             }
           ],
           "consultados": ""
@@ -181,7 +182,7 @@
           "stage": "porhacer",
           "startDate": "",
           "endDate": "",
-          "expanded": false,
+          "expanded": true,
           "subtasks": [
             {
               "id": "c2p2s1",
