@@ -21,10 +21,11 @@
             {
               "id": "c1p1s1",
               "name": "Cadencias de contacto automáticas multicanal (email, WhatsApp, SMS)",
-              "responsible": "",
-              "stage": "porhacer",
-              "startDate": "2026-05-25",
-              "endDate": "2026-06-05"
+              "responsible": "Jose Figueroa",
+              "stage": "definicion",
+              "startDate": "2026-06-08",
+              "endDate": "2026-06-12",
+              "consultados": "Melannie Mora"
             },
             {
               "id": "c1p1s2",
