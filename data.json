@@ -220,7 +220,7 @@
     {
       "id": "okr_v1",
       "code": "V1",
-      "expanded": false,
+      "expanded": true,
       "name": "Conversión Lead → Lead SQL / Oportunidad Venta",
       "meta": "10%",
       "actual": "5.60%",
