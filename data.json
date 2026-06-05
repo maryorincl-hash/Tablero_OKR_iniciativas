@@ -59,11 +59,11 @@
             {
               "id": "c1p2s1",
               "name": "Reasignación Express: reasignación automática de leads sin contacto al superar SLA",
-              "responsible": "",
+              "responsible": "Jose Figueroa",
               "stage": "definicion",
-              "startDate": "2026-05-25",
+              "startDate": "2026-06-08",
               "endDate": "2026-06-12",
-              "consultados": ""
+              "consultados": "Melannie Mora"
             },
             {
               "id": "c1p2s2",
@@ -233,7 +233,7 @@
           "stage": "definicion",
           "startDate": "2026-05-01",
           "endDate": "2026-12-31",
-          "expanded": false,
+          "expanded": true,
           "stopReason": "",
           "subtasks": [
             {
@@ -435,7 +435,7 @@
     {
       "id": "okr_v2",
       "code": "V2",
-      "expanded": false,
+      "expanded": true,
       "name": "Conversión Lead → Cita de Venta Completada",
       "meta": "20%",
       "actual": "10.39%",
