@@ -37,11 +37,12 @@
             },
             {
               "id": "c1p1s3",
-              "name": "Primer contacto automático desde Llaima en Compra (iniciativa con Paula)",
-              "responsible": "",
-              "stage": "porhacer",
-              "startDate": "2026-05-25",
-              "endDate": "2026-06-12"
+              "name": "Gestión de leads desde Llaima en Compra (iniciativa con Paula)",
+              "responsible": "Jose Figueroa",
+              "stage": "definicion",
+              "startDate": "2026-06-08",
+              "endDate": "2026-06-12",
+              "consultados": "Pablo Polanco - Martin Flores"
             }
           ],
           "consultados": "Melannie Mora"
