@@ -13,18 +13,19 @@
           "id": "c1p1",
           "name": "Palanca C1.1 – Contactabilidad Global de Leads de Compra",
           "responsible": "Jose Figueroa",
-          "stage": "ejecucion",
+          "stage": "monitoreo",
           "startDate": "2026-01-15",
           "endDate": "2026-06-30",
-          "expanded": false,
+          "expanded": true,
           "subtasks": [
             {
               "id": "c1p1s1",
               "name": "Cadencias de contacto automáticas multicanal (email, WhatsApp, SMS)",
-              "responsible": "",
-              "stage": "porhacer",
-              "startDate": "2026-05-25",
-              "endDate": "2026-06-05"
+              "responsible": "Jose Figueroa",
+              "stage": "definicion",
+              "startDate": "2026-06-08",
+              "endDate": "2026-06-12",
+              "consultados": "Melannie Mora"
             },
             {
               "id": "c1p1s2",
@@ -32,36 +33,38 @@
               "responsible": "",
               "stage": "finalizado",
               "startDate": "2026-03-23",
-              "endDate": "2026-05-08"
+              "endDate": "2026-05-08",
+              "consultados": ""
             },
             {
               "id": "c1p1s3",
-              "name": "Primer contacto automático desde Llaima en Compra (iniciativa con Paula)",
-              "responsible": "",
-              "stage": "porhacer",
-              "startDate": "2026-05-25",
-              "endDate": "2026-06-12"
+              "name": "Gestión de leads desde Llaima en Compra (iniciativa con Paula)",
+              "responsible": "Jose Figueroa",
+              "stage": "definicion",
+              "startDate": "2026-06-08",
+              "endDate": "2026-06-12",
+              "consultados": "Pablo Polanco - Martin Flores"
             }
           ],
-          "consultados": ""
+          "consultados": "Melannie Mora"
         },
         {
           "id": "c1p2",
           "name": "Palanca C1.2 – Tiempo Promedio de Primer Contacto (Leads Compra)",
           "responsible": "Jose Figueroa",
-          "stage": "monitoreo",
-          "startDate": "2026-01-15",
-          "endDate": "2026-06-30",
+          "stage": "definicion",
+          "startDate": "2026-06-08",
+          "endDate": "2026-06-12",
           "expanded": true,
           "subtasks": [
             {
               "id": "c1p2s1",
               "name": "Reasignación Express: reasignación automática de leads sin contacto al superar SLA",
-              "responsible": "",
+              "responsible": "Jose Figueroa",
               "stage": "definicion",
-              "startDate": "2026-05-25",
+              "startDate": "2026-06-08",
               "endDate": "2026-06-12",
-              "consultados": ""
+              "consultados": "Melannie Mora"
             },
             {
               "id": "c1p2s2",
@@ -73,7 +76,7 @@
               "consultados": "Melannie Mora"
             }
           ],
-          "consultados": ""
+          "consultados": "Melannie Mora"
         },
         {
           "id": "c1p3",
@@ -90,7 +93,7 @@
           "id": "c1p4",
           "name": "Palanca C1.4 – Detectar clientes falsos (nombre, cantidad de leads vs patentes)",
           "responsible": "",
-          "stage": "porhacer",
+          "stage": "monitoreo",
           "startDate": "",
           "endDate": "",
           "expanded": true,
@@ -100,13 +103,13 @@
         {
           "id": "c1p5",
           "name": "Palanca C1.5 – Optimización de la lista negra",
-          "responsible": "",
-          "stage": "porhacer",
-          "startDate": "",
-          "endDate": "",
-          "expanded": true,
+          "responsible": "Jose Figueroa",
+          "stage": "definicion",
+          "startDate": "2026-07-06",
+          "endDate": "2026-06-12",
+          "expanded": false,
           "subtasks": [],
-          "consultados": ""
+          "consultados": "Melannie Mora"
         },
         {
           "id": "c1p6",
@@ -250,10 +253,10 @@
               "stage": "monitoreo",
               "startDate": "2026-05-25",
               "endDate": "2026-06-30",
-              "consultados": "Yerko Pino"
+              "consultados": ""
             }
           ],
-          "consultados": "Equipo comercial/Mkt/Leads"
+          "consultados": ""
         },
         {
           "id": "v1p2",
