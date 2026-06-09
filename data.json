@@ -207,6 +207,15 @@
               "startDate": "2026-06-08",
               "endDate": "2026-06-26",
               "consultados": ""
+            },
+            {
+              "id": "_kenfthl",
+              "name": "Capacitación y auditoría de protocolos basada en éxito",
+              "responsible": "Jose Figueroa",
+              "stage": "definicion",
+              "startDate": "2026-06-08",
+              "endDate": "2026-06-12",
+              "consultados": "Melannie Mora"
             }
           ],
           "consultados": "Forum / Integraciones / Canales Digitales"
