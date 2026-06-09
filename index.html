@@ -243,6 +243,13 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#eef0f3;color:#333;font-
 .grow-inc .gantt-rlabel{font-size:11px;font-weight:600;color:#333;}
 
 @media print{.toolbar,.side-panel,.sp-overlay,.modal-bg,.toast,.row-acts,.add-sub-btn,.expand-btn,.okr-acts,.drag-hint{display:none!important;} body{background:white;}}
+.file-dropzone{border:1px dashed #d0d4da;border-radius:4px;padding:7px 10px;background:#fafafa;cursor:pointer;transition:border-color .15s;text-align:center;}
+.file-dropzone:hover{border-color:#4A90D9;background:#f0f6ff;}
+.file-list{margin-top:5px;display:flex;flex-direction:column;gap:3px;}
+.file-item{display:flex;align-items:center;gap:6px;padding:3px 8px;background:#f0f4ff;border-radius:3px;font-size:10px;color:#555;}
+.file-item-name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.file-item-del{background:none;border:none;cursor:pointer;color:#ccc;font-size:14px;padding:0 2px;line-height:1;flex-shrink:0;}
+.file-item-del:hover{color:#C62828;}
 </style>
 </head>
 <body>
@@ -372,6 +379,18 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:#eef0f3;color:#333;font-
       <div class="field">
         <label>📝 Notas / Contexto</label>
         <textarea id="f_notes" placeholder="Decisiones tomadas, criterio de éxito, dependencias, próximos pasos…" style="width:100%;padding:6px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px;font-family:inherit;height:64px;resize:vertical;box-sizing:border-box;"></textarea>
+      </div>
+      <div class="field">
+        <label>🔗 URL de referencia</label>
+        <input type="text" id="f_url" placeholder="https://docs.google.com/..." style="width:100%;padding:6px 8px;border:1px solid #ddd;border-radius:4px;font-size:12px;font-family:inherit;">
+      </div>
+      <div class="field">
+        <label>📎 Adjuntar archivo(s) <span style="font-weight:normal;color:#aaa;">(máx. 5 MB c/u)</span></label>
+        <div class="file-dropzone" onclick="document.getElementById('f_file_input').click()">
+          <span style="font-size:11px;color:#aaa;">Clic aquí para seleccionar archivos</span>
+          <input type="file" id="f_file_input" multiple style="display:none" onchange="onFileSelect(event)">
+        </div>
+        <div class="file-list" id="f_file_list"></div>
       </div>
     </div>
 
@@ -1276,6 +1295,7 @@ function _showFields(type){
   document.getElementById('palanca_fields').style.display=type==='palanca'?'':'none';
   document.getElementById('incidencia_fields').style.display=type==='incidencia'?'':'none';
 }
+let _pendingFiles=[];
 function _resetFields(){
   ['f_okr_code','f_okr_name','f_okr_meta','f_okr_actual','f_okr_resp',
    'f_name','f_resp_otro','f_start','f_end','f_notes',
@@ -1287,7 +1307,28 @@ function _resetFields(){
   const fcEl=document.getElementById('f_consultados'); if(fcEl) fcEl.value='';
   document.getElementById('f_inc_levanta_otro_wrap').style.display='none';
   document.getElementById('f_inc_asigna_otro_wrap').style.display='none';
+  const fuEl=document.getElementById('f_url');if(fuEl)fuEl.value='';
+  _pendingFiles=[];
+  const flEl=document.getElementById('f_file_list');if(flEl)flEl.innerHTML='';
+  const fiEl=document.getElementById('f_file_input');if(fiEl)fiEl.value='';
 }
+function onFileSelect(e){
+  Array.from(e.target.files).forEach(file=>{
+    if(file.size>5*1024*1024){showToast('⚠ "'+file.name+'" supera 5 MB y fue omitido');return;}
+    const reader=new FileReader();
+    reader.onload=ev=>{
+      _pendingFiles.push({name:file.name,type:file.type,data:ev.target.result.split(',')[1]});
+      _renderFileList(_pendingFiles);
+    };
+    reader.readAsDataURL(file);
+  });
+  e.target.value='';
+}
+function _renderFileList(files){
+  const el=document.getElementById('f_file_list');if(!el)return;
+  el.innerHTML=files.map((f,i)=>`<div class="file-item"><span class="file-item-name">📄 ${escH(f.name)}</span><button class="file-item-del" onclick="_removeFile(${i})">×</button></div>`).join('');
+}
+function _removeFile(idx){_pendingFiles.splice(idx,1);_renderFileList(_pendingFiles);}
 function _fillOkrSelect(){
   const sel=document.getElementById('f_okr_sel');
   sel.innerHTML='<option value="">— Selecciona OKR —</option>';
@@ -1378,6 +1419,8 @@ function openModalEditPalanca(okrId,palId){
   document.getElementById('f_end').value=p.endDate||'';
   const fcPEl=document.getElementById('f_consultados'); if(fcPEl) fcPEl.value=p.consultados||'';
   const fnPEl=document.getElementById('f_notes'); if(fnPEl) fnPEl.value=p.notes||'';
+  const fuPEl=document.getElementById('f_url');if(fuPEl)fuPEl.value=p.url||'';
+  _pendingFiles=(p.files||[]).map(f=>({...f}));_renderFileList(_pendingFiles);
   document.getElementById('modal_bg').classList.add('open');
 }
 function openModalAddSub(okrId,palId){
@@ -1411,6 +1454,8 @@ function openModalEditSub(okrId,palId,subId){
   document.getElementById('f_end').value=sub.endDate||'';
   const fcSEl=document.getElementById('f_consultados'); if(fcSEl) fcSEl.value=sub.consultados||'';
   const fnSEl=document.getElementById('f_notes'); if(fnSEl) fnSEl.value=sub.notes||'';
+  const fuSEl=document.getElementById('f_url');if(fuSEl)fuSEl.value=sub.url||'';
+  _pendingFiles=(sub.files||[]).map(f=>({...f}));_renderFileList(_pendingFiles);
   document.getElementById('modal_bg').classList.add('open');
 }
 
@@ -1499,6 +1544,8 @@ function saveItem(){
     const stage=document.getElementById('f_stage').value;
     const startDate=document.getElementById('f_start').value;
     const endDate=document.getElementById('f_end').value;
+    const url=document.getElementById('f_url')?document.getElementById('f_url').value.trim():'';
+    const files=_pendingFiles.slice();
     if(!name||!resp||!stage){showToast('⚠ Completa nombre, responsable y etapa');return;}
     if(stage==='detenido'){
       const existing=_mode==='edit_palanca'?(getPalanca(_okrId,_palId)||{}).stopReason
@@ -1516,19 +1563,19 @@ function saveItem(){
     if(_mode==='add_palanca'){
       const okrId=_okrId||document.getElementById('f_okr_sel').value;
       const okr=getOkr(okrId);if(!okr){showToast('⚠ Selecciona un OKR');return;}
-      okr.palancas.push({id:uid(),name,responsible:resp,stage,startDate,endDate,consultados,expanded:false,subtasks:[]});
+      okr.palancas.push({id:uid(),name,responsible:resp,stage,startDate,endDate,consultados,url,files,expanded:false,subtasks:[]});
       showToast('Palanca agregada ✓');
     } else if(_mode==='edit_palanca'){
       const p=getPalanca(_okrId,_palId);
-      if(p)Object.assign(p,{name,responsible:resp,stage,startDate,endDate,consultados});
+      if(p)Object.assign(p,{name,responsible:resp,stage,startDate,endDate,consultados,url,files});
       showToast('Palanca actualizada ✓');
     } else if(_mode==='add_sub'){
       const p=getPalanca(_okrId,_palId);
-      if(p){p.subtasks.push({id:uid(),name,responsible:resp,stage,startDate,endDate,consultados});p.expanded=true;}
+      if(p){p.subtasks.push({id:uid(),name,responsible:resp,stage,startDate,endDate,consultados,url,files});p.expanded=true;}
       showToast('Iniciativa agregada ✓');
     } else if(_mode==='edit_sub'){
       const p=getPalanca(_okrId,_palId);
-      if(p){const s=p.subtasks.find(x=>x.id===_itemId);if(s)Object.assign(s,{name,responsible:resp,stage,startDate,endDate,consultados});}
+      if(p){const s=p.subtasks.find(x=>x.id===_itemId);if(s)Object.assign(s,{name,responsible:resp,stage,startDate,endDate,consultados,url,files});}
       showToast('Iniciativa actualizada ✓');
     }
   }
@@ -1917,9 +1964,21 @@ async function syncToClickUp(){
     if(Object.keys(body).length)await cuSend(taskId,body);else skip++;
   }
 
-  // Palancas e iniciativas: estado homologado + fecha inicio + fecha límite (endDate) + responsable.
+  async function cuUploadAttachment(taskId,file){
+    try{
+      const bytes=atob(file.data);
+      const buf=new Uint8Array(bytes.length);
+      for(let i=0;i<bytes.length;i++)buf[i]=bytes.charCodeAt(i);
+      const blob=new Blob([buf],{type:file.type||'application/octet-stream'});
+      const fd=new FormData();fd.append('attachment',blob,file.name);
+      await fetch('https://api.clickup.com/api/v2/task/'+taskId+'/attachment',
+        {method:'POST',headers:{'Authorization':cuApiKey},body:fd});
+    }catch(e){console.warn('CU attachment err',taskId,file.name,e);}
+  }
+
+  // Palancas e iniciativas: estado homologado + fecha inicio + fecha límite (endDate) + responsable + URL + archivos.
   // Solo sincroniza elementos con avance (stage distinto a porhacer).
-  async function cuUpdate(taskId,stage,sd,ed,responsible){
+  async function cuUpdate(taskId,stage,sd,ed,responsible,url,files){
     if(stage==='porhacer'){skip++;return;}
     const cuStatus=CU_STATUS[stage];
     if(!cuStatus){skip++;return;}
@@ -1928,7 +1987,9 @@ async function syncToClickUp(){
     if(ed)body.due_date=new Date(ed).getTime();
     const uid=CU_USERS[responsible?.trim()];
     if(uid)body.assignees={add:[uid]};
+    if(url)body.description='🔗 '+url;
     await cuSend(taskId,body);
+    if(files&&files.length){for(const f of files)await cuUploadAttachment(taskId,f);}
   }
 
   try{
@@ -1938,10 +1999,10 @@ async function syncToClickUp(){
         if(oid)await cuUpdateOkr(oid,okr);else skip++;
         for(const p of okr.palancas||[]){
           const pid=CU_IDS[p.name?.trim()];
-          if(pid)await cuUpdate(pid,p.stage,p.startDate,p.endDate,p.responsible);else skip++;
+          if(pid)await cuUpdate(pid,p.stage,p.startDate,p.endDate,p.responsible,p.url,p.files);else skip++;
           for(const sub of p.subtasks||[]){
             const sid=CU_IDS[sub.name?.trim()];
-            if(sid)await cuUpdate(sid,sub.stage,sub.startDate,sub.endDate,sub.responsible);else skip++;
+            if(sid)await cuUpdate(sid,sub.stage,sub.startDate,sub.endDate,sub.responsible,sub.url,sub.files);else skip++;
           }
         }
       }
