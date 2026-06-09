@@ -148,7 +148,8 @@
               "responsible": "",
               "stage": "ejecucion",
               "startDate": "2026-05-18",
-              "endDate": "2026-05-29"
+              "endDate": "2026-05-29",
+              "consultados": ""
             },
             {
               "id": "c2p1s2",
@@ -156,7 +157,8 @@
               "responsible": "",
               "stage": "porhacer",
               "startDate": "2026-05-25",
-              "endDate": "2026-06-05"
+              "endDate": "2026-06-05",
+              "consultados": ""
             },
             {
               "id": "c2p1s3",
@@ -164,7 +166,8 @@
               "responsible": "",
               "stage": "porhacer",
               "startDate": "2026-05-25",
-              "endDate": "2026-06-19"
+              "endDate": "2026-06-19",
+              "consultados": ""
             },
             {
               "id": "c2p1s4",
@@ -193,7 +196,8 @@
               "responsible": "",
               "stage": "porhacer",
               "startDate": "2026-05-25",
-              "endDate": "2026-06-05"
+              "endDate": "2026-06-05",
+              "consultados": ""
             },
             {
               "id": "c2p2s2",
@@ -201,7 +205,8 @@
               "responsible": "",
               "stage": "porhacer",
               "startDate": "2026-05-25",
-              "endDate": "2026-06-19"
+              "endDate": "2026-06-19",
+              "consultados": ""
             },
             {
               "id": "c2p2s3",
@@ -209,7 +214,8 @@
               "responsible": "",
               "stage": "porhacer",
               "startDate": "2026-06-08",
-              "endDate": "2026-06-26"
+              "endDate": "2026-06-26",
+              "consultados": ""
             }
           ],
           "consultados": "Forum / Integraciones / Canales Digitales"
