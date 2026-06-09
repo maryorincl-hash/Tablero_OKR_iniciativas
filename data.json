@@ -92,13 +92,13 @@
         {
           "id": "c1p4",
           "name": "Palanca C1.4 – Detectar clientes falsos (nombre, cantidad de leads vs patentes)",
-          "responsible": "",
+          "responsible": "Jose Figueroa",
           "stage": "monitoreo",
-          "startDate": "",
-          "endDate": "",
+          "startDate": "2026-06-08",
+          "endDate": "2026-06-12",
           "expanded": true,
           "subtasks": [],
-          "consultados": ""
+          "consultados": "Melannie Mora"
         },
         {
           "id": "c1p5",
@@ -107,7 +107,7 @@
           "stage": "definicion",
           "startDate": "2026-07-06",
           "endDate": "2026-06-12",
-          "expanded": false,
+          "expanded": true,
           "subtasks": [],
           "consultados": "Melannie Mora"
         },
