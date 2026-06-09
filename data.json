@@ -191,15 +191,6 @@
           "expanded": true,
           "subtasks": [
             {
-              "id": "c2p2s1",
-              "name": "Capacitación y auditoría de protocolos basada en éxito",
-              "responsible": "Jose Figueroa",
-              "stage": "ejecucion",
-              "startDate": "2026-06-08",
-              "endDate": "2026-06-12",
-              "consultados": "Melannie Mora"
-            },
-            {
               "id": "c2p2s2",
               "name": "Análisis de llamadas con IA para detectar factores de éxito en conversión",
               "responsible": "",
