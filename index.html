@@ -1185,6 +1185,45 @@ function renderStageBar(){
 }
 
 // ── TOOLBAR ──
+async function verificarAccesoGitHub(){
+  const overlay=document.getElementById('cu_overlay');
+  const box=document.getElementById('cu_result');
+  if(!ghToken){
+    box.querySelector('.cu-result-icon').textContent='⚠️';
+    box.querySelector('.cu-result-title').textContent='Sin token configurado';
+    box.querySelector('.cu-result-detail').textContent='Abre el configurador con el botón "cambiar" e ingresa tu token de GitHub.';
+    box.querySelector('.cu-result-close').onclick=()=>{overlay.classList.remove('show');box.classList.remove('show');};
+    overlay.classList.add('show');box.classList.add('show');return;
+  }
+  const hdrs={'Authorization':'token '+ghToken,'Accept':'application/vnd.github.v3+json'};
+  let scopeOk=false,scopes='',pushOk=false,rateLimitOk=true;
+  try{
+    const r=await fetch('https://api.github.com/user',{headers:hdrs});
+    if(r.ok){
+      scopes=r.headers.get('X-OAuth-Scopes')||'(vacío)';
+      scopeOk=scopes.includes('repo');
+    } else if(r.status===401){scopes='Token inválido o expirado';}
+    else if(r.status===403){rateLimitOk=false;}
+  }catch(e){scopes='Error de red';}
+  try{
+    const r=await fetch('https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO,{headers:hdrs});
+    if(r.ok){const j=await r.json();pushOk=j.permissions?.push===true;}
+  }catch(e){}
+  const allOk=scopeOk&&pushOk;
+  let detail='';
+  detail+=(scopeOk?'✅':'❌')+' Scope del token: '+scopes+'\n';
+  if(!scopeOk&&scopes!=='Token inválido o expirado')detail+='   → Necesita el scope "repo"\n';
+  detail+='\n';
+  detail+=(pushOk?'✅':'❌')+' Acceso de escritura al repositorio: '+(pushOk?'OK':'Sin permiso')+'\n';
+  if(!pushOk)detail+='   → Maryorin debe agregarte como colaborador en GitHub\n   (Settings → Collaborators → Add people)';
+  if(!rateLimitOk)detail='Rate limit de GitHub alcanzado. Espera 1 minuto e intenta de nuevo.';
+  box.querySelector('.cu-result-icon').textContent=allOk?'✅':'❌';
+  box.querySelector('.cu-result-title').style.color=allOk?'#2e7d32':'#c62828';
+  box.querySelector('.cu-result-title').textContent=allOk?'Acceso correcto — puedes subir archivos':'Acceso incompleto';
+  box.querySelector('.cu-result-detail').textContent=detail;
+  box.querySelector('.cu-result-close').onclick=()=>{overlay.classList.remove('show');box.classList.remove('show');box.querySelector('.cu-result-title').style.color='';};
+  overlay.classList.add('show');box.classList.add('show');
+}
 function renderToolbar(){
   const isInc=currentTab==='incidencias';
   let h='';
@@ -1207,7 +1246,8 @@ function renderToolbar(){
         👤 <strong>${currentUser||'Sin usuario'}</strong>
         <button onclick="cambiarUsuario()" style="border:none;background:none;cursor:pointer;font-size:11px;color:#888;">cambiar</button>
       </span>
-      <button class="btn" onclick="pullFromGitHub()" title="Cargar cambios de otros usuarios" style="margin-left:6px;">🔄</button>`;
+      <button class="btn" onclick="verificarAccesoGitHub()" title="Verificar si tu token puede subir archivos" style="margin-left:6px;font-size:11px;">🔐 Verificar acceso</button>
+      <button class="btn" onclick="pullFromGitHub()" title="Cargar cambios de otros usuarios" style="margin-left:4px;">🔄</button>`;
   document.getElementById('toolbar_btns').innerHTML=h;
 }
 
