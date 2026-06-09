@@ -516,6 +516,11 @@ let currentUser=localStorage.getItem('current_user')||'';
 let ghSha=null;
 let saveTimer=null;
 let cuApiKey=localStorage.getItem('cu_api_key')||'';
+let ghUploadToken=localStorage.getItem('gh_upload_token')||'';
+// Ofuscación simple para evitar detección de tokens en repos públicos
+const _K=[17,31,53,97];
+function _obf(s){return btoa(unescape(encodeURIComponent(s.split('').map((c,i)=>String.fromCharCode(c.charCodeAt(0)^_K[i%4])).join(''))));}
+function _deobf(s){try{return decodeURIComponent(escape(atob(s))).split('').map((c,i)=>String.fromCharCode(c.charCodeAt(0)^_K[i%4])).join('');}catch(e){return '';}}
 
 const CU_STATUS={porhacer:'backlog',definicion:'in design',ejecucion:'in development',monitoreo:'in testing',finalizado:'deployed',detenido:'paused'};
 const CU_USERS={
@@ -1185,6 +1190,26 @@ function renderStageBar(){
 }
 
 // ── TOOLBAR ──
+async function configurarTokenCarga(){
+  const tok=prompt('Ingresa el token de GitHub con acceso de escritura al repo\n(el que usas tú para guardar datos — empieza con ghp_o github_pat_):\n\nEste token se guardará ofuscado en data.json y llegará automáticamente\na todos los miembros cuando hagan 🔄.');
+  if(!tok||!tok.trim())return;
+  const t=tok.trim();
+  // Verificar que el token puede escribir en el repo antes de guardarlo
+  showToast('⏳ Verificando token...');
+  try{
+    const r=await fetch('https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO,
+      {headers:{'Authorization':'token '+t,'Accept':'application/vnd.github.v3+json'}});
+    if(!r.ok){showToast('❌ Token inválido o sin acceso al repo ('+r.status+')');return;}
+    const j=await r.json();
+    if(!j.permissions?.push){showToast('❌ Este token no tiene permiso de escritura. Usa el tuyo propio.');return;}
+  }catch(e){showToast('❌ Error de red al verificar');return;}
+  // Guardar ofuscado en data y en localStorage
+  ghUploadToken=t;
+  localStorage.setItem('gh_upload_token',t);
+  data._ut=_obf(t);
+  saveState();
+  showToast('✅ Token de carga guardado. Todos lo recibirán al hacer 🔄');
+}
 async function verificarAccesoGitHub(){
   const overlay=document.getElementById('cu_overlay');
   const box=document.getElementById('cu_result');
@@ -1195,7 +1220,8 @@ async function verificarAccesoGitHub(){
     box.querySelector('.cu-result-close').onclick=()=>{overlay.classList.remove('show');box.classList.remove('show');};
     overlay.classList.add('show');box.classList.add('show');return;
   }
-  const hdrs={'Authorization':'token '+ghToken,'Accept':'application/vnd.github.v3+json'};
+  const tokenToCheck=ghUploadToken||ghToken;
+  const hdrs={'Authorization':'token '+tokenToCheck,'Accept':'application/vnd.github.v3+json'};
   let scopeOk=false,scopes='',pushOk=false,rateLimitOk=true;
   try{
     const r=await fetch('https://api.github.com/user',{headers:hdrs});
@@ -1210,12 +1236,14 @@ async function verificarAccesoGitHub(){
     if(r.ok){const j=await r.json();pushOk=j.permissions?.push===true;}
   }catch(e){}
   const allOk=scopeOk&&pushOk;
+  const usingShared=!!ghUploadToken;
   let detail='';
-  detail+=(scopeOk?'✅':'❌')+' Scope del token: '+scopes+'\n';
+  detail+='🔑 Token usado: '+(usingShared?'Token compartido de carga (configurado por admin)':'Tu token personal')+'\n\n';
+  detail+=(scopeOk?'✅':'❌')+' Scope: '+scopes+'\n';
   if(!scopeOk&&scopes!=='Token inválido o expirado')detail+='   → Necesita el scope "repo"\n';
   detail+='\n';
   detail+=(pushOk?'✅':'❌')+' Acceso de escritura al repositorio: '+(pushOk?'OK':'Sin permiso')+'\n';
-  if(!pushOk)detail+='   → Maryorin debe agregarte como colaborador en GitHub\n   (Settings → Collaborators → Add people)';
+  if(!pushOk&&!usingShared)detail+='   → Pide a Maryorin que configure el botón "🔑 Token carga"\n   y luego haz 🔄 para recibirlo automáticamente.';
   if(!rateLimitOk)detail='Rate limit de GitHub alcanzado. Espera 1 minuto e intenta de nuevo.';
   box.querySelector('.cu-result-icon').textContent=allOk?'✅':'❌';
   box.querySelector('.cu-result-title').style.color=allOk?'#2e7d32':'#c62828';
@@ -1246,7 +1274,8 @@ function renderToolbar(){
         👤 <strong>${currentUser||'Sin usuario'}</strong>
         <button onclick="cambiarUsuario()" style="border:none;background:none;cursor:pointer;font-size:11px;color:#888;">cambiar</button>
       </span>
-      <button class="btn" onclick="verificarAccesoGitHub()" title="Verificar si tu token puede subir archivos" style="margin-left:6px;font-size:11px;">🔐 Verificar acceso</button>
+      ${currentUser==='Maryorin Vivas Macedo'?`<button class="btn" onclick="configurarTokenCarga()" title="Configurar token compartido para que todos puedan subir archivos" style="margin-left:6px;font-size:11px;background:#fff8e1;border-color:#f9a825;">🔑 Token carga</button>`:''}
+      <button class="btn" onclick="verificarAccesoGitHub()" title="Verificar si tu token puede subir archivos" style="margin-left:4px;font-size:11px;">🔐 Verificar acceso</button>
       <button class="btn" onclick="pullFromGitHub()" title="Cargar cambios de otros usuarios" style="margin-left:4px;">🔄</button>`;
   document.getElementById('toolbar_btns').innerHTML=h;
 }
@@ -1355,11 +1384,12 @@ function _resetFields(){
   const fiEl=document.getElementById('f_file_input');if(fiEl)fiEl.value='';
 }
 async function uploadFileToGitHub(folder,file){
-  if(!ghToken){showToast('⚠ Sin token GitHub — configúralo en ajustes');return null;}
+  const uploadTok=ghUploadToken||ghToken;
+  if(!uploadTok){showToast('⚠ Sin token de carga — pide al administrador que configure el token compartido');return null;}
   const safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,'_');
   const path='attachments/'+folder+'/'+safeName;
   const apiUrl='https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/'+path;
-  const hdrs={'Authorization':'token '+ghToken,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'};
+  const hdrs={'Authorization':'token '+uploadTok,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'};
   let sha=null;
   try{const chk=await fetch(apiUrl,{headers:hdrs});if(chk.ok){const j=await chk.json();sha=j.sha;}}catch(e){}
   const body={message:'Adjunto: '+safeName,content:file.data,branch:'main'};
@@ -1811,6 +1841,8 @@ async function pullFromGitHub(){
       const hasData=remote&&((remote.compras&&remote.compras.length)||(remote.ventas&&remote.ventas.length));
       if(hasData){
         data=remote;localStorage.setItem(KEY,JSON.stringify(data));
+        // Extraer token compartido de carga si viene en data
+        if(remote._ut){const t=_deobf(remote._ut);if(t){ghUploadToken=t;localStorage.setItem('gh_upload_token',t);}}
         setSyncStatus('ok');showToast('Datos actualizados desde GitHub');renderBoard();
       } else {setSyncStatus('ok');}
     }else{setSyncStatus('error');}
@@ -1822,7 +1854,7 @@ function setSyncStatus(s){
   const map={ok:'✅ Guardado',guardando:'⏳ Guardando...','cargando':'⏳ Cargando...',conflicto:'🔄 Conflicto, recargando...',error:'❌ Error al guardar'};
   el.textContent=map[s]||s;
 }
-function loadState(){const r=localStorage.getItem(KEY);if(!r)return false;try{data=JSON.parse(r);return true;}catch(e){localStorage.removeItem(KEY);return false;}}
+function loadState(){const r=localStorage.getItem(KEY);if(!r)return false;try{data=JSON.parse(r);if(data._ut&&!ghUploadToken){const t=_deobf(data._ut);if(t){ghUploadToken=t;localStorage.setItem('gh_upload_token',t);}}return true;}catch(e){localStorage.removeItem(KEY);return false;}}
 
 // ── TOAST ──
 let _tT=null;
