@@ -108,7 +108,17 @@
           "startDate": "2026-07-06",
           "endDate": "2026-06-12",
           "expanded": true,
-          "subtasks": [],
+          "subtasks": [
+            {
+              "id": "_dc0ee7o",
+              "name": "Depuracion de lista negra",
+              "responsible": "Jose Figueroa",
+              "stage": "ejecucion",
+              "startDate": "2026-06-08",
+              "endDate": "2026-06-30",
+              "consultados": "Melannie Mora"
+            }
+          ],
           "consultados": "Melannie Mora"
         },
         {
