@@ -1296,6 +1296,7 @@ function _showFields(type){
   document.getElementById('incidencia_fields').style.display=type==='incidencia'?'':'none';
 }
 let _pendingFiles=[];
+let _modalFileFolder='';
 function _resetFields(){
   ['f_okr_code','f_okr_name','f_okr_meta','f_okr_actual','f_okr_resp',
    'f_name','f_resp_otro','f_start','f_end','f_notes',
@@ -1309,24 +1310,55 @@ function _resetFields(){
   document.getElementById('f_inc_asigna_otro_wrap').style.display='none';
   const fuEl=document.getElementById('f_url');if(fuEl)fuEl.value='';
   _pendingFiles=[];
+  _modalFileFolder=uid();
   const flEl=document.getElementById('f_file_list');if(flEl)flEl.innerHTML='';
   const fiEl=document.getElementById('f_file_input');if(fiEl)fiEl.value='';
 }
-function onFileSelect(e){
-  Array.from(e.target.files).forEach(file=>{
-    if(file.size>5*1024*1024){showToast('⚠ "'+file.name+'" supera 5 MB y fue omitido');return;}
+async function uploadFileToGitHub(folder,file){
+  if(!ghToken){showToast('⚠ Sin token GitHub — configúralo en ajustes');return null;}
+  const safeName=file.name.replace(/[^a-zA-Z0-9._-]/g,'_');
+  const path='attachments/'+folder+'/'+safeName;
+  const apiUrl='https://api.github.com/repos/'+GH_OWNER+'/'+GH_REPO+'/contents/'+path;
+  const hdrs={'Authorization':'token '+ghToken,'Content-Type':'application/json','Accept':'application/vnd.github.v3+json'};
+  let sha=null;
+  try{const chk=await fetch(apiUrl,{headers:hdrs});if(chk.ok){const j=await chk.json();sha=j.sha;}}catch(e){}
+  const body={message:'Adjunto: '+safeName,content:file.data,branch:'main'};
+  if(sha)body.sha=sha;
+  try{
+    const r=await fetch(apiUrl,{method:'PUT',headers:hdrs,body:JSON.stringify(body)});
+    if(!r.ok){console.warn('GitHub upload error',r.status,await r.text());return null;}
+    return {name:file.name,url:'https://raw.githubusercontent.com/'+GH_OWNER+'/'+GH_REPO+'/main/'+path};
+  }catch(e){console.warn('GitHub upload err',e);return null;}
+}
+async function onFileSelect(e){
+  const fileInput=e.target;
+  for(const file of Array.from(fileInput.files)){
+    if(file.size>5*1024*1024){showToast('⚠ "'+file.name+'" supera 5 MB y fue omitido');continue;}
+    const placeholder={name:file.name,uploading:true};
+    _pendingFiles.push(placeholder);
+    _renderFileList(_pendingFiles);
     const reader=new FileReader();
-    reader.onload=ev=>{
-      _pendingFiles.push({name:file.name,type:file.type,data:ev.target.result.split(',')[1]});
-      _renderFileList(_pendingFiles);
-    };
-    reader.readAsDataURL(file);
-  });
-  e.target.value='';
+    await new Promise(res=>{
+      reader.onload=async ev=>{
+        const b64=ev.target.result.split(',')[1];
+        const result=await uploadFileToGitHub(_modalFileFolder,{name:file.name,type:file.type,data:b64});
+        const idx=_pendingFiles.indexOf(placeholder);
+        if(result){if(idx>=0)_pendingFiles[idx]=result;else _pendingFiles.push(result);showToast('📎 "'+file.name+'" subido a GitHub ✓');}
+        else{if(idx>=0)_pendingFiles.splice(idx,1);showToast('⚠ No se pudo subir "'+file.name+'" a GitHub');}
+        _renderFileList(_pendingFiles);
+        res();
+      };
+      reader.readAsDataURL(file);
+    });
+  }
+  fileInput.value='';
 }
 function _renderFileList(files){
   const el=document.getElementById('f_file_list');if(!el)return;
-  el.innerHTML=files.map((f,i)=>`<div class="file-item"><span class="file-item-name">📄 ${escH(f.name)}</span><button class="file-item-del" onclick="_removeFile(${i})">×</button></div>`).join('');
+  el.innerHTML=files.map((f,i)=>f.uploading
+    ?`<div class="file-item"><span class="file-item-name" style="color:#999;">⏳ Subiendo ${escH(f.name)}...</span></div>`
+    :`<div class="file-item"><span class="file-item-name"><a href="${escH(f.url)}" target="_blank" style="color:#0f3460;text-decoration:none;">📄 ${escH(f.name)}</a></span><button class="file-item-del" onclick="_removeFile(${i})">×</button></div>`
+  ).join('');
 }
 function _removeFile(idx){_pendingFiles.splice(idx,1);_renderFileList(_pendingFiles);}
 function _fillOkrSelect(){
@@ -1552,7 +1584,7 @@ function saveItem(){
                     :_mode==='edit_sub'?((getPalanca(_okrId,_palId)||{subtasks:[]}).subtasks.find(s=>s.id===_itemId)||{}).stopReason
                     :null;
       if(!existing){
-        _pendingStop={type:(_mode.includes('sub')?'sub':'palanca'),id:(_mode==='add_palanca'?null:(_mode==='edit_palanca'?_palId:_itemId)),parentStr:_okrId+(_palId?'|'+_palId:''),_modalSave:{name,resp,stage,startDate,endDate}};
+        _pendingStop={type:(_mode.includes('sub')?'sub':'palanca'),id:(_mode==='add_palanca'?null:(_mode==='edit_palanca'?_palId:_itemId)),parentStr:_okrId+(_palId?'|'+_palId:''),_modalSave:{name,resp,stage,startDate,endDate,url,files:_pendingFiles.slice()}};
         document.getElementById('f_stop_reason').value='';
         closeModal();
         document.getElementById('stop_modal_bg').classList.add('open');
@@ -1630,8 +1662,8 @@ function confirmStop(){
       }
     } else {
       const[okrId,palId]=(_pendingStop.parentStr||'').split('|');
-      if(_pendingStop.type==='palanca'&&palId){const p=getPalanca(okrId,palId);if(p)Object.assign(p,{name:ms.name,responsible:ms.resp,stage:'detenido',startDate:ms.startDate,endDate:ms.endDate,stopReason:reason});}
-      else if(_pendingStop.type==='sub'&&palId&&_pendingStop.id){const p=getPalanca(okrId,palId);if(p){const s=p.subtasks.find(x=>x.id===_pendingStop.id);if(s)Object.assign(s,{name:ms.name,responsible:ms.resp,stage:'detenido',startDate:ms.startDate,endDate:ms.endDate,stopReason:reason});}}
+      if(_pendingStop.type==='palanca'&&palId){const p=getPalanca(okrId,palId);if(p)Object.assign(p,{name:ms.name,responsible:ms.resp,stage:'detenido',startDate:ms.startDate,endDate:ms.endDate,url:ms.url||'',files:ms.files||[],stopReason:reason});}
+      else if(_pendingStop.type==='sub'&&palId&&_pendingStop.id){const p=getPalanca(okrId,palId);if(p){const s=p.subtasks.find(x=>x.id===_pendingStop.id);if(s)Object.assign(s,{name:ms.name,responsible:ms.resp,stage:'detenido',startDate:ms.startDate,endDate:ms.endDate,url:ms.url||'',files:ms.files||[],stopReason:reason});}}
     }
   } else {
     if(_pendingStop.type==='palanca'){const okr=getOkr(_pendingStop.parentStr);if(okr){const p=okr.palancas.find(x=>x.id===_pendingStop.id);if(p){p.stage='detenido';p.stopReason=reason;}}}
@@ -1964,12 +1996,11 @@ async function syncToClickUp(){
     if(Object.keys(body).length)await cuSend(taskId,body);else skip++;
   }
 
-  async function cuUploadAttachment(taskId,file){
+  async function cuUploadAttachmentFromUrl(taskId,file){
     try{
-      const bytes=atob(file.data);
-      const buf=new Uint8Array(bytes.length);
-      for(let i=0;i<bytes.length;i++)buf[i]=bytes.charCodeAt(i);
-      const blob=new Blob([buf],{type:file.type||'application/octet-stream'});
+      const resp=await fetch(file.url+'?v='+Date.now());
+      if(!resp.ok){console.warn('GH fetch err',file.url,resp.status);return;}
+      const blob=await resp.blob();
       const fd=new FormData();fd.append('attachment',blob,file.name);
       await fetch('https://api.clickup.com/api/v2/task/'+taskId+'/attachment',
         {method:'POST',headers:{'Authorization':cuApiKey},body:fd});
@@ -1989,7 +2020,7 @@ async function syncToClickUp(){
     if(uid)body.assignees={add:[uid]};
     if(url)body.description='🔗 '+url;
     await cuSend(taskId,body);
-    if(files&&files.length){for(const f of files)await cuUploadAttachment(taskId,f);}
+    if(files&&files.length){for(const f of files)if(f.url)await cuUploadAttachmentFromUrl(taskId,f);}
   }
 
   try{
