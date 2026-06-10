@@ -1762,6 +1762,7 @@ function onStageDrop(e,stageId){e.preventDefault();e.stopPropagation();document.
 
 // ── PERSISTENCE ──
 function saveState(){
+  data._lastSaved=Date.now();
   localStorage.setItem(KEY,JSON.stringify(data));
   clearTimeout(saveTimer);
   saveTimer=setTimeout(pushToGitHub,2000);
@@ -1826,7 +1827,7 @@ async function pushToGitHub(){
     setSyncStatus('error');
   }
 }
-async function pullFromGitHub(){
+async function pullFromGitHub(silent=false){
   setSyncStatus('cargando');
   try{
     const rawUrl='https://raw.githubusercontent.com/'+GH_OWNER+'/'+GH_REPO+'/main/'+GH_FILE+'?v='+Date.now();
@@ -1840,10 +1841,17 @@ async function pullFromGitHub(){
       }
       const hasData=remote&&((remote.compras&&remote.compras.length)||(remote.ventas&&remote.ventas.length));
       if(hasData){
-        data=remote;localStorage.setItem(KEY,JSON.stringify(data));
-        // Extraer token compartido de carga si viene en data
-        if(remote._ut){const t=_deobf(remote._ut);if(t){ghUploadToken=t;localStorage.setItem('gh_upload_token',t);}}
-        setSyncStatus('ok');showToast('Datos actualizados desde GitHub');renderBoard();
+        const localTs=data._lastSaved||0;
+        const remoteTs=remote._lastSaved||0;
+        if(remoteTs>=localTs){
+          data=remote;localStorage.setItem(KEY,JSON.stringify(data));
+          if(remote._ut){const t=_deobf(remote._ut);if(t){ghUploadToken=t;localStorage.setItem('gh_upload_token',t);}}
+          setSyncStatus('ok');
+          if(!silent)showToast('Datos actualizados desde GitHub');
+          renderBoard();
+        } else {
+          setSyncStatus('ok');
+        }
       } else {setSyncStatus('ok');}
     }else{setSyncStatus('error');}
   }catch(e){console.error('pullFromGitHub error:',e);setSyncStatus('error');}
@@ -1978,12 +1986,8 @@ async function initApp(){
   renderBoard();
   if(ghToken){
     try{
-      // Solo obtener SHA para poder guardar después (no sobreescribir datos locales)
-      await fetchSha();
-      // Si no hay datos locales, cargar desde GitHub
-      if(!loaded||!data.compras||!data.compras.length){
-        await pullFromGitHub();
-      }
+      // Siempre cargar desde GitHub al iniciar para que todos vean los cambios de otros usuarios
+      await pullFromGitHub(true);
     }
     catch(e){ console.error('initApp error:',e); }
   }
@@ -2013,6 +2017,7 @@ function cambiarUsuario(){
   location.reload();
 }
 window.addEventListener('load', initApp);
+window.addEventListener('beforeunload', ()=>{ if(saveTimer){clearTimeout(saveTimer);pushToGitHub();} });
 function okrFechas(okr){
   let mn=null,mx=null;
   (okr.palancas||[]).forEach(p=>{
