@@ -3,7 +3,7 @@
     {
       "id": "okr_c1",
       "code": "C1",
-      "expanded": false,
+      "expanded": true,
       "name": "Conversión Lead → Lead SQL / Oportunidad Compra",
       "meta": "3.0%",
       "actual": "1.5%",
@@ -13,19 +13,18 @@
           "id": "c1p1",
           "name": "Palanca C1.1 – Contactabilidad Global de Leads de Compra",
           "responsible": "Jose Figueroa",
-          "stage": "monitoreo",
+          "stage": "ejecucion",
           "startDate": "2026-01-15",
           "endDate": "2026-06-30",
-          "expanded": false,
+          "expanded": true,
           "subtasks": [
             {
               "id": "c1p1s1",
               "name": "Cadencias de contacto automáticas multicanal (email, WhatsApp, SMS)",
-              "responsible": "Jose Figueroa",
-              "stage": "definicion",
-              "startDate": "2026-06-08",
-              "endDate": "2026-06-12",
-              "consultados": "Melannie Mora"
+              "responsible": "",
+              "stage": "porhacer",
+              "startDate": "2026-05-25",
+              "endDate": "2026-06-05"
             },
             {
               "id": "c1p1s2",
@@ -33,38 +32,36 @@
               "responsible": "",
               "stage": "finalizado",
               "startDate": "2026-03-23",
-              "endDate": "2026-05-08",
-              "consultados": ""
+              "endDate": "2026-05-08"
             },
             {
               "id": "c1p1s3",
-              "name": "Gestión de leads desde Llaima en Compra (iniciativa con Paula)",
-              "responsible": "Jose Figueroa",
-              "stage": "definicion",
-              "startDate": "2026-06-08",
-              "endDate": "2026-06-12",
-              "consultados": "Pablo Polanco - Martin Flores"
+              "name": "Primer contacto automático desde Llaima en Compra (iniciativa con Paula)",
+              "responsible": "",
+              "stage": "porhacer",
+              "startDate": "2026-05-25",
+              "endDate": "2026-06-12"
             }
           ],
-          "consultados": "Melannie Mora"
+          "consultados": ""
         },
         {
           "id": "c1p2",
           "name": "Palanca C1.2 – Tiempo Promedio de Primer Contacto (Leads Compra)",
           "responsible": "Jose Figueroa",
-          "stage": "definicion",
-          "startDate": "2026-06-08",
-          "endDate": "2026-06-12",
-          "expanded": false,
+          "stage": "monitoreo",
+          "startDate": "2026-01-15",
+          "endDate": "2026-06-30",
+          "expanded": true,
           "subtasks": [
             {
               "id": "c1p2s1",
               "name": "Reasignación Express: reasignación automática de leads sin contacto al superar SLA",
-              "responsible": "Jose Figueroa",
+              "responsible": "",
               "stage": "definicion",
-              "startDate": "2026-06-08",
+              "startDate": "2026-05-25",
               "endDate": "2026-06-12",
-              "consultados": "Melannie Mora"
+              "consultados": ""
             },
             {
               "id": "c1p2s2",
@@ -76,7 +73,7 @@
               "consultados": "Melannie Mora"
             }
           ],
-          "consultados": "Melannie Mora"
+          "consultados": ""
         },
         {
           "id": "c1p3",
@@ -85,51 +82,31 @@
           "stage": "definicion",
           "startDate": "2026-03-01",
           "endDate": "",
-          "expanded": false,
+          "expanded": true,
           "subtasks": [],
           "consultados": ""
         },
         {
           "id": "c1p4",
           "name": "Palanca C1.4 – Detectar clientes falsos (nombre, cantidad de leads vs patentes)",
-          "responsible": "Jose Figueroa",
-          "stage": "monitoreo",
-          "startDate": "2026-06-08",
-          "endDate": "2026-06-12",
-          "expanded": false,
-          "subtasks": [
-            {
-              "id": "_ept9d2z",
-              "name": "Validación para identificar clientes falsos",
-              "responsible": "Jose Figueroa",
-              "stage": "porhacer",
-              "startDate": "2026-06-08",
-              "endDate": "2026-06-12",
-              "consultados": "Melannie Mora"
-            }
-          ],
-          "consultados": "Melannie Mora"
+          "responsible": "",
+          "stage": "porhacer",
+          "startDate": "",
+          "endDate": "",
+          "expanded": true,
+          "subtasks": [],
+          "consultados": ""
         },
         {
           "id": "c1p5",
           "name": "Palanca C1.5 – Optimización de la lista negra",
-          "responsible": "Jose Figueroa",
-          "stage": "definicion",
-          "startDate": "2026-07-06",
-          "endDate": "2026-06-12",
-          "expanded": false,
-          "subtasks": [
-            {
-              "id": "_dc0ee7o",
-              "name": "Depuracion de lista negra",
-              "responsible": "Jose Figueroa",
-              "stage": "ejecucion",
-              "startDate": "2026-06-08",
-              "endDate": "2026-06-30",
-              "consultados": "Melannie Mora"
-            }
-          ],
-          "consultados": "Melannie Mora"
+          "responsible": "",
+          "stage": "porhacer",
+          "startDate": "",
+          "endDate": "",
+          "expanded": true,
+          "subtasks": [],
+          "consultados": ""
         },
         {
           "id": "c1p6",
@@ -138,7 +115,7 @@
           "stage": "definicion",
           "startDate": "2026-04-01",
           "endDate": "",
-          "expanded": false,
+          "expanded": true,
           "subtasks": [],
           "consultados": ""
         }
@@ -160,7 +137,7 @@
           "stage": "monitoreo",
           "startDate": "2026-01-01",
           "endDate": "2026-06-30",
-          "expanded": false,
+          "expanded": true,
           "subtasks": [
             {
               "id": "c2p1s1",
@@ -168,8 +145,7 @@
               "responsible": "",
               "stage": "ejecucion",
               "startDate": "2026-05-18",
-              "endDate": "2026-05-29",
-              "consultados": ""
+              "endDate": "2026-05-29"
             },
             {
               "id": "c2p1s2",
@@ -177,8 +153,7 @@
               "responsible": "",
               "stage": "porhacer",
               "startDate": "2026-05-25",
-              "endDate": "2026-06-05",
-              "consultados": ""
+              "endDate": "2026-06-05"
             },
             {
               "id": "c2p1s3",
@@ -186,8 +161,7 @@
               "responsible": "",
               "stage": "porhacer",
               "startDate": "2026-05-25",
-              "endDate": "2026-06-19",
-              "consultados": ""
+              "endDate": "2026-06-19"
             },
             {
               "id": "c2p1s4",
@@ -208,34 +182,31 @@
           "stage": "porhacer",
           "startDate": "",
           "endDate": "",
-          "expanded": false,
+          "expanded": true,
           "subtasks": [
+            {
+              "id": "c2p2s1",
+              "name": "Capacitación y auditoría de protocolos basada en éxito",
+              "responsible": "",
+              "stage": "porhacer",
+              "startDate": "2026-05-25",
+              "endDate": "2026-06-05"
+            },
             {
               "id": "c2p2s2",
               "name": "Análisis de llamadas con IA para detectar factores de éxito en conversión",
-              "responsible": "Jose Figueroa",
-              "stage": "monitoreo",
-              "startDate": "2026-06-08",
-              "endDate": "2026-06-12",
-              "consultados": "Melannie Mora"
+              "responsible": "",
+              "stage": "porhacer",
+              "startDate": "2026-05-25",
+              "endDate": "2026-06-19"
             },
             {
               "id": "c2p2s3",
               "name": "Dashboard de rendimiento individual por asesor en llamadas de compra",
-              "responsible": "Melannie Mora",
+              "responsible": "",
               "stage": "porhacer",
-              "startDate": "2026-06-09",
-              "endDate": "2026-06-12",
-              "consultados": "Daniela Godoy"
-            },
-            {
-              "id": "_kenfthl",
-              "name": "Capacitación y auditoría de protocolos basada en éxito",
-              "responsible": "Jose Figueroa",
-              "stage": "ejecucion",
               "startDate": "2026-06-08",
-              "endDate": "2026-06-12",
-              "consultados": "Melannie Mora"
+              "endDate": "2026-06-26"
             }
           ],
           "consultados": "Forum / Integraciones / Canales Digitales"
@@ -646,5 +617,6 @@
       "endDate": "2026-05-25",
       "stopReason": ""
     }
-  ]
+  ],
+  "_ut": "dndFPntmXApjeWYoQVRaKiF2YlgpXHwVZlZENEV5YRNYXgQuc1JZEA=="
 }
