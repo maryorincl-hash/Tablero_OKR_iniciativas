@@ -202,11 +202,13 @@
             {
               "id": "c2p2s2",
               "name": "Análisis de llamadas con IA para detectar factores de éxito en conversión",
-              "responsible": "",
-              "stage": "porhacer",
-              "startDate": "2026-05-25",
-              "endDate": "2026-06-19",
-              "consultados": ""
+              "responsible": "Jose Figueroa",
+              "stage": "monitoreo",
+              "startDate": "2026-06-08",
+              "endDate": "2026-06-12",
+              "consultados": "Melannie Mora",
+              "url": "",
+              "files": []
             },
             {
               "id": "c2p2s3",
