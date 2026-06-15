@@ -97,7 +97,19 @@
           "startDate": "2026-06-15",
           "endDate": "2026-06-26",
           "expanded": true,
-          "subtasks": [],
+          "subtasks": [
+            {
+              "id": "_f636oqv",
+              "name": "Validación para identificar clientes falsos",
+              "responsible": "Jose Figueroa",
+              "stage": "monitoreo",
+              "startDate": "2026-06-15",
+              "endDate": "2026-06-26",
+              "consultados": "Melannie Mora",
+              "url": "",
+              "files": []
+            }
+          ],
           "consultados": "Melannie Mora",
           "url": "",
           "files": []
@@ -634,5 +646,5 @@
     }
   ],
   "_ut": "dndFPntmXApjeWYoQVRaKiF2YlgpXHwVZlZENEV5YRNYXgQuc1JZEA==",
-  "_lastSaved": 1781548837518
+  "_lastSaved": 1781548848793
 }
