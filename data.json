@@ -174,7 +174,7 @@
               "id": "c2p1s1",
               "name": "Monitoreo de citas agendadas y atención de leads",
               "responsible": "",
-              "stage": "ejecucion",
+              "stage": "porhacer",
               "startDate": "2026-05-18",
               "endDate": "2026-05-29",
               "consultados": ""
@@ -662,5 +662,5 @@
     }
   ],
   "_ut": "dndFPntmXApjeWYoQVRaKiF2YlgpXHwVZlZENEV5YRNYXgQuc1JZEA==",
-  "_lastSaved": 1781729664060
+  "_lastSaved": 1781729773539
 }
