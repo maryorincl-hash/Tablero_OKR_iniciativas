@@ -191,11 +191,13 @@
             {
               "id": "c2p1s3",
               "name": "Flujo automatizado de confirmación + recordatorio cita inspección (WhatsApp + email)",
-              "responsible": "",
-              "stage": "porhacer",
-              "startDate": "2026-05-25",
-              "endDate": "2026-06-19",
-              "consultados": ""
+              "responsible": "Jose Figueroa",
+              "stage": "definicion",
+              "startDate": "2026-06-22",
+              "endDate": "2026-07-27",
+              "consultados": "Pablo Polanco",
+              "url": "",
+              "files": []
             },
             {
               "id": "c2p1s4",
@@ -660,5 +662,5 @@
     }
   ],
   "_ut": "dndFPntmXApjeWYoQVRaKiF2YlgpXHwVZlZENEV5YRNYXgQuc1JZEA==",
-  "_lastSaved": 1781548892148
+  "_lastSaved": 1781729658598
 }
