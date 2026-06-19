@@ -162,15 +162,6 @@
           "expanded": true,
           "subtasks": [
             {
-              "id": "c2p1s1",
-              "name": "Monitoreo de citas agendadas y atención de leads",
-              "responsible": "",
-              "stage": "porhacer",
-              "startDate": "2026-05-18",
-              "endDate": "2026-05-29",
-              "consultados": ""
-            },
-            {
               "id": "c2p1s2",
               "name": "Lead Scoring Predictivo: análisis del tipo de cliente y auto con mayor conversión",
               "responsible": "",
@@ -653,5 +644,5 @@
     }
   ],
   "_ut": "dndFPntmXApjeWYoQVRaKiF2YlgpXHwVZlZENEV5YRNYXgQuc1JZEA==",
-  "_lastSaved": 1781891357333
+  "_lastSaved": 1781891370316
 }
