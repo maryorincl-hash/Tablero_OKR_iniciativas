@@ -58,15 +58,6 @@
           "expanded": true,
           "subtasks": [
             {
-              "id": "c1p2s1",
-              "name": "Reasignación Express: reasignación automática de leads sin contacto al superar SLA",
-              "responsible": "",
-              "stage": "definicion",
-              "startDate": "2026-05-25",
-              "endDate": "2026-06-12",
-              "consultados": ""
-            },
-            {
               "id": "c1p2s2",
               "name": "Monitoreo de colas y priorización de leads categoría Muy Alta y Alta",
               "responsible": "Jose Figueroa",
@@ -662,5 +653,5 @@
     }
   ],
   "_ut": "dndFPntmXApjeWYoQVRaKiF2YlgpXHwVZlZENEV5YRNYXgQuc1JZEA==",
-  "_lastSaved": 1781729773539
+  "_lastSaved": 1781891357333
 }
