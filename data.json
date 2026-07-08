@@ -146,7 +146,7 @@
     {
       "id": "okr_c2",
       "code": "C2",
-      "expanded": false,
+      "expanded": true,
       "name": "Conversión Lead → Cita de Inspección Completada",
       "meta": "40%",
       "actual": "32%",
@@ -644,5 +644,5 @@
     }
   ],
   "_ut": "dndFPntmXApjeWYoQVRaKiF2YlgpXHwVZlZENEV5YRNYXgQuc1JZEA==",
-  "_lastSaved": 1783544719637
+  "_lastSaved": 1783544816342
 }
