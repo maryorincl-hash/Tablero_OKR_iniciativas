@@ -226,7 +226,7 @@
               "id": "c2p2s3",
               "name": "Dashboard de rendimiento individual por asesor en llamadas de compra",
               "responsible": "Jose Figueroa",
-              "stage": "monitoreo",
+              "stage": "finalizado",
               "startDate": "2026-06-08",
               "endDate": "2026-06-12",
               "consultados": "Daniela Godoy",
@@ -644,5 +644,5 @@
     }
   ],
   "_ut": "dndFPntmXApjeWYoQVRaKiF2YlgpXHwVZlZENEV5YRNYXgQuc1JZEA==",
-  "_lastSaved": 1783544858570
+  "_lastSaved": 1783544881680
 }
