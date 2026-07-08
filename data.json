@@ -185,7 +185,7 @@
               "id": "c2p1s4",
               "name": "Panel de citas de inspección (Inspector / Jefe)",
               "responsible": "Maryorin Vivas Macedo",
-              "stage": "definicion",
+              "stage": "ejecucion",
               "startDate": "2026-06-05",
               "endDate": "2026-07-17",
               "consultados": ""
@@ -644,5 +644,5 @@
     }
   ],
   "_ut": "dndFPntmXApjeWYoQVRaKiF2YlgpXHwVZlZENEV5YRNYXgQuc1JZEA==",
-  "_lastSaved": 1783544816342
+  "_lastSaved": 1783544858570
 }
